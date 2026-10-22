@@ -114,33 +114,35 @@ function Encode() {
       });
   
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Gagal membuat gambar: ${errorText}`
-        );
+        throw new Error(await response.text());
       }
   
       const blob = await response.blob();
   
       if (!blob.type.startsWith("image/") || blob.size === 0) {
-        throw new Error("Respons AI bukan file gambar yang valid.");
+        throw new Error("Respons AI bukan gambar yang valid.");
       }
   
       const generatedFile = new File(
         [blob],
-        `stegaai-${category}.jpg`,
+        `tentara-${category}.png`,
         { type: blob.type }
       );
   
-      // Gunakan gambar AI sebagai cover image.
+      // Tampilkan preview gambar AI
+      const previewUrl = URL.createObjectURL(blob);
+  
+      setAiImageUrl((oldUrl) => {
+        if (oldUrl) URL.revokeObjectURL(oldUrl);
+        return previewUrl;
+      });
+  
+      // Jadikan gambar AI sebagai cover image
       setImage(generatedFile);
       calculateCapacity(generatedFile);
-  
     } catch (error) {
-      console.error("StegaAI generation error:", error);
-      setAiError(
-        error.message || "Gagal menghasilkan gambar AI."
-      );
+      console.error(error);
+      setAiError(error.message || "Gagal membuat gambar AI.");
     } finally {
       setGeneratingImage(false);
     }
@@ -270,7 +272,45 @@ function Encode() {
                 ? "Generating Image..."
                 : "Generate Image with AI"}
             </button>
-        
+            
+            {generatingImage && (
+              <div className="mt-3 text-center">
+                <div
+                  className="spinner-border text-primary"
+                  role="status"
+                />
+                <p className="mt-2">
+                  AI sedang membuat ilustrasi tentara kartun...
+                </p>
+              </div>
+            )}
+            
+            {aiError && (
+              <p className="text-danger mt-2">{aiError}</p>
+            )}
+            
+            {aiImageUrl && (
+              <div className="mt-3 text-center">
+                <h6>Preview Gambar AI</h6>
+            
+                <img
+                  src={aiImageUrl}
+                  alt={`Ilustrasi tentara kartun chubby - ${category}`}
+                  style={{
+                    width: "100%",
+                    maxWidth: "350px",
+                    borderRadius: "12px",
+                    border: "2px solid #ddd",
+                    objectFit: "contain",
+                  }}
+                />
+            
+                <p className="text-success mt-2">
+                  Gambar berhasil dibuat: {category}
+                </p>
+              </div>
+            )}
+            
             {aiError && (
               <p className="text-danger mt-3">
                 {aiError}
