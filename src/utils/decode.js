@@ -42,9 +42,9 @@ function readUint32(bytes, offset) {
  * @throws  {Error} If the password is wrong or the image has no hidden data.
  */
 export async function decodeImage(img, canvas, password) {
-  if (!password) {
-    throw new Error("Password is required to decode this image.");
-  }
+  //if (!password) {
+ //   throw new Error("Password is required to decode this image.");
+ // }
 
   const ctx = canvas.getContext("2d");
   canvas.width  = img.width;
@@ -77,11 +77,28 @@ export async function decodeImage(img, canvas, password) {
   const encryptedBlob = bytes.slice(4, 4 + encryptedSize);
 
   // Decrypt everything — wrong password will throw here
+  //let plaintext;
+  //try {
+  //  plaintext = decryptData(encryptedBlob, password);
+  //} catch {
+  //  throw new Error("Wrong password or this image has no hidden data.");
+  // }
+  // Decrypt only when a password is provided
   let plaintext;
-  try {
-    plaintext = decryptData(encryptedBlob, password);
-  } catch {
-    throw new Error("Wrong password or this image has no hidden data.");
+  
+  if (password !== null && password !== undefined) {
+    if (!password) {
+      throw new Error("Password is required to decode this image.");
+    }
+  
+    try {
+      plaintext = decryptData(encryptedBlob, password);
+    } catch {
+      throw new Error("Wrong password or this image has no hidden data.");
+    }
+  } else {
+    // Encryption OFF: payload is already plaintext
+    plaintext = encryptedBlob;
   }
 
   // Verify magic bytes "STGO"
