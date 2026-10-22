@@ -25,6 +25,7 @@ function Encode() {
   const [category, setCategory] = useState("dihadiri");
   const [generatingImage, setGeneratingImage] = useState(false);
   const [aiError, setAiError] = useState("");
+  const [aiImageUrl, setAiImageUrl] = useState(null);
   // End AI
 
   const fileInputRef = useRef();
