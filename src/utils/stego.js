@@ -79,7 +79,11 @@ export async function encodeImage(img, file, password, canvas) {
   plaintext.set(compressed,               offset);
 
   // Encrypt the entire block — metadata + payload, nothing left in plaintext
-  const encrypted = encryptData(plaintext, password);
+  //const encrypted = encryptData(plaintext, password);
+  const payload =
+  password !== null && password !== undefined
+    ? encryptData(plaintext, password)
+    : plaintext;
 
   // Prepend total encrypted size as 4B so decoder knows when to stop reading
   const byteStream = new Uint8Array(4 + encrypted.length);
