@@ -235,13 +235,12 @@ function Encode() {
           <label className="label-text">Cover Image</label>
           <div className="info-box">
             <h5>✨ Generate Cover Image with AI</h5>
-            <p>
-              Buat gambar otomatis berdasarkan kategori,
-              tanpa harus mengunggah gambar sendiri.
+            <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.75, margin: 0 }}>
+              Buat gambar otomatis berdasarkan instruksi disposisi.
             </p>
         
             <label className="label-text">
-              Kategori Gambar
+              Instruksi Disposis
             </label>
             
             <select
@@ -484,17 +483,15 @@ function Encode() {
         <h5>Instructions</h5>
         <ul>
           <li>
-            Use <strong>PNG or BMP</strong> only — JPEG compression will destroy
-            hidden data.
+            Gunakan format <strong>PNG</strong> atau <strong>BMP</strong> saja — kompresi JPEG akan merusak data tersembunyi.
           </li>
           <li>
-            Encryption <strong>ON</strong>: set a strong password.{" "}
-            <strong>OFF</strong>: anyone can extract the data.
+            Enkripsi <strong>AKTIF</strong>: gunakan kata sandi yang kuat.{" "}
+            <strong>NONAKTIF</strong>: siapa pun dapat mengekstrak data.
           </li>
-          <li>Secret file size must not exceed the capacity shown above.</li>
+          <li>Ukuran file rahasia tidak boleh melebihi kapasitas yang ditampilkan di atas.</li>
           <li>
-            Use <strong>Download ZIP</strong> for sharing — direct PNG sharing
-            (WhatsApp, etc.) may corrupt data.
+            Gunakan fitur <strong>Download ZIP</strong> untuk berbagi file. Berbagi file PNG secara langsung melalui WhatsApp atau aplikasi lainnya dapat merusak data.
           </li>
         </ul>
       </div>
