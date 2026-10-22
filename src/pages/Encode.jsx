@@ -221,22 +221,21 @@ function Encode() {
 
       {/* Page header */}
       <div className="text-center text-white mb-4">
-        <h1>Encode Data into Image</h1>
+        <h1>Enkode Data ke dalam Gambar</h1>
         <p className="text-warning small mb-1">
-          ⚠️ Read the instructions below before hiding data — incorrect usage
-          may cause data loss.
+          ⚠️ Baca petunjuk di bawah ini sebelum menyembunyikan data - penggunaan yang salah dapat menyebabkan kehilangan data.
         </p>
-        <p>Embed a file inside an image, with optional AES-256 encryption</p>
+        <p>Sematkan file di dalam gambar, dengan enkripsi AES-256 opsional</p>
       </div>
 
       <div className="row g-4">
         {/* AI Image Generator */}
         <div className="col-12">
-          <label className="label-text">Cover Image</label>
+          <label className="label-text">Gambar Sampul</label>
           <div className="info-box">
-            <h5>✨ Generate Cover Image with AI</h5>
+            <h5>✨ Generate Cover Gambar dengan AI</h5>
             <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.75, margin: 0 }}>
-              Buat gambar otomatis berdasarkan instruksi disposisi.
+              Buat Gambar Sampul dengan AI
             </p>
         
             <label className="label-text">
@@ -269,8 +268,8 @@ function Encode() {
               disabled={generatingImage}
             >
               {generatingImage
-                ? "Generating Image..."
-                : "Generate Image with AI"}
+                ? "Menghasilkan Gambar..."
+                : "Hasilkan Gambar dengan AI"}
             </button>
             
             {generatingImage && (
@@ -353,7 +352,7 @@ function Encode() {
 
         {/* Secret file drop zone */}
         <div className="col-md-12">
-          <label className="label-text">Secret File</label>
+          <label className="label-text">File Rahasia</label>
           <div
             className="drop-zone"
             onDrop={(e) => handleDrop(e, "file")}
