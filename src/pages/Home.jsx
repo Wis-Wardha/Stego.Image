@@ -269,7 +269,7 @@ export default function Home() {
 
             <div className="si-hero-text">
               <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#8b949e", marginBottom: 14 }}>
-                Client-side steganography
+                Client-side steganography Development
               </p>
               <h1 style={{ fontSize: "clamp(26px,5vw,48px)", fontWeight: 700, lineHeight: 1.2, marginBottom: 18, minHeight: "1.3em" }}>
                 <span style={{ color: "#58a6ff" }}>{typed}</span>
