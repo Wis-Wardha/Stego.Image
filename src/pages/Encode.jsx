@@ -22,7 +22,7 @@ function Encode() {
   const [stegoUrl, setStegoUrl] = useState(null); // object URL of the output PNG
   const [loading, setLoading] = useState(false);
   // First AI
-  const [category, setCategory] = useState("pendidikan");
+  const [category, setCategory] = useState("dihadiri");
   const [generatingImage, setGeneratingImage] = useState(false);
   const [aiError, setAiError] = useState("");
   // End AI
@@ -240,18 +240,24 @@ function Encode() {
             <label className="label-text">
               Kategori Gambar
             </label>
-        
+            
             <select
               className="form-select custom-input mb-3"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               disabled={generatingImage}
             >
-              <option value="pendidikan">Pendidikan</option>
-              <option value="bisnis">Bisnis</option>
-              <option value="teknologi">Teknologi</option>
-              <option value="alam">Alam</option>
-              <option value="pribadi">Pribadi</option>
+              <option value="dihadiri">Dihadiri</option>
+              <option value="dijadwalkan">Dijadwalkan</option>
+              <option value="ditindaklanjuti">Ditindaklanjuti</option>
+              <option value="dikaji">Dikaji</option>
+              <option value="didampingi">Didampingi</option>
+              <option value="diketahui">Diketahui</option>
+              <option value="dikoordinasikan">Dikoordinasikan</option>
+              <option value="diarsipkan">Diarsipkan</option>
+              <option value="dimonitor">Dimonitor</option>
+              <option value="diwakilkan">Diwakilkan</option>
+              <option value="laporan">Sebagai Laporan</option>
             </select>
         
             <button
