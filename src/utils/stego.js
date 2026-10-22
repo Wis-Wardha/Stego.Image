@@ -86,9 +86,12 @@ export async function encodeImage(img, file, password, canvas) {
     : plaintext;
 
   // Prepend total encrypted size as 4B so decoder knows when to stop reading
-  const byteStream = new Uint8Array(4 + encrypted.length);
-  byteStream.set(uint32ToBytes(encrypted.length), 0);
-  byteStream.set(encrypted, 4);
+  // const byteStream = new Uint8Array(4 + encrypted.length);
+  // byteStream.set(uint32ToBytes(encrypted.length), 0);
+  // byteStream.set(encrypted, 4);
+  const byteStream = new Uint8Array(4 + payload.length);
+  byteStream.set(uint32ToBytes(payload.length), 0);
+  byteStream.set(payload, 4);
 
   const bits = bytesToBits(byteStream);
 
