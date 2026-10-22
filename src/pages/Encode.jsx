@@ -227,9 +227,9 @@ function Encode() {
       </div>
 
       <div className="row g-4">
-        // First AI
         {/* AI Image Generator */}
         <div className="col-12">
+          <label className="label-text">Cover Image</label>
           <div className="info-box">
             <h5>✨ Generate Cover Image with AI</h5>
             <p>
@@ -280,10 +280,9 @@ function Encode() {
             )}
           </div>
         </div>
-        // End AI
+       
         {/* Cover image drop zone */}
-        <div className="col-md-6">
-          <label className="label-text">Cover Image</label>
+        <div className="col-md-12">
           <div
             className="drop-zone"
             onDrop={(e) => handleDrop(e, "image")}
@@ -307,7 +306,7 @@ function Encode() {
         </div>
 
         {/* Secret file drop zone */}
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="label-text">Secret File</label>
           <div
             className="drop-zone"
