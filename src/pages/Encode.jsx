@@ -21,6 +21,11 @@ function Encode() {
   const [capacity, setCapacity] = useState(null); // max bytes the image can hold
   const [stegoUrl, setStegoUrl] = useState(null); // object URL of the output PNG
   const [loading, setLoading] = useState(false);
+  // First AI
+  const [category, setCategory] = useState("pendidikan");
+  const [generatingImage, setGeneratingImage] = useState(false);
+  const [aiError, setAiError] = useState("");
+  // End AI
 
   const fileInputRef = useRef();
   const imageInputRef = useRef();
@@ -88,6 +93,59 @@ function Encode() {
       return !prev;
     });
   };
+
+  // First AI
+  
+  const WORKER_URL =
+    "https://stegaai-backend.fair-csff7.workers.dev";
+  
+  const generateAIImage = async () => {
+    setGeneratingImage(true);
+    setAiError("");
+    setStegoUrl(null);
+  
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ category }),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Gagal membuat gambar: ${errorText}`
+        );
+      }
+  
+      const blob = await response.blob();
+  
+      if (!blob.type.startsWith("image/") || blob.size === 0) {
+        throw new Error("Respons AI bukan file gambar yang valid.");
+      }
+  
+      const generatedFile = new File(
+        [blob],
+        `stegaai-${category}.jpg`,
+        { type: blob.type }
+      );
+  
+      // Gunakan gambar AI sebagai cover image.
+      setImage(generatedFile);
+      calculateCapacity(generatedFile);
+  
+    } catch (error) {
+      console.error("StegaAI generation error:", error);
+      setAiError(
+        error.message || "Gagal menghasilkan gambar AI."
+      );
+    } finally {
+      setGeneratingImage(false);
+    }
+  };
+  // End AI
 
   // ── Encode ─────────────────────────────────────────────────────────────────
 
@@ -169,6 +227,60 @@ function Encode() {
       </div>
 
       <div className="row g-4">
+        // First AI
+        {/* AI Image Generator */}
+        <div className="col-12">
+          <div className="info-box">
+            <h5>✨ Generate Cover Image with AI</h5>
+            <p>
+              Buat gambar otomatis berdasarkan kategori,
+              tanpa harus mengunggah gambar sendiri.
+            </p>
+        
+            <label className="label-text">
+              Kategori Gambar
+            </label>
+        
+            <select
+              className="form-select custom-input mb-3"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              disabled={generatingImage}
+            >
+              <option value="pendidikan">Pendidikan</option>
+              <option value="bisnis">Bisnis</option>
+              <option value="teknologi">Teknologi</option>
+              <option value="alam">Alam</option>
+              <option value="pribadi">Pribadi</option>
+            </select>
+        
+            <button
+              type="button"
+              className="primary-btn"
+              onClick={generateAIImage}
+              disabled={generatingImage}
+            >
+              {generatingImage
+                ? "Generating Image..."
+                : "Generate Image with AI"}
+            </button>
+        
+            {aiError && (
+              <p className="text-danger mt-3">
+                {aiError}
+              </p>
+            )}
+        
+            {image && (
+              <div className="mt-3">
+                <p className="text-success">
+                  Cover image tersedia: {image.name}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+        // End AI
         {/* Cover image drop zone */}
         <div className="col-md-6">
           <label className="label-text">Cover Image</label>
