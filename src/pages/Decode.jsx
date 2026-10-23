@@ -165,6 +165,15 @@ function Decode() {
         setOutputFile(extractedFile);
 
         if (isPdfFile(fileName, finalBlob.type)) {
+          try {
+            const pdfWindow = window.open(finalObjectUrl, "_blank", "noopener,noreferrer");
+            if (!pdfWindow) {
+              console.warn("PDF viewer blocked by browser popup settings.");
+            }
+          } catch (err) {
+            console.warn("Failed to open decoded PDF in a new tab:", err);
+          }
+
           await verifyPdfTte(finalBlob, fileName);
         }
       } catch (err) {
@@ -397,8 +406,8 @@ function Decode() {
           </li>
           <li>Wrong password or wrong toggle = corrupted or no output.</li>
           <li>
-            Jika hasil decode adalah file PDF, sistem akan otomatis mengecek
-            validitas TTE melalui Worker Cloudflare, lalu tombol <strong>Verify PDF TTE</strong> juga tersedia.
+            Jika hasil decode adalah file PDF, sistem akan otomatis membuka PDF
+            di tab baru agar bisa dibaca langsung di browser.
           </li>
         </ul>
       </div>
