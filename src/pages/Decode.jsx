@@ -291,7 +291,22 @@ function Decode() {
             <div className="output-box text-center">
               <h5>File Extracted Successfully</h5>
               <p>{outputFile.name}</p>
-
+              {isPdfOutput && (
+                <div className="mt-4 text-start">
+                  <h6>PDF Preview</h6>
+                  <iframe
+                    title="Decoded PDF preview"
+                    src={outputFile.url}
+                    style={{
+                      width: "100%",
+                      minHeight: "700px",
+                      border: "1px solid #d9d9d9",
+                      borderRadius: "8px",
+                      background: "#fff",
+                    }}
+                  />
+                </div>
+              )}
               <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
                 <a
                   href={outputFile.url}
@@ -311,23 +326,6 @@ function Decode() {
                   </button>
                 )}
               </div>
-
-              {isPdfOutput && (
-                <div className="mt-4 text-start">
-                  <h6>PDF Preview</h6>
-                  <iframe
-                    title="Decoded PDF preview"
-                    src={outputFile.url}
-                    style={{
-                      width: "100%",
-                      minHeight: "700px",
-                      border: "1px solid #d9d9d9",
-                      borderRadius: "8px",
-                      background: "#fff",
-                    }}
-                  />
-                </div>
-              )}
             </div>
           </div>
         )}
