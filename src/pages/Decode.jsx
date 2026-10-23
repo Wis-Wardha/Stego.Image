@@ -165,15 +165,6 @@ function Decode() {
         setOutputFile(extractedFile);
 
         if (isPdfFile(fileName, finalBlob.type)) {
-          try {
-            const pdfWindow = window.open(finalObjectUrl, "_blank", "noopener,noreferrer");
-            if (!pdfWindow) {
-              console.warn("PDF viewer blocked by browser popup settings.");
-            }
-          } catch (err) {
-            console.warn("Failed to open decoded PDF in a new tab:", err);
-          }
-
           await verifyPdfTte(finalBlob, fileName);
         }
       } catch (err) {
@@ -296,8 +287,8 @@ function Decode() {
 
         {/* Output — shown after successful extraction */}
         {outputFile && (
-          <div className="col-12 text-center mt-4">
-            <div className="output-box">
+          <div className="col-12 mt-4">
+            <div className="output-box text-center">
               <h5>File Extracted Successfully</h5>
               <p>{outputFile.name}</p>
 
@@ -320,6 +311,23 @@ function Decode() {
                   </button>
                 )}
               </div>
+
+              {isPdfOutput && (
+                <div className="mt-4 text-start">
+                  <h6>PDF Preview</h6>
+                  <iframe
+                    title="Decoded PDF preview"
+                    src={outputFile.url}
+                    style={{
+                      width: "100%",
+                      minHeight: "700px",
+                      border: "1px solid #d9d9d9",
+                      borderRadius: "8px",
+                      background: "#fff",
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -406,8 +414,8 @@ function Decode() {
           </li>
           <li>Wrong password or wrong toggle = corrupted or no output.</li>
           <li>
-            Jika hasil decode adalah file PDF, sistem akan otomatis membuka PDF
-            di tab baru agar bisa dibaca langsung di browser.
+            Jika hasil decode adalah file PDF, file akan tampil langsung di dalam
+            halaman web menggunakan object URL browser. Tidak disimpan ke server.
           </li>
         </ul>
       </div>
