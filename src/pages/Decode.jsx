@@ -16,11 +16,10 @@ function Decode() {
   const [useEncrypt, setUseEncrypt] = useState(true); // must match encode-time setting
   const [outputFile, setOutputFile] = useState(null); // { url, name }
   const [loading, setLoading] = useState(false);
+  const [pdfVerification, setPdfVerification] = useState(null); // { loading, error, result }
 
   const canvasRef = useRef();
   const imageInputRef = useRef();
-
-  // ── Helpers ────────────────────────────────────────────────────────────────
 
   /**
    * Sets the selected image and clears any previous decode result.
@@ -33,6 +32,7 @@ function Decode() {
     }
     setImage(file);
     setOutputFile(null);
+    setPdfVerification(null);
   };
 
   const handleDrop = (e) => {
@@ -52,7 +52,68 @@ function Decode() {
     });
   };
 
-  // ── Decode ─────────────────────────────────────────────────────────────────
+  /**
+   * Verifies a PDF document via cekdokumen.id TTE REST API.
+   * Browser can only send a controlled subset of headers; Origin/Referer
+   * are set automatically by the browser and cannot be overridden.
+   *
+   * @param {Blob} blob
+   * @param {string} fileName
+   * @returns {Promise<object|null>}
+   */
+  const verifyPdfTte = async (blob, fileName) => {
+    if (!blob || blob.type !== "application/pdf") {
+      setPdfVerification(null);
+      return null;
+    }
+
+    setPdfVerification({ loading: true, error: null, result: null });
+
+    try {
+      const pdfFile = new File([blob], fileName || "document.pdf", {
+        type: "application/pdf",
+      });
+
+      const formData = new FormData();
+      formData.append("file", pdfFile, fileName || "document.pdf");
+
+      const response = await fetch("https://cekdokumen.id/api/verification", {
+        method: "POST",
+        headers: {
+          "X-Platform": "web",
+          Accept: "*/*",
+        },
+        body: formData,
+      });
+
+      const rawText = await response.text();
+      let result = null;
+
+      if (rawText) {
+        try {
+          result = JSON.parse(rawText);
+        } catch {
+          result = { rawResponse: rawText };
+        }
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          result && result.message ? result.message : `Verification failed (${response.status})`,
+        );
+      }
+
+      setPdfVerification({ loading: false, error: null, result });
+      return result;
+    } catch (error) {
+      setPdfVerification({
+        loading: false,
+        error: error.message || "Failed to verify PDF signature.",
+        result: null,
+      });
+      return null;
+    }
+  };
 
   /**
    * Loads the stego image, then calls decodeImage.
@@ -74,6 +135,7 @@ function Decode() {
 
     setLoading(true);
     setOutputFile(null);
+    setPdfVerification(null);
 
     const objectUrl = URL.createObjectURL(image);
     const img = new window.Image();
@@ -84,9 +146,21 @@ function Decode() {
         const { blob, fileName } = await decodeImage(
           img,
           canvasRef.current,
-          useEncrypt ? password : null, // null tells decodeImage to skip decryption
+          useEncrypt ? password : null,
         );
-        setOutputFile({ url: URL.createObjectURL(blob), name: fileName });
+
+        const finalBlob = new Blob([blob], { type: blob.type || "application/octet-stream" });
+        const finalObjectUrl = URL.createObjectURL(finalBlob);
+
+        setOutputFile({
+          url: finalObjectUrl,
+          name: fileName,
+          mimeType: finalBlob.type,
+        });
+
+        if (finalBlob.type === "application/pdf") {
+          await verifyPdfTte(finalBlob, fileName);
+        }
       } catch (err) {
         alert(err.message);
       } finally {
@@ -101,8 +175,6 @@ function Decode() {
       URL.revokeObjectURL(objectUrl);
     };
   };
-
-  // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
     <div className="decode-container container py-5">
@@ -221,6 +293,67 @@ function Decode() {
             </div>
           </div>
         )}
+
+        {/* PDF TTE verification results */}
+        {pdfVerification && (
+          <div className="col-12 mt-4">
+            <div className="output-box text-start">
+              <h5>PDF TTE Verification</h5>
+
+              {pdfVerification.loading && <p>Checking digital signature…</p>}
+
+              {pdfVerification.error && (
+                <div className="alert alert-danger mb-0">
+                  {pdfVerification.error}
+                </div>
+              )}
+
+              {pdfVerification.result && (
+                <div>
+                  <p className="mb-2">
+                    <strong>Document ID:</strong> {pdfVerification.result.documentId || "-"}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Status:</strong>{" "}
+                    {pdfVerification.result.verificationStatus?.join(", ") || "-"}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Has Signature:</strong>{" "}
+                    {pdfVerification.result.documentHasSignature ? "Yes" : "No"}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Message Code:</strong>{" "}
+                    {pdfVerification.result.messageCode || "-"}
+                  </p>
+
+                  {pdfVerification.result.signatures?.[0]?.basicInfo && (
+                    <div className="mt-3">
+                      <h6>Signature Details</h6>
+                      <ul className="mb-0 ps-3">
+                        <li>
+                          <strong>Name:</strong>{" "}
+                          {pdfVerification.result.signatures[0].basicInfo.signatureName || "-"}
+                        </li>
+                        <li>
+                          <strong>Signer:</strong>{" "}
+                          {pdfVerification.result.signatures[0].basicInfo.signerName || "-"}
+                        </li>
+                        <li>
+                          <strong>Time:</strong>{" "}
+                          {pdfVerification.result.signatures[0].basicInfo.signerTime || "-"}
+                        </li>
+                        <li>
+                          <strong>Reason:</strong>{" "}
+                          {pdfVerification.result.signatures[0].basicInfo.reason || "-"}
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Hidden canvas used by the steganography engine */}
@@ -242,6 +375,10 @@ function Decode() {
             encode. <strong>OFF</strong>: no password needed.
           </li>
           <li>Wrong password or wrong toggle = corrupted or no output.</li>
+          <li>
+            Jika hasil decode adalah file PDF, sistem akan otomatis mengecek
+            validitas TTE menggunakan API cekdokumen.id.
+          </li>
         </ul>
       </div>
     </div>
