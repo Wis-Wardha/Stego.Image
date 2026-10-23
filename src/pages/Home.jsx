@@ -74,7 +74,7 @@ function LsbDemo() {
   return (
     <div style={{ background: "#0d1117", border: "1px solid #30363d", borderRadius: 10, padding: "20px" }}>
       <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#8b949e", marginBottom: 14 }}>
-        LSB demo — pixel channel values
+        Demo LSB — nilai kanal piksel
       </p>
       <div className="lsb-grid">
         {original.map((v, i) => (
@@ -104,10 +104,10 @@ function LsbDemo() {
           color: "#fff", borderRadius: 6, padding: "7px 14px",
           fontSize: 12, cursor: "pointer", fontFamily: "inherit", transition: "all 0.25s",
         }}>
-          {step === 0 ? "Embed secret bit →" : "← Show original"}
+          {step === 0 ? "Sisipkan bit rahasia →" : "← Tampilkan asli"}
         </button>
         <span style={{ fontSize: 11, color: "#8b949e" }}>
-          {step === 0 ? "Original pixel values" : "LSB changed — visually identical"}
+          {step === 0 ? "Nilai piksel asli" : "LSB berubah — tampilan tetap sama"}
         </span>
       </div>
     </div>
@@ -116,39 +116,39 @@ function LsbDemo() {
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const FEATURES = [
-  { icon: "🔒", title: "AES-256 encryption",  desc: "PBKDF2-SHA256 key derivation — 100,000 iterations, random salt per session." },
-  { icon: "🖼️", title: "LSB steganography",   desc: "Data hidden in the least significant bits of RGB channels. Invisible to the eye." },
-  { icon: "📦", title: "GZIP compression",    desc: "Files compressed before embedding to maximise cover image capacity." },
-  { icon: "🖥️", title: "100% client-side",   desc: "No servers, no uploads, no telemetry. Runs entirely in your browser." },
+  { icon: "🔒", title: "Enkripsi AES-256",  desc: "Derivasi kunci PBKDF2-SHA256 — 100.000 iterasi, salt acak untuk setiap sesi." },
+  { icon: "🖼️", title: "Steganografi LSB",   desc: "Data disembunyikan pada bit paling tidak signifikan dari kanal RGB. Tidak terlihat oleh mata." },
+  { icon: "📦", title: "Kompresi GZIP",    desc: "File dikompresi sebelum disisipkan untuk memaksimalkan kapasitas gambar penutup." },
+  { icon: "🖥️", title: "100% di sisi klien",   desc: "Tanpa server, tanpa unggahan, tanpa telemetri. Semuanya berjalan di browser Anda." },
 ];
 const STEPS = [
-  { n: "01", label: "Upload cover image", note: "PNG or BMP only" },
-  { n: "02", label: "Select secret file", note: "Any file type" },
-  { n: "03", label: "Set password",       note: "Optional encryption" },
-  { n: "04", label: "Download stego PNG", note: "Identical to original" },
+  { n: "01", label: "Unggah gambar penutup", note: "Hanya PNG atau BMP" },
+  { n: "02", label: "Pilih file rahasia", note: "Semua jenis file" },
+  { n: "03", label: "Atur kata sandi",       note: "Enkripsi opsional" },
+  { n: "04", label: "Unduh PNG stego", note: "Tampilan sama seperti aslinya" },
 ];
 const PIPELINE = [
-  { icon: "📄", label: "Secret file", color: "#8b949e" },
+  { icon: "📄", label: "File rahasia", color: "#8b949e" },
   { icon: "📦", label: "GZIP",        color: "#58a6ff" },
   { icon: "🔐", label: "AES-256",     color: "#2ea043" },
-  { icon: "🖼️", label: "LSB embed",   color: "#a371f7" },
-  { icon: "✅", label: "Stego PNG",   color: "#58a6ff" },
+  { icon: "🖼️", label: "Sisipkan LSB",   color: "#a371f7" },
+  { icon: "✅", label: "PNG stego",   color: "#58a6ff" },
 ];
 const SEC_ROWS = [
-  ["Key derivation",      "PBKDF2-SHA256", "#58a6ff"],
+  ["Derivasi kunci",      "PBKDF2-SHA256", "#58a6ff"],
   ["Iterations",          "100,000",       "#58a6ff"],
-  ["Encryption",          "AES-256",       "#58a6ff"],
-  ["Compression",         "DEFLATE",       "#58a6ff"],
-  ["Network requests",    "0",             "#2ea043"],
-  ["Server-side storage", "None",          "#2ea043"],
+  ["Enkripsi",            "AES-256",       "#58a6ff"],
+  ["Kompresi",            "DEFLATE",       "#58a6ff"],
+  ["Permintaan jaringan", "0",             "#2ea043"],
+  ["Penyimpanan di server", "Tidak ada",   "#2ea043"],
 ];
 const LEARN = [
-  { to: "/learn/how-steganography-works",     label: "How steganography works" },
-  { to: "/learn/lsb-steganography",           label: "LSB steganography" },
-  { to: "/learn/aes256-encryption",           label: "AES-256 encryption" },
-  { to: "/learn/steganography-vs-encryption", label: "Steganography vs encryption" },
-  { to: "/learn/detect-hidden-data",          label: "Detect hidden data" },
-  { to: "/learn/use-cases",                   label: "Use cases" },
+  { to: "/learn/how-steganography-works",     label: "Cara kerja steganografi" },
+  { to: "/learn/lsb-steganography",           label: "Steganografi LSB" },
+  { to: "/learn/aes256-encryption",           label: "Enkripsi AES-256" },
+  { to: "/learn/steganography-vs-encryption", label: "Steganografi vs. enkripsi" },
+  { to: "/learn/detect-hidden-data",          label: "Mendeteksi data tersembunyi" },
+  { to: "/learn/use-cases",                   label: "Contoh penggunaan" },
 ];
 
 /* ─── Hover helpers ──────────────────────────────────────────── */
@@ -162,13 +162,13 @@ const offPipe  = e => { e.currentTarget.style.transform = "none"; };
 /* ─── Component ──────────────────────────────────────────────── */
 export default function Home() {
   const navigate = useNavigate();
-  const typed    = useTyping(["Hide files in images.", "Encrypt. Compress. Embed.", "No servers. No traces."]);
+  const typed    = useTyping(["Sembunyikan file dalam gambar.", "Enkripsi. Kompresi. Sisipkan.", "Tanpa server. Tanpa jejak."]);
 
   return (
     <div style={{ background: "#0d1117", color: "#e6edf3" }}>
       <Helmet>
-        <title>Steganography Online — Hide Any File in a PNG | Stego.Image</title>
-        <meta name="description" content="Free online steganography tool. Hide any file inside a PNG image using LSB steganography and AES-256 encryption. 100% client-side — no uploads, no servers, no tracking." />
+        <title>Steganografi Online — Sembunyikan File dalam PNG | Stego.Image</title>
+        <meta name="description" content="Alat steganografi online gratis. Sembunyikan file apa pun di dalam gambar PNG menggunakan steganografi LSB dan enkripsi AES-256. 100% di sisi klien — tanpa unggahan, server, atau pelacakan." />
         <link rel="canonical" href="https://stegoimage.pages.dev/" />
       </Helmet>
 
@@ -269,22 +269,22 @@ export default function Home() {
 
             <div className="si-hero-text">
               <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#8b949e", marginBottom: 14 }}>
-                Client-side steganography Development
+                Pengembangan steganografi di sisi klien
               </p>
               <h1 style={{ fontSize: "clamp(26px,5vw,48px)", fontWeight: 700, lineHeight: 1.2, marginBottom: 18, minHeight: "1.3em" }}>
                 <span style={{ color: "#58a6ff" }}>{typed}</span>
                 <span className="si-cursor" aria-hidden="true">|</span>
               </h1>
               <p style={{ fontSize: 15, lineHeight: 1.75, color: "#8b949e", marginBottom: 28, maxWidth: 480 }}>
-                Embed any file inside a PNG using LSB steganography and optional AES-256
-                encryption — entirely in your browser. Nothing ever leaves your device.
+                Sisipkan file apa pun ke dalam PNG menggunakan steganografi LSB dan enkripsi
+                AES-256 opsional — sepenuhnya di browser Anda. Tidak ada data yang meninggalkan perangkat.
               </p>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
-                <button className="primary-btn" onClick={() => navigate("/encode")}>Start encoding</button>
-                <button className="secondary-btn" onClick={() => navigate("/decode")}>Extract file</button>
+                <button className="primary-btn" onClick={() => navigate("/encode")}>Mulai menyisipkan</button>
+                <button className="secondary-btn" onClick={() => navigate("/decode")}>Ekstrak file</button>
               </div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {[["Zero network requests", "#2ea043"], ["Open source", "#58a6ff"], ["Free forever", "#2ea043"]].map(([t, c]) => (
+                {[["Tanpa permintaan jaringan", "#2ea043"], ["Sumber terbuka", "#58a6ff"], ["Gratis selamanya", "#2ea043"]].map(([t, c]) => (
                   <span key={t} style={{
                     display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11,
                     color: "#8b949e", background: "#161b22", border: "1px solid #30363d",
@@ -299,10 +299,10 @@ export default function Home() {
 
             <div className="si-hero-canvas">
               <div className="si-card" style={{ padding: 18, display: "inline-flex", flexDirection: "column", gap: 10, maxWidth: "100%" }}>
-                <span style={{ fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase", color: "#8b949e" }}>pixel data</span>
+                <span style={{ fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase", color: "#8b949e" }}>data piksel</span>
                 <PixelGrid />
                 <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
-                  {["🔒 AES-256", "👁️ Invisible"].map(b => (
+                  {["🔒 AES-256", "👁️ Tak terlihat"].map(b => (
                     <span key={b} style={{ fontSize: 10, color: "#58a6ff", background: "rgba(88,166,255,0.08)", border: "1px solid rgba(88,166,255,0.2)", borderRadius: 5, padding: "2px 8px" }}>{b}</span>
                   ))}
                 </div>
@@ -318,11 +318,11 @@ export default function Home() {
         <div className="si-wrap">
           <div className="si-card si-layers" style={{ padding: "32px 28px" }}>
             {[
-              { n: "01", c: "#58a6ff", title: "Steganography",    desc: "Hides the existence of the data inside ordinary pixel values." },
+              { n: "01", c: "#58a6ff", title: "Steganografi",    desc: "Menyembunyikan keberadaan data di dalam nilai piksel biasa." },
               { sep: "+" },
-              { n: "02", c: "#2ea043", title: "Encryption",       desc: "Protects the data itself — unreadable even if extracted." },
+              { n: "02", c: "#2ea043", title: "Enkripsi",       desc: "Melindungi data itu sendiri — tetap tidak terbaca meskipun berhasil diekstrak." },
               { sep: "=" },
-              { n: "✓",  c: "#a371f7", title: "Two-layer security", desc: "Attackers must find the data, then break the cipher." },
+              { n: "✓",  c: "#a371f7", title: "Keamanan dua lapis", desc: "Penyerang harus menemukan data terlebih dahulu, lalu memecahkan sandinya." },
             ].map((item, i) =>
               item.sep ? (
                 <div key={i} className="si-layer-sep" style={{ fontSize: 24, fontWeight: 300, color: "#30363d", flexShrink: 0 }}>{item.sep}</div>
@@ -344,7 +344,7 @@ export default function Home() {
       <section className="si-section">
         <div className="si-wrap">
           <h2 style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 700, color: "#e6edf3", textAlign: "center", marginBottom: 32, letterSpacing: -0.3 }}>
-            What's under the hood
+            Teknologi di baliknya
           </h2>
           <div className="si-feat-grid">
             {FEATURES.map(({ icon, title, desc }) => (
@@ -365,7 +365,7 @@ export default function Home() {
       <section className="si-section">
         <div className="si-wrap">
           <h2 style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 700, color: "#e6edf3", textAlign: "center", marginBottom: 32, letterSpacing: -0.3 }}>
-            How to use it
+            Cara menggunakannya
           </h2>
           <div className="si-card si-steps-grid" style={{ marginBottom: 28 }}>
             {STEPS.map(({ n, label, note }) => (
@@ -379,8 +379,8 @@ export default function Home() {
             ))}
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <button className="primary-btn" onClick={() => navigate("/encode")}>Try it now</button>
-            <button className="secondary-btn" onClick={() => navigate("/about")}>Technical details</button>
+            <button className="primary-btn" onClick={() => navigate("/encode")}>Coba sekarang</button>
+            <button className="secondary-btn" onClick={() => navigate("/about")}>Detail teknis</button>
           </div>
         </div>
       </section>
@@ -389,11 +389,11 @@ export default function Home() {
       <section className="si-section">
         <div className="si-wrap">
           <h2 style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 700, color: "#e6edf3", textAlign: "center", marginBottom: 32, letterSpacing: -0.3 }}>
-            See how LSB works
+            Lihat cara kerja LSB
           </h2>
           <LsbDemo />
           <p style={{ textAlign: "center", fontSize: 12, color: "#8b949e", marginTop: 12 }}>
-            Only the last bit of each byte changes. The visual difference is zero.
+            Hanya bit terakhir dari setiap byte yang berubah. Tidak ada perbedaan yang terlihat.
           </p>
         </div>
       </section>
@@ -402,7 +402,7 @@ export default function Home() {
       <section className="si-section">
         <div className="si-wrap">
           <h2 style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 700, color: "#e6edf3", textAlign: "center", marginBottom: 32, letterSpacing: -0.3 }}>
-            Encode pipeline
+            Alur penyisipan
           </h2>
 
           {/* Horizontal (tablet+desktop) */}
@@ -444,14 +444,14 @@ export default function Home() {
             <div className="si-sec-inner">
               <div style={{ flex: "1 1 280px" }}>
                 <h2 style={{ fontSize: "clamp(18px,2.5vw,24px)", fontWeight: 700, color: "#e6edf3", marginBottom: 14 }}>
-                  Privacy by architecture
+                  Privasi sejak dari rancangan
                 </h2>
                 <p style={{ fontSize: 14, lineHeight: 1.75, color: "#8b949e", marginBottom: 18 }}>
-                  There is no backend. Every byte stays in your browser — never serialised,
-                  transmitted, or logged. Inspect network traffic while encoding: request count stays at zero.
+                  Tidak ada backend. Setiap byte tetap berada di browser Anda — tidak pernah diserialisasi,
+                  dikirim, atau dicatat. Periksa lalu lintas jaringan saat menyisipkan data: jumlah permintaan tetap nol.
                 </p>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {["PBKDF2-SHA256, 100,000 iterations, random salt", "Output PNG carries no hidden metadata or fingerprint", "Cloudflare Pages — no origin server to subpoena", "MIT licensed — read every line on GitHub"].map(item => (
+                  {["PBKDF2-SHA256, 100.000 iterasi, salt acak", "PNG keluaran tidak memuat metadata tersembunyi atau sidik jari", "Cloudflare Pages — tidak ada server asal yang dapat diminta datanya", "Lisensi MIT — baca setiap baris kode di GitHub"].map(item => (
                     <li key={item} className="si-sec-bullet">{item}</li>
                   ))}
                 </ul>
@@ -483,7 +483,7 @@ export default function Home() {
       <section className="si-section">
         <div className="si-wrap">
           <h2 style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 700, color: "#e6edf3", textAlign: "center", marginBottom: 32, letterSpacing: -0.3 }}>
-            Learn the concepts
+            Pelajari konsepnya
           </h2>
           <div className="si-learn-grid">
             {LEARN.map(({ to, label }) => (
@@ -504,14 +504,14 @@ export default function Home() {
           <div className="si-card" style={{ textAlign: "center", padding: "56px 24px", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: -40, left: "50%", transform: "translateX(-50%)", width: 300, height: 150, background: "radial-gradient(circle,rgba(88,166,255,0.07) 0%,transparent 70%)", pointerEvents: "none" }} />
             <h2 style={{ fontSize: "clamp(22px,4vw,36px)", fontWeight: 700, color: "#e6edf3", marginBottom: 8 }}>
-              Ready to hide something?
+              Siap menyembunyikan sesuatu?
             </h2>
             <p style={{ fontSize: 15, color: "#8b949e", marginBottom: 28 }}>
-              Your files. Your browser. Your control.
+              File Anda. Browser Anda. Kendali ada pada Anda.
             </p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-              <button className="primary-btn" onClick={() => navigate("/encode")}>Start encoding</button>
-              <button className="secondary-btn" onClick={() => navigate("/decode")}>Extract a file</button>
+              <button className="primary-btn" onClick={() => navigate("/encode")}>Mulai menyisipkan</button>
+              <button className="secondary-btn" onClick={() => navigate("/decode")}>Ekstrak file</button>
             </div>
           </div>
         </div>
