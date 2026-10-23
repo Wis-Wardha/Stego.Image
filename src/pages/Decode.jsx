@@ -14,9 +14,9 @@ function Decode() {
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
   const [useEncrypt, setUseEncrypt] = useState(true); // must match encode-time setting
-  const [outputFile, setOutputFile] = useState(null); // { url, name }
-  const [loading, setLoading] = useState(false);
+  const [outputFile, setOutputFile] = useState(null); // { url, name, mimeType }
   const [pdfVerification, setPdfVerification] = useState(null); // { loading, error, result }
+  const [loading, setLoading] = useState(false);
 
   const canvasRef = useRef();
   const imageInputRef = useRef();
@@ -53,16 +53,26 @@ function Decode() {
   };
 
   /**
+   * Detects whether a decoded file is a PDF.
+   * @param {string|null} fileName
+   * @param {string|null} mimeType
+   * @returns {boolean}
+   */
+  const isPdfFile = (fileName, mimeType) => {
+    const normalizedName = (fileName || "").toLowerCase();
+    return (
+      mimeType === "application/pdf" ||
+      normalizedName.endsWith(".pdf")
+    );
+  };
+
+  /**
    * Verifies a PDF document via cekdokumen.id TTE REST API.
-   * Browser can only send a controlled subset of headers; Origin/Referer
-   * are set automatically by the browser and cannot be overridden.
-   *
    * @param {Blob} blob
    * @param {string} fileName
-   * @returns {Promise<object|null>}
    */
   const verifyPdfTte = async (blob, fileName) => {
-    if (!blob || blob.type !== "application/pdf") {
+    if (!blob || !isPdfFile(fileName, blob.type)) {
       setPdfVerification(null);
       return null;
     }
@@ -157,10 +167,6 @@ function Decode() {
           name: fileName,
           mimeType: finalBlob.type,
         });
-
-        if (finalBlob.type === "application/pdf") {
-          await verifyPdfTte(finalBlob, fileName);
-        }
       } catch (err) {
         alert(err.message);
       } finally {
@@ -175,6 +181,19 @@ function Decode() {
       URL.revokeObjectURL(objectUrl);
     };
   };
+
+  /**
+   * Manually verifies whether the decoded output is a valid PDF with TTE.
+   */
+  const handleVerifyPdf = async () => {
+    if (!outputFile) return;
+    await verifyPdfTte(
+      new Blob([""], { type: outputFile.mimeType || "application/pdf" }),
+      outputFile.name,
+    );
+  };
+
+  const isPdfOutput = outputFile && isPdfFile(outputFile.name, outputFile.mimeType);
 
   return (
     <div className="decode-container container py-5">
@@ -283,13 +302,26 @@ function Decode() {
             <div className="output-box">
               <h5>File Extracted Successfully</h5>
               <p>{outputFile.name}</p>
-              <a
-                href={outputFile.url}
-                download={outputFile.name}
-                className="primary-btn"
-              >
-                Download File
-              </a>
+
+              <div className="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                <a
+                  href={outputFile.url}
+                  download={outputFile.name}
+                  className="primary-btn"
+                >
+                  Download File
+                </a>
+
+                {isPdfOutput && (
+                  <button
+                    type="button"
+                    className="primary-btn"
+                    onClick={() => verifyPdfTte(new Blob([""], { type: outputFile.mimeType || "application/pdf" }), outputFile.name)}
+                  >
+                    Verify PDF TTE
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -376,8 +408,7 @@ function Decode() {
           </li>
           <li>Wrong password or wrong toggle = corrupted or no output.</li>
           <li>
-            Jika hasil decode adalah file PDF, sistem akan otomatis mengecek
-            validitas TTE menggunakan API cekdokumen.id.
+            Jika hasil decode adalah file PDF, tombol <strong>Verify PDF TTE</strong> akan muncul.
           </li>
         </ul>
       </div>
