@@ -14,7 +14,7 @@ function Decode() {
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
   const [useEncrypt, setUseEncrypt] = useState(true); // must match encode-time setting
-  const [outputFile, setOutputFile] = useState(null); // { url, name, mimeType }
+  const [outputFile, setOutputFile] = useState(null); // { url, name, mimeType, blob }
   const [pdfVerification, setPdfVerification] = useState(null); // { loading, error, result }
   const [loading, setLoading] = useState(false);
 
@@ -60,14 +60,11 @@ function Decode() {
    */
   const isPdfFile = (fileName, mimeType) => {
     const normalizedName = (fileName || "").toLowerCase();
-    return (
-      mimeType === "application/pdf" ||
-      normalizedName.endsWith(".pdf")
-    );
+    return mimeType === "application/pdf" || normalizedName.endsWith(".pdf");
   };
 
   /**
-   * Verifies a PDF document via cekdokumen.id TTE REST API.
+   * Verifies a PDF document using the Cloudflare Worker proxy.
    * @param {Blob} blob
    * @param {string} fileName
    */
@@ -87,12 +84,8 @@ function Decode() {
       const formData = new FormData();
       formData.append("file", pdfFile, fileName || "document.pdf");
 
-      const response = await fetch("https://cekdokumen.id/api/verification", {
+      const response = await fetch("https://apiproxy.fair-csff7.workers.dev/verify-pdf", {
         method: "POST",
-        headers: {
-          "X-Platform": "web",
-          Accept: "*/*",
-        },
         body: formData,
       });
 
@@ -162,11 +155,18 @@ function Decode() {
         const finalBlob = new Blob([blob], { type: blob.type || "application/octet-stream" });
         const finalObjectUrl = URL.createObjectURL(finalBlob);
 
-        setOutputFile({
+        const extractedFile = {
           url: finalObjectUrl,
           name: fileName,
           mimeType: finalBlob.type,
-        });
+          blob: finalBlob,
+        };
+
+        setOutputFile(extractedFile);
+
+        if (isPdfFile(fileName, finalBlob.type)) {
+          await verifyPdfTte(finalBlob, fileName);
+        }
       } catch (err) {
         alert(err.message);
       } finally {
@@ -180,17 +180,6 @@ function Decode() {
       setLoading(false);
       URL.revokeObjectURL(objectUrl);
     };
-  };
-
-  /**
-   * Manually verifies whether the decoded output is a valid PDF with TTE.
-   */
-  const handleVerifyPdf = async () => {
-    if (!outputFile) return;
-    await verifyPdfTte(
-      new Blob([""], { type: outputFile.mimeType || "application/pdf" }),
-      outputFile.name,
-    );
   };
 
   const isPdfOutput = outputFile && isPdfFile(outputFile.name, outputFile.mimeType);
@@ -316,7 +305,7 @@ function Decode() {
                   <button
                     type="button"
                     className="primary-btn"
-                    onClick={() => verifyPdfTte(new Blob([""], { type: outputFile.mimeType || "application/pdf" }), outputFile.name)}
+                    onClick={() => verifyPdfTte(outputFile.blob, outputFile.name)}
                   >
                     Verify PDF TTE
                   </button>
@@ -408,7 +397,8 @@ function Decode() {
           </li>
           <li>Wrong password or wrong toggle = corrupted or no output.</li>
           <li>
-            Jika hasil decode adalah file PDF, tombol <strong>Verify PDF TTE</strong> akan muncul.
+            Jika hasil decode adalah file PDF, sistem akan otomatis mengecek
+            validitas TTE melalui Worker Cloudflare, lalu tombol <strong>Verify PDF TTE</strong> juga tersedia.
           </li>
         </ul>
       </div>
