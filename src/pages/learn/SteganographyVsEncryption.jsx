@@ -3,88 +3,88 @@ import { Helmet } from "react-helmet-async";
 
 const COMPARISON = [
   {
-    property: "Primary goal",
-    stego: "Hide that data exists",
-    encryption: "Hide what the data says",
+    property: "Tujuan utama",
+    stego: "Menyembunyikan keberadaan data",
+    encryption: "Menyembunyikan isi data",
   },
   {
-    property: "Output appearance",
-    stego: "Normal image file",
-    encryption: "Unreadable scrambled data",
+    property: "Tampilan hasil",
+    stego: "File gambar biasa",
+    encryption: "Data acak yang tak terbaca",
   },
   {
-    property: "Detectable?",
-    stego: "Not visually",
-    encryption: "Yes — ciphertext is obvious",
+    property: "Dapat dideteksi?",
+    stego: "Tidak secara visual",
+    encryption: "Ya — ciphertext terlihat jelas",
   },
-  { property: "Requires password?", stego: "Optional", encryption: "Always" },
+  { property: "Memerlukan kata sandi?", stego: "Opsional", encryption: "Selalu" },
   {
-    property: "Broken if detected?",
-    stego: "Data location exposed",
-    encryption: "Data still unreadable",
-  },
-  {
-    property: "Broken if decrypted?",
-    stego: "N/A",
-    encryption: "Data fully exposed",
+    property: "Jika terdeteksi, apakah perlindungannya gagal?",
+    stego: "Lokasi data terungkap",
+    encryption: "Data tetap tak terbaca",
   },
   {
-    property: "Example tools",
+    property: "Jika didekripsi, apakah perlindungannya gagal?",
+    stego: "Tidak berlaku",
+    encryption: "Seluruh data terungkap",
+  },
+  {
+    property: "Contoh alat",
     stego: "Stego.Image, OpenStego",
     encryption: "AES-256, GPG, VeraCrypt",
   },
   {
-    property: "Used for",
-    stego: "Covert communication, watermarks",
-    encryption: "Secure storage, transmission",
+    property: "Kegunaan",
+    stego: "Komunikasi terselubung, watermark",
+    encryption: "Penyimpanan dan pengiriman yang aman",
   },
 ];
 
 const SCENARIOS = [
   {
-    title: "Encryption alone",
-    desc: "You send an encrypted file to a colleague. Anyone monitoring the transfer sees an obvious encrypted blob — they know a secret is being sent, even if they cannot read it. In some contexts this alone can be suspicious.",
+    title: "Hanya enkripsi",
+    desc: "Anda mengirim file terenkripsi kepada rekan kerja. Siapa pun yang memantau pengiriman akan melihat data terenkripsi dengan jelas — mereka tahu ada rahasia yang dikirim, meskipun tidak dapat membacanya. Dalam situasi tertentu, hal ini saja dapat menimbulkan kecurigaan.",
   },
   {
-    title: "Steganography alone",
-    desc: "You hide a file inside an image without encrypting it. If someone detects the hidden data and extracts it — using a steganalysis tool — the file is immediately readable. No password required.",
+    title: "Hanya steganografi",
+    desc: "Anda menyembunyikan file di dalam gambar tanpa mengenkripsinya. Jika seseorang mendeteksi data tersembunyi lalu mengekstraknya menggunakan alat steganalisis, file tersebut langsung dapat dibaca tanpa kata sandi.",
   },
   {
-    title: "Both together (Stego.Image approach)",
-    desc: "The file is encrypted first, then hidden inside an image. An observer sees a normal image. Even if they detect and extract the hidden data, they cannot read it without the password. Two independent layers of protection.",
+    title: "Keduanya (cara Stego.Image)",
+    desc: "File dienkripsi terlebih dahulu, lalu disembunyikan di dalam gambar. Pengamat hanya melihat gambar biasa. Kalaupun data tersembunyi terdeteksi dan diekstrak, mereka tidak dapat membacanya tanpa kata sandi. Dua lapisan perlindungan yang berdiri sendiri.",
   },
 ];
 
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Broad overview of steganography concepts",
+    label: "Cara Kerja Steganografi",
+    desc: "Gambaran umum konsep steganografi",
   },
   {
     to: "/learn/aes256-encryption",
-    label: "AES-256 Encryption",
-    desc: "How your data is protected before embedding",
+    label: "Enkripsi AES-256",
+    desc: "Cara data Anda dilindungi sebelum disisipkan",
   },
   {
     to: "/learn/image-steganography",
-    label: "Image Steganography",
-    desc: "How image format affects hidden data survival",
+    label: "Steganografi Gambar",
+    desc: "Pengaruh format gambar terhadap keutuhan data tersembunyi",
   },
   {
     to: "/learn/lsb-steganography",
-    label: "LSB Steganography",
-    desc: "How pixel-level bit manipulation works",
+    label: "Steganografi LSB",
+    desc: "Cara kerja manipulasi bit pada tingkat piksel",
   },
   {
     to: "/learn/detect-hidden-data",
-    label: "Detect Hidden Data",
-    desc: "How steganalysis tools detect hidden content",
+    label: "Mendeteksi Data Tersembunyi",
+    desc: "Cara alat steganalisis mendeteksi konten tersembunyi",
   },
   {
     to: "/learn/use-cases",
-    label: "Use Cases",
-    desc: "When to use steganography, encryption, or both together",
+    label: "Kegunaan",
+    desc: "Kapan menggunakan steganografi, enkripsi, atau keduanya",
   }
 ];
 
@@ -92,10 +92,10 @@ function SteganographyVsEncryption() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>Steganography vs Encryption — Key Differences Explained | Stego.Image</title>
+        <title>Steganografi vs Enkripsi — Perbedaan Utama | Stego.Image</title>
         <meta
           name="description"
-          content="Understand the difference between steganography and encryption — how they work, when to use each, and why combining both provides the strongest protection."
+          content="Pahami perbedaan steganografi dan enkripsi — cara kerja masing-masing, kapan menggunakannya, dan alasan menggabungkan keduanya memberi perlindungan terkuat."
         />
         <link
           rel="canonical"
@@ -103,7 +103,7 @@ function SteganographyVsEncryption() {
         />
         <meta
           property="og:title"
-          content="Steganography vs Encryption — Key Differences Explained | Stego.Image"
+          content="Steganografi vs Enkripsi — Perbedaan Utama | Stego.Image"
         />
         <meta property="og:type" content="article" />
       </Helmet>
@@ -111,17 +111,17 @@ function SteganographyVsEncryption() {
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
         <span style={{ color: "var(--text-primary)" }}>
-          Steganography vs Encryption
+          Steganografi vs Enkripsi
         </span>
       </nav>
 
@@ -131,7 +131,7 @@ function SteganographyVsEncryption() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            Steganography vs Encryption
+            Steganografi vs Enkripsi
           </h1>
           <p
             style={{
@@ -141,10 +141,10 @@ function SteganographyVsEncryption() {
               lineHeight: 1.7,
             }}
           >
-            Steganography and encryption are both tools for protecting
-            information — but they solve different problems. Understanding the
-            difference helps you choose the right approach, or combine both for
-            maximum security.
+            Steganografi dan enkripsi sama-sama digunakan untuk melindungi
+            informasi — tetapi keduanya menyelesaikan masalah yang berbeda.
+            Memahami perbedaannya membantu Anda memilih pendekatan yang tepat,
+            atau menggabungkan keduanya untuk perlindungan maksimal.
           </p>
 
           {/* ── CORE DIFFERENCE ── */}
@@ -159,7 +159,7 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              The Core Difference
+              Perbedaan Utama
             </h2>
             <p
               style={{
@@ -168,27 +168,27 @@ function SteganographyVsEncryption() {
                 fontSize: "14.5px",
               }}
             >
-              The fundamental distinction is about <em>what</em> each technique
-              conceals:
+              Perbedaan mendasarnya terletak pada <em>apa</em> yang
+              disembunyikan oleh setiap teknik:
             </p>
             <div className="row g-3">
               <div className="col-md-6">
                 <div className="about-faq-item h-100">
-                  <div className="about-faq-q">Encryption</div>
+                  <div className="about-faq-q">Enkripsi</div>
                   <div className="about-faq-a">
-                    Protects <strong>what</strong> the data says. The existence
-                    of the data is visible — but its contents are scrambled and
-                    unreadable without a key.
+                    Melindungi <strong>isi</strong> data. Keberadaan data tetap
+                    terlihat — tetapi isinya diacak dan tidak dapat dibaca tanpa
+                    kunci.
                   </div>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="about-faq-item h-100">
-                  <div className="about-faq-q">Steganography</div>
+                  <div className="about-faq-q">Steganografi</div>
                   <div className="about-faq-a">
-                    Protects <strong>that</strong> data exists. The data is
-                    hidden inside a normal-looking file — an observer does not
-                    know a secret is present at all.
+                    Melindungi <strong>keberadaan</strong> data. Data
+                    disembunyikan di dalam file yang tampak biasa — pengamat
+                    tidak tahu bahwa ada rahasia di dalamnya.
                   </div>
                 </div>
               </div>
@@ -207,15 +207,15 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Full Comparison
+              Perbandingan Lengkap
             </h2>
             <div className="about-table-wrapper">
               <table className="about-meta-table">
                 <thead>
                   <tr>
-                    <th>Property</th>
-                    <th style={{ color: "#58a6ff" }}>Steganography</th>
-                    <th style={{ color: "#3fb950" }}>Encryption</th>
+                    <th>Karakteristik</th>
+                    <th style={{ color: "#58a6ff" }}>Steganografi</th>
+                    <th style={{ color: "#3fb950" }}>Enkripsi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -252,7 +252,7 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Three Scenarios
+              Tiga Skenario
             </h2>
             <div className="about-steps">
               {SCENARIOS.map(({ title, desc }, i) => (
@@ -271,9 +271,10 @@ function SteganographyVsEncryption() {
               ))}
             </div>
             <div className="about-note mt-3">
-              Stego.Image always uses both. Your file is AES-256 encrypted
-              before being hidden with LSB steganography — two independent
-              layers that must both be defeated for your data to be exposed.
+              Stego.Image selalu menggunakan keduanya. File Anda dienkripsi
+              dengan AES-256 sebelum disembunyikan menggunakan steganografi LSB
+              — dua lapisan perlindungan yang harus ditembus agar data Anda
+              dapat terungkap.
             </div>
           </section>
 
@@ -289,24 +290,24 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Individual Weaknesses
+              Kelemahan Masing-Masing
             </h2>
             <div className="about-limitations">
               {[
                 {
                   icon: "⚠️",
-                  title: "Steganography weakness",
-                  desc: "If steganalysis detects hidden data and the payload is not encrypted, the file is immediately exposed. Steganography alone provides security by obscurity only.",
+                  title: "Kelemahan steganografi",
+                  desc: "Jika steganalisis mendeteksi data tersembunyi dan payload tidak dienkripsi, file akan langsung terbuka. Steganografi saja hanya memberikan perlindungan melalui penyamaran.",
                 },
                 {
                   icon: "⚠️",
-                  title: "Encryption weakness",
-                  desc: "Encrypted data is obviously secret. In environments where encryption attracts scrutiny — or is restricted — the presence of ciphertext can itself be a problem.",
+                  title: "Kelemahan enkripsi",
+                  desc: "Data terenkripsi jelas merupakan rahasia. Di lingkungan yang mengawasi atau membatasi enkripsi, keberadaan ciphertext itu sendiri dapat menjadi masalah.",
                 },
                 {
                   icon: "✅",
-                  title: "Combined strength",
-                  desc: "Steganography hides the existence of the data. Encryption protects it if found. An attacker must both detect the hidden data AND break AES-256 with PBKDF2 key derivation.",
+                  title: "Kekuatan jika digabungkan",
+                  desc: "Steganografi menyembunyikan keberadaan data. Enkripsi melindunginya jika ditemukan. Penyerang harus mendeteksi data tersembunyi sekaligus membobol AES-256 dengan derivasi kunci PBKDF2.",
                 },
               ].map(({ icon, title, desc }) => (
                 <div className="about-limitation-item" key={title}>
@@ -337,21 +338,21 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              When to Use Each
+              Kapan Menggunakan Masing-Masing
             </h2>
             <div className="row g-3">
               {[
                 {
-                  title: "Use encryption when",
-                  desc: "You need to protect data during storage or transmission and the existence of the secret is not itself sensitive. Example: encrypted backups, secure messaging.",
+                  title: "Gunakan enkripsi ketika",
+                  desc: "Anda perlu melindungi data saat disimpan atau dikirim, dan keberadaan rahasia itu sendiri bukan hal sensitif. Contoh: cadangan terenkripsi, pesan aman.",
                 },
                 {
-                  title: "Use steganography when",
-                  desc: "The existence of a secret must be concealed. Example: covert communication, embedding ownership metadata invisibly.",
+                  title: "Gunakan steganografi ketika",
+                  desc: "Keberadaan rahasia harus disembunyikan. Contoh: komunikasi terselubung, menyisipkan metadata kepemilikan tanpa terlihat.",
                 },
                 {
-                  title: "Use both when",
-                  desc: "You need the highest level of protection — the data must be undetectable and unreadable even if detected. This is what Stego.Image does.",
+                  title: "Gunakan keduanya ketika",
+                  desc: "Anda memerlukan perlindungan tertinggi — data harus sulit dideteksi dan tetap tak terbaca sekalipun ditemukan. Inilah yang dilakukan Stego.Image.",
                 },
               ].map(({ title, desc }) => (
                 <div className="col-12" key={title}>
@@ -376,7 +377,7 @@ function SteganographyVsEncryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Pelajari Lebih Lanjut
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -404,15 +405,15 @@ function SteganographyVsEncryption() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {[
-                  { href: "#core-difference", label: "Core Difference" },
-                  { href: "#comparison", label: "Full Comparison" },
-                  { href: "#scenarios", label: "Three Scenarios" },
-                  { href: "#weaknesses", label: "Individual Weaknesses" },
-                  { href: "#when-to-use", label: "When to Use Each" },
-                  { href: "#related", label: "Continue Learning" },
+                  { href: "#core-difference", label: "Perbedaan Utama" },
+                  { href: "#comparison", label: "Perbandingan Lengkap" },
+                  { href: "#scenarios", label: "Tiga Skenario" },
+                  { href: "#weaknesses", label: "Kelemahan Masing-Masing" },
+                  { href: "#when-to-use", label: "Kapan Menggunakan Masing-Masing" },
+                  { href: "#related", label: "Pelajari Lebih Lanjut" },
                 ].map(({ href, label }) => (
                   <a
                     key={href}
@@ -432,7 +433,7 @@ function SteganographyVsEncryption() {
               </div>
             </div>
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -440,21 +441,21 @@ function SteganographyVsEncryption() {
                   marginBottom: "14px",
                 }}
               >
-                See both techniques working together — free, client-side, no
-                uploads.
+                Lihat kedua teknik bekerja bersama — gratis, di sisi klien,
+                tanpa mengunggah file.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyisipkan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>

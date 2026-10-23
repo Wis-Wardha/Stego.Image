@@ -3,49 +3,49 @@ import { useState } from "react";
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const ENCODE_STEPS = [
-  { icon: "📂", title: "Select inputs",           desc: "Upload a lossless cover image (PNG or BMP) and the secret file you want to hide." },
-  { icon: "📦", title: "GZIP compress",           desc: "The secret file is compressed with DEFLATE (via pako) to reduce the pixel space needed." },
-  { icon: "🔐", title: "AES-256 encrypt",         desc: "If a password is provided, the compressed data is encrypted with AES-256. The encrypted flag in the header is set so the decoder knows to decrypt." },
-  { icon: "🧩", title: "Embed with LSB",          desc: "A binary stream — [4B meta length][JSON header][payload] — is written into the least significant bits of the R, G, and B channels of every fully opaque pixel." },
-  { icon: "💾", title: "Export PNG",              desc: "The canvas is exported as a lossless PNG. The output is visually identical to the original." },
+  { icon: "📂", title: "Pilih file masukan",           desc: "Unggah gambar penutup tanpa kehilangan kualitas (PNG atau BMP) dan file rahasia yang ingin Anda sembunyikan." },
+  { icon: "📦", title: "Kompresi GZIP",           desc: "File rahasia dikompresi dengan DEFLATE (melalui pako) untuk mengurangi ruang piksel yang dibutuhkan." },
+  { icon: "🔐", title: "Enkripsi AES-256",         desc: "Jika kata sandi diberikan, data terkompresi dienkripsi dengan AES-256. Penanda terenkripsi pada header diatur agar dekoder tahu bahwa data harus didekripsi." },
+  { icon: "🧩", title: "Sisipkan dengan LSB",          desc: "Aliran biner — [panjang metadata 4B][header JSON][payload] — ditulis ke bit paling tidak signifikan pada kanal R, G, dan B dari setiap piksel yang sepenuhnya opak." },
+  { icon: "💾", title: "Ekspor PNG",              desc: "Kanvas diekspor sebagai PNG tanpa kehilangan kualitas. Tampilan gambar keluaran sama seperti gambar asli." },
 ];
 
 const DECODE_STEPS = [
-  { icon: "🖼️", title: "Upload stego image",     desc: "Upload the stego PNG. The image must not have been re-compressed by a lossy platform." },
-  { icon: "🔍", title: "Read LSBs",              desc: "The decoder reads the LSB of each RGB channel from every fully opaque pixel to reconstruct the bit stream." },
-  { icon: "📋", title: "Parse metadata",         desc: "The first 4 bytes give the metadata length. The decoder parses the JSON header to learn the filename, type, size, and encryption state." },
-  { icon: "🔓", title: "Decrypt",               desc: "If metadata.encrypted is true, AES-256 decryption is applied using the provided password. The UI toggle does not override this flag." },
-  { icon: "📤", title: "Decompress & validate", desc: "The payload is decompressed and its byte length is checked against metadata.size. A mismatch means a wrong password or corrupted file." },
+  { icon: "🖼️", title: "Unggah gambar stego",     desc: "Unggah PNG stego. Gambar tidak boleh dikompresi ulang oleh platform yang menggunakan kompresi lossy." },
+  { icon: "🔍", title: "Baca LSB",              desc: "Dekoder membaca LSB dari setiap kanal RGB pada semua piksel yang sepenuhnya opak untuk menyusun kembali aliran bit." },
+  { icon: "📋", title: "Uraikan metadata",         desc: "Empat byte pertama menunjukkan panjang metadata. Dekoder menguraikan header JSON untuk mengetahui nama file, jenis, ukuran, dan status enkripsinya." },
+  { icon: "🔓", title: "Dekripsi",               desc: "Jika metadata.encrypted bernilai true, dekripsi AES-256 dilakukan menggunakan kata sandi yang diberikan. Tombol di antarmuka tidak mengesampingkan penanda ini." },
+  { icon: "📤", title: "Dekompresi & validasi", desc: "Payload didekompresi dan panjang byte-nya diperiksa terhadap metadata.size. Ketidakcocokan berarti kata sandi salah atau file rusak." },
 ];
 
 const TECH_STACK = [
-  { name: "React 19",         role: "UI framework",                  pkg: "react" },
-  { name: "Vite",             role: "Build tool & dev server",       pkg: "vite" },
-  { name: "crypto-js",        role: "AES-256 encryption/decryption", pkg: "crypto-js" },
-  { name: "pako",             role: "DEFLATE compression",           pkg: "pako" },
-  { name: "file-saver",       role: "Browser file downloads",        pkg: "file-saver" },
-  { name: "jszip",            role: "ZIP export for safe sharing",   pkg: "jszip" },
-  { name: "Bootstrap 5",      role: "Responsive layout utilities",   pkg: "bootstrap" },
-  { name: "react-dropzone",   role: "Drag-and-drop upload zones",    pkg: "react-dropzone" },
-  { name: "react-router-dom", role: "Client-side routing",           pkg: "react-router-dom" },
-  { name: "HTML5 Canvas",     role: "Direct pixel read/write",       pkg: "(browser built-in)" },
+  { name: "React 19",         role: "Kerangka kerja UI",                  pkg: "react" },
+  { name: "Vite",             role: "Alat build & server pengembangan",       pkg: "vite" },
+  { name: "crypto-js",        role: "Enkripsi/dekripsi AES-256", pkg: "crypto-js" },
+  { name: "pako",             role: "Kompresi DEFLATE",           pkg: "pako" },
+  { name: "file-saver",       role: "Unduhan file di browser",        pkg: "file-saver" },
+  { name: "jszip",            role: "Ekspor ZIP untuk berbagi dengan aman",   pkg: "jszip" },
+  { name: "Bootstrap 5",      role: "Utilitas tata letak responsif",   pkg: "bootstrap" },
+  { name: "react-dropzone",   role: "Area unggah dengan seret dan lepas",    pkg: "react-dropzone" },
+  { name: "react-router-dom", role: "Perutean di sisi klien",           pkg: "react-router-dom" },
+  { name: "HTML5 Canvas",     role: "Membaca/menulis piksel secara langsung",       pkg: "(bawaan browser)" },
 ];
 
 const LIMITATIONS = [
-  { icon: "🚫", title: "No JPEG support",             desc: "JPEG lossy compression rewrites pixel values, destroying LSB data. Always use PNG or BMP." },
-  { icon: "📏", title: "Capacity bound",              desc: "Capacity = ⌊(opaque pixels × 3) / 8⌋ bytes. A 1920×1080 PNG holds ~760 KB of payload after overhead." },
-  { icon: "📱", title: "Social platform re-encoding", desc: "WhatsApp, Instagram, and Telegram re-encode images on upload. Use the ZIP download and share the archive instead." },
-  { icon: "🔑", title: "Password non-recoverable",    desc: "There is no reset mechanism. A lost password means the hidden data is permanently inaccessible." },
-  { icon: "👁️", title: "Unencrypted metadata",       desc: "The JSON header (filename, MIME, size) is stored unencrypted. Someone who knows to look can read these fields without the password." },
+  { icon: "🚫", title: "JPEG tidak didukung",             desc: "Kompresi lossy JPEG mengubah nilai piksel sehingga merusak data LSB. Selalu gunakan PNG atau BMP." },
+  { icon: "📏", title: "Kapasitas terbatas",              desc: "Kapasitas = ⌊(piksel opak × 3) / 8⌋ byte. PNG berukuran 1920×1080 dapat menampung sekitar 760 KB payload setelah memperhitungkan overhead." },
+  { icon: "📱", title: "Pengodean ulang oleh platform sosial", desc: "WhatsApp, Instagram, dan Telegram mengodekan ulang gambar saat diunggah. Gunakan unduhan ZIP dan bagikan arsipnya." },
+  { icon: "🔑", title: "Kata sandi tidak dapat dipulihkan",    desc: "Tidak ada mekanisme pengaturan ulang. Jika kata sandi hilang, data tersembunyi tidak akan dapat diakses lagi." },
+  { icon: "👁️", title: "Metadata tidak dienkripsi",       desc: "Header JSON (nama file, MIME, ukuran) disimpan tanpa enkripsi. Siapa pun yang tahu tempat mencarinya dapat membaca informasi ini tanpa kata sandi." },
 ];
 
 const FAQ = [
-  { q: "Why can't I share the PNG directly on WhatsApp?", a: "WhatsApp re-encodes all images with lossy compression, overwriting the LSBs. Use \"Download ZIP\" — the receiver extracts the PNG and decodes it locally." },
-  { q: "Does the encryption toggle on the Decode page matter?", a: "Partially. The metadata header stores an encrypted flag that drives decryption. The UI toggle only controls whether the password field is visible — you still need the correct password when the flag is true." },
-  { q: "What happens if I enter the wrong password?", a: "Decryption produces garbage bytes. The decoder checks the decompressed length against metadata.size and throws an error if they don't match." },
-  { q: "Can I hide a file without encryption?", a: "Yes. Turn the encryption toggle OFF before encoding. The payload is still compressed, but no password is required and anyone with the image can decode it." },
-  { q: "What file types can I hide?", a: "Any binary file — PDFs, ZIPs, images, videos, code files, etc. The only constraint is that the compressed file fits within the image's pixel capacity." },
-  { q: "Does any data leave my browser?", a: "No. All compression, encryption, and steganography runs entirely in JavaScript. No server receives your files or passwords." },
+  { q: "Mengapa saya tidak bisa langsung membagikan PNG melalui WhatsApp?", a: "WhatsApp mengodekan ulang semua gambar dengan kompresi lossy sehingga menimpa LSB. Gunakan \"Unduh ZIP\" — penerima dapat mengekstrak PNG dan mendekodenya secara lokal." },
+  { q: "Apakah tombol enkripsi di halaman Dekode berpengaruh?", a: "Sebagian. Header metadata menyimpan penanda terenkripsi yang menentukan proses dekripsi. Tombol di antarmuka hanya mengatur apakah kolom kata sandi ditampilkan — kata sandi yang benar tetap diperlukan jika penanda tersebut aktif." },
+  { q: "Apa yang terjadi jika saya memasukkan kata sandi yang salah?", a: "Dekripsi menghasilkan byte yang tidak bermakna. Dekoder memeriksa panjang hasil dekompresi terhadap metadata.size dan menampilkan kesalahan jika nilainya tidak cocok." },
+  { q: "Bisakah saya menyembunyikan file tanpa enkripsi?", a: "Bisa. Matikan tombol enkripsi sebelum menyisipkan file. Payload tetap dikompresi, tetapi tidak memerlukan kata sandi dan siapa pun yang memiliki gambar dapat mendekodenya." },
+  { q: "Jenis file apa saja yang bisa disembunyikan?", a: "Semua file biner — PDF, ZIP, gambar, video, file kode, dan sebagainya. Syaratnya hanya file terkompresi harus muat dalam kapasitas piksel gambar." },
+  { q: "Apakah ada data yang keluar dari browser saya?", a: "Tidak. Semua proses kompresi, enkripsi, dan steganografi berjalan sepenuhnya di JavaScript. Tidak ada server yang menerima file atau kata sandi Anda." },
 ];
 
 /* ─── FAQ accordion item ─────────────────────────────────────── */
@@ -129,8 +129,8 @@ export default function About() {
   return (
     <div style={{ background: "#0d1117", color: "#e6edf3" }}>
       <Helmet>
-        <title>About Stego.Image — Free Client-Side Steganography Tool</title>
-        <meta name="description" content="Learn about Stego.Image — an open-source, client-side steganography tool built with React, AES-256 encryption, and LSB pixel encoding." />
+        <title>Tentang Stego.Image — Alat Steganografi Gratis di Sisi Klien</title>
+        <meta name="description" content="Pelajari Stego.Image — alat steganografi sumber terbuka di sisi klien yang dibuat dengan React, enkripsi AES-256, dan pengodean piksel LSB." />
         <link rel="canonical" href="https://stegoimage.pages.dev/about" />
       </Helmet>
 
@@ -155,24 +155,24 @@ export default function About() {
         {/* ── HERO ─────────────────────────────────────────── */}
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#8b949e", marginBottom: 12 }}>
-            Open source · MIT licensed
+            Sumber terbuka · Berlisensi MIT
           </p>
           <h1 style={{ fontSize: "clamp(26px,5vw,42px)", fontWeight: 700, marginBottom: 16, letterSpacing: -0.5 }}>
-            About Stego.Image
+            Tentang Stego.Image
           </h1>
           <p style={{ fontSize: 16, lineHeight: 1.75, color: "#8b949e", maxWidth: 600, margin: "0 auto" }}>
-            A browser-based tool to hide and extract files inside images using
-            steganography and optional AES-256 encryption — 100% client-side,
-            zero server communication.
+            Alat berbasis browser untuk menyembunyikan dan mengekstrak file di dalam gambar menggunakan
+            steganografi dan enkripsi AES-256 opsional — 100% di sisi klien,
+            tanpa komunikasi dengan server.
           </p>
         </div>
 
         {/* ── WHAT IT DOES ─────────────────────────────────── */}
-        <Section title="What It Does">
+        <Section title="Fungsinya">
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
             {[
-              { n: "01", c: "#58a6ff", title: "Steganography", desc: "Hides the existence of data by writing it into the least significant bits of pixel RGB channels. Output is visually indistinguishable from the original." },
-              { n: "02", c: "#2ea043", title: "Encryption",    desc: "Protects the data with AES-256 so that even if someone finds the hidden data, they cannot read it without the password." },
+              { n: "01", c: "#58a6ff", title: "Steganografi", desc: "Menyembunyikan keberadaan data dengan menuliskannya pada bit paling tidak signifikan dari kanal RGB piksel. Tampilan gambar keluaran tidak dapat dibedakan dari gambar asli." },
+              { n: "02", c: "#2ea043", title: "Enkripsi",    desc: "Melindungi data dengan AES-256 sehingga sekalipun seseorang menemukan data tersembunyi, mereka tidak dapat membacanya tanpa kata sandi." },
             ].map(({ n, c, title, desc }) => (
               <div key={n} style={{
                 flex: "1 1 260px", background: "#161b22", border: `1px solid ${c}22`,
@@ -188,14 +188,14 @@ export default function About() {
           </div>
           <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 10, padding: "14px 18px" }}>
             <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.75, margin: 0 }}>
-              All processing runs locally in your browser. No files, passwords, or image data
-              are ever transmitted to a server.
+              Semua pemrosesan berjalan secara lokal di browser Anda. File, kata sandi, maupun data gambar
+              tidak pernah dikirim ke server.
             </p>
           </div>
         </Section>
 
         {/* ── ENCODE PIPELINE ──────────────────────────────── */}
-        <Section title="Encode Pipeline">
+        <Section title="Alur Penyisipan">
           <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, padding: "24px 20px" }}>
             {ENCODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={ENCODE_STEPS.length} />
@@ -204,7 +204,7 @@ export default function About() {
         </Section>
 
         {/* ── DECODE PIPELINE ──────────────────────────────── */}
-        <Section title="Decode Pipeline">
+        <Section title="Alur Ekstraksi">
           <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, padding: "24px 20px" }}>
             {DECODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={DECODE_STEPS.length} />
@@ -213,14 +213,14 @@ export default function About() {
         </Section>
 
         {/* ── TECH STACK ───────────────────────────────────── */}
-        <Section title="Tech Stack">
+        <Section title="Teknologi yang Digunakan">
           <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, overflow: "hidden" }}>
             <table className="ab-tech-table">
               <thead>
                 <tr>
-                  <th>Library</th>
-                  <th>Role</th>
-                  <th>Package</th>
+                  <th>Pustaka</th>
+                  <th>Fungsi</th>
+                  <th>Paket</th>
                 </tr>
               </thead>
               <tbody>
@@ -237,7 +237,7 @@ export default function About() {
         </Section>
 
         {/* ── LIMITATIONS ──────────────────────────────────── */}
-        <Section title="Limitations">
+        <Section title="Batasan">
           <div className="ab-grid-2">
             {LIMITATIONS.map(({ icon, title, desc }) => (
               <div key={title} style={{
@@ -256,7 +256,7 @@ export default function About() {
         </Section>
 
         {/* ── FAQ ──────────────────────────────────────────── */}
-        <Section title="FAQ">
+        <Section title="Pertanyaan Umum">
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {FAQ.map(item => <FaqItem key={item.q} {...item} />)}
           </div>

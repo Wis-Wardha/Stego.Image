@@ -4,61 +4,61 @@ import { Helmet } from "react-helmet-async";
 const STEPS = [
   {
     num: 1,
-    title: "Convert payload to binary",
-    desc: "The encrypted file is converted into a stream of bits — a sequence of 0s and 1s. Every byte of data becomes 8 bits.",
+    title: "Ubah payload menjadi biner",
+    desc: "File terenkripsi diubah menjadi aliran bit — rangkaian angka 0 dan 1. Setiap byte data menjadi 8 bit.",
   },
   {
     num: 2,
-    title: "Read pixel channels",
-    desc: "The encoder reads each pixel of the cover image. Every pixel has three channels: Red, Green, Blue — each an 8-bit value between 0 and 255.",
+    title: "Baca kanal piksel",
+    desc: "Encoder membaca setiap piksel pada gambar sampul. Setiap piksel memiliki tiga kanal: Merah, Hijau, Biru — masing-masing berupa nilai 8-bit antara 0 dan 255.",
   },
   {
     num: 3,
-    title: "Replace the least significant bit",
-    desc: "The last bit of each channel value is replaced with one bit from the payload. 3 channels per pixel = 3 bits hidden per pixel.",
+    title: "Ganti bit paling tidak signifikan",
+    desc: "Bit terakhir dari nilai setiap kanal diganti dengan satu bit dari payload. 3 kanal per piksel = 3 bit tersembunyi per piksel.",
   },
   {
     num: 4,
-    title: "Write modified pixels back",
-    desc: "The modified pixel values are written back to the image canvas. The visual difference is imperceptible — a max change of ±1 per channel.",
+    title: "Tulis kembali piksel yang diubah",
+    desc: "Nilai piksel yang telah diubah ditulis kembali ke kanvas gambar. Perbedaannya tak terlihat — perubahan maksimum hanya ±1 per kanal.",
   },
   {
     num: 5,
-    title: "Export as PNG",
-    desc: "The image is exported as a lossless PNG so the modified LSBs are preserved exactly. Any lossy format like JPEG would overwrite the hidden bits.",
+    title: "Ekspor sebagai PNG",
+    desc: "Gambar diekspor sebagai PNG lossless agar LSB yang diubah tetap utuh. Format lossy seperti JPEG akan menimpa bit tersembunyi.",
   },
 ];
 
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Broad overview of steganography concepts",
+    label: "Cara Kerja Steganografi",
+    desc: "Gambaran umum konsep steganografi",
   },
   {
     to: "/learn/image-steganography",
-    label: "Image Steganography",
-    desc: "PNG vs JPEG and format tradeoffs",
+    label: "Steganografi Gambar",
+    desc: "PNG vs JPEG dan pertimbangan format",
   },
   {
     to: "/learn/aes256-encryption",
-    label: "AES-256 Encryption",
-    desc: "How your data is protected before embedding",
+    label: "Enkripsi AES-256",
+    desc: "Cara data Anda dilindungi sebelum disisipkan",
   },
   {
     to: "/learn/steganography-vs-encryption",
-    label: "Steganography vs Encryption",
-    desc: "Full side-by-side comparison",
+    label: "Steganografi vs Enkripsi",
+    desc: "Perbandingan lengkap secara berdampingan",
   },
   {
     to: "/learn/detect-hidden-data",
-    label: "Detect Hidden Data",
-    desc: "How steganalysis tools detect LSB-encoded images",
+    label: "Mendeteksi Data Tersembunyi",
+    desc: "Cara alat steganalisis mendeteksi gambar yang dikodekan dengan LSB",
   },
   {
     to: "/learn/use-cases",
-    label: "Use Cases",
-    desc: "When to use steganography, encryption, or both together",
+    label: "Kegunaan",
+    desc: "Kapan menggunakan steganografi, enkripsi, atau keduanya",
   }
 ];
 
@@ -66,32 +66,32 @@ function LsbSteganography() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>LSB Steganography Explained — Least Significant Bit Technique | Stego.Image</title>
+        <title>Steganografi LSB — Teknik Bit Paling Tidak Signifikan | Stego.Image</title>
         <meta
           name="description"
-          content="Learn how LSB steganography works — hiding secret data in the least significant bits of image pixels. Covers binary encoding, capacity, and detection."
+          content="Pelajari cara kerja steganografi LSB — menyembunyikan data rahasia pada bit paling tidak signifikan dari piksel gambar. Mencakup encoding biner, kapasitas, dan deteksi."
         />
         <link
           rel="canonical"
           href="https://stegoimage.pages.dev/learn/lsb-steganography"
         />
-        <meta property="og:title" content="LSB Steganography Explained — Least Significant Bit Technique | Stego.Image" />
+        <meta property="og:title" content="Steganografi LSB — Teknik Bit Paling Tidak Signifikan | Stego.Image" />
         <meta property="og:type" content="article" />
       </Helmet>
 
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>LSB Steganography</span>
+        <span style={{ color: "var(--text-primary)" }}>Steganografi LSB</span>
       </nav>
 
       <div className="row">
@@ -101,7 +101,7 @@ function LsbSteganography() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            LSB Steganography
+            Steganografi LSB
           </h1>
           <p
             style={{
@@ -111,10 +111,11 @@ function LsbSteganography() {
               lineHeight: 1.7,
             }}
           >
-            Least Significant Bit (LSB) steganography is the most widely used
-            technique for hiding data inside images. It works by replacing the
-            last bit of each pixel channel value with one bit of secret data — a
-            change so small it is invisible to the human eye.
+            Steganografi Least Significant Bit (LSB) adalah teknik yang paling
+            banyak digunakan untuk menyembunyikan data di dalam gambar. Caranya
+            dengan mengganti bit terakhir dari nilai setiap kanal piksel dengan
+            satu bit data rahasia — perubahan yang begitu kecil hingga tak
+            terlihat oleh mata manusia.
           </p>
 
           {/* ── WHAT IS LSB ── */}
@@ -129,7 +130,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              What Is the Least Significant Bit?
+              Apa Itu Bit Paling Tidak Signifikan?
             </h2>
             <p
               style={{
@@ -141,13 +142,13 @@ function LsbSteganography() {
               Every pixel channel value is stored as an 8-bit binary number. In
               an 8-bit number, the{" "}
               <strong style={{ color: "var(--text-primary)" }}>
-                most significant bit (MSB)
+                bit paling signifikan (MSB)
               </strong>{" "}
               is the leftmost bit — it contributes 128 to the value. The{" "}
               <strong style={{ color: "var(--text-primary)" }}>
-                least significant bit (LSB)
+                bit paling tidak signifikan (LSB)
               </strong>{" "}
-              is the rightmost bit — it contributes only 1 to the value.
+              adalah bit paling kanan — nilainya hanya menyumbang 1.
             </p>
             <p
               style={{
@@ -156,9 +157,9 @@ function LsbSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Flipping the LSB changes the pixel value by at most ±1 out of 255.
-              That is a 0.4% change in brightness — well below the threshold of
-              human visual perception.
+              Membalik LSB mengubah nilai piksel paling banyak ±1 dari 255.
+              Perubahan kecerahan sebesar 0,4% ini jauh di bawah ambang
+              persepsi visual manusia.
             </p>
 
             <div
@@ -174,7 +175,7 @@ function LsbSteganography() {
                   textTransform: "uppercase",
                 }}
               >
-                8-bit value breakdown
+                Rincian nilai 8-bit
               </div>
               <div style={{ display: "flex", gap: "4px", marginBottom: "8px" }}>
                 {["1", "1", "0", "0", "1", "0", "0", "0"].map((bit, i) => (
@@ -215,7 +216,7 @@ function LsbSteganography() {
                 <span>LSB (bit 0) = 1 →</span>
               </div>
               <div style={{ marginBottom: "6px" }}>
-                <span style={{ color: "var(--text-muted)" }}>Original: </span>
+                <span style={{ color: "var(--text-muted)" }}>Asli: </span>
                 <span style={{ color: "var(--text-primary)" }}>1100100</span>
                 <span style={{ color: "var(--text-muted)" }}>0</span>
                 <span style={{ color: "var(--text-muted)" }}> = 200</span>
@@ -226,7 +227,7 @@ function LsbSteganography() {
                 <span style={{ color: "#3fb950", fontWeight: 700 }}>0</span>
                 <span style={{ color: "var(--text-muted)" }}>
                   {" "}
-                  = 200 (hidden bit: 0)
+                  = 200 (bit tersembunyi: 0)
                 </span>
               </div>
               <div>
@@ -237,7 +238,7 @@ function LsbSteganography() {
                 </span>
                 <span style={{ color: "var(--text-muted)" }}>
                   {" "}
-                  = 201 (hidden bit: 1)
+                  = 201 (bit tersembunyi: 1)
                 </span>
               </div>
             </div>
@@ -255,7 +256,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              How LSB Encoding Works
+              Cara Kerja Encoding LSB
             </h2>
             <div className="about-steps">
               {STEPS.map(({ num, title, desc }) => (
@@ -287,7 +288,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Storage Capacity
+              Kapasitas Penyimpanan
             </h2>
             <p
               style={{
@@ -296,8 +297,9 @@ function LsbSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Using 1 LSB per channel, each pixel stores 3 bits (one per RGB
-              channel). The maximum payload capacity of any image is:
+              Dengan menggunakan 1 LSB per kanal, setiap piksel menyimpan 3 bit
+              (satu untuk setiap kanal RGB). Kapasitas payload maksimum gambar
+              adalah:
             </p>
 
             <div
@@ -306,7 +308,7 @@ function LsbSteganography() {
             >
               <div style={{ marginBottom: "8px" }}>
                 <span style={{ color: "var(--text-muted)" }}>
-                  Capacity (bytes) ={" "}
+                  Kapasitas (byte) ={" "}
                 </span>
                 <span style={{ color: "var(--accent-blue)" }}>
                   (width × height × 3) ÷ 8
@@ -321,35 +323,35 @@ function LsbSteganography() {
               >
                 <div style={{ marginBottom: "4px" }}>
                   <span style={{ color: "var(--text-muted)" }}>
-                    1920×1080 image:{" "}
+                    Gambar 1920×1080:{" "}
                   </span>
                   <span style={{ color: "#3fb950" }}>
-                    (1920 × 1080 × 3) ÷ 8 = ~777 KB max payload
+                    (1920 × 1080 × 3) ÷ 8 = payload maks. ~777 KB
                   </span>
                 </div>
                 <div style={{ marginBottom: "4px" }}>
                   <span style={{ color: "var(--text-muted)" }}>
-                    800×600 image:{" "}
+                    Gambar 800×600:{" "}
                   </span>
                   <span style={{ color: "#3fb950" }}>
-                    (800 × 600 × 3) ÷ 8 = ~180 KB max payload
+                    (800 × 600 × 3) ÷ 8 = payload maks. ~180 KB
                   </span>
                 </div>
                 <div>
                   <span style={{ color: "var(--text-muted)" }}>
-                    3840×2160 image:{" "}
+                    Gambar 3840×2160:{" "}
                   </span>
                   <span style={{ color: "#3fb950" }}>
-                    (3840 × 2160 × 3) ÷ 8 = ~3.1 MB max payload
+                    (3840 × 2160 × 3) ÷ 8 = payload maks. ~3,1 MB
                   </span>
                 </div>
               </div>
             </div>
 
             <div className="about-note mt-3">
-              Stego.Image shows you the exact available capacity for your
-              uploaded image before encoding. The secret file (after GZIP
-              compression) must fit within this limit.
+              Stego.Image menampilkan kapasitas tersedia secara tepat untuk
+              gambar yang Anda unggah sebelum encoding. File rahasia (setelah
+              dikompresi dengan GZIP) harus muat dalam batas ini.
             </div>
           </section>
 
@@ -365,7 +367,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              How LSB Decoding Works
+              Cara Kerja Decoding LSB
             </h2>
             <p
               style={{
@@ -374,32 +376,33 @@ function LsbSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Decoding is the exact reverse of encoding. The decoder reads the
-              LSB of each RGB channel from every pixel in order, reconstructing
-              the original bit stream. The bits are reassembled into bytes, then
-              parsed to extract the metadata header and payload.
+              Decoding adalah kebalikan persis dari encoding. Decoder membaca
+              LSB dari setiap kanal RGB pada semua piksel secara berurutan untuk
+              menyusun kembali aliran bit semula. Bit-bit tersebut dirangkai
+              menjadi byte, lalu diurai untuk mengambil header metadata dan
+              payload.
             </p>
             <div className="about-steps">
               {[
                 {
                   num: 1,
-                  title: "Read LSBs in order",
-                  desc: "The decoder reads the last bit of each R, G, B channel from every pixel, left to right, top to bottom.",
+                  title: "Baca LSB secara berurutan",
+                  desc: "Decoder membaca bit terakhir dari setiap kanal R, G, B pada semua piksel, dari kiri ke kanan dan dari atas ke bawah.",
                 },
                 {
                   num: 2,
-                  title: "Reassemble the bit stream",
-                  desc: "Every 8 bits are combined into one byte, reconstructing the original encrypted binary payload.",
+                  title: "Rangkai kembali aliran bit",
+                  desc: "Setiap 8 bit digabungkan menjadi satu byte untuk menyusun kembali payload biner terenkripsi semula.",
                 },
                 {
                   num: 3,
-                  title: "Parse the metadata header",
-                  desc: "The first bytes contain a metadata header (filename, file type, size, encryption flag). This tells the decoder how to handle the rest of the data.",
+                  title: "Urai header metadata",
+                  desc: "Byte pertama berisi header metadata (nama file, jenis file, ukuran, penanda enkripsi). Informasi ini memberi tahu decoder cara menangani sisa data.",
                 },
                 {
                   num: 4,
-                  title: "Decrypt and decompress",
-                  desc: "If encrypted, AES-256 decryption is applied using the provided password. Then GZIP decompression recovers the original file.",
+                  title: "Dekripsi dan dekompresi",
+                  desc: "Jika dienkripsi, dekripsi AES-256 dilakukan menggunakan kata sandi yang diberikan. Setelah itu, dekompresi GZIP memulihkan file aslinya.",
                 },
               ].map(({ num, title, desc }) => (
                 <div className="about-step-card" key={num}>
@@ -430,7 +433,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Can LSB Steganography Be Detected?
+              Apakah Steganografi LSB Dapat Dideteksi?
             </h2>
             <p
               style={{
@@ -439,27 +442,27 @@ function LsbSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Yes — under certain conditions. Steganalysis tools use statistical
-              analysis to detect anomalies in LSB patterns that differ from
-              natural image noise.
+              Ya — dalam kondisi tertentu. Alat steganalisis menggunakan
+              analisis statistik untuk mendeteksi anomali pada pola LSB yang
+              berbeda dari derau alami gambar.
             </p>
             <div className="row g-3">
               {[
                 {
-                  title: "Visual inspection",
-                  desc: "Impossible for humans. The modified image is visually identical to the original.",
+                  title: "Pemeriksaan visual",
+                  desc: "Tidak mungkin dikenali oleh manusia. Secara visual, gambar yang diubah identik dengan gambar aslinya.",
                 },
                 {
-                  title: "Statistical analysis",
-                  desc: "Tools like StegExpose can detect unusual LSB distributions across large image areas.",
+                  title: "Analisis statistik",
+                  desc: "Alat seperti StegExpose dapat mendeteksi distribusi LSB yang tidak biasa pada area gambar yang luas.",
                 },
                 {
-                  title: "Chi-square attack",
-                  desc: "Compares LSB frequency distributions against expected natural image statistics.",
+                  title: "Serangan chi-square",
+                  desc: "Membandingkan distribusi frekuensi LSB dengan statistik gambar alami yang diharapkan.",
                 },
                 {
-                  title: "With encryption",
-                  desc: "AES-256 encryption randomises the payload bits, making statistical detection significantly harder.",
+                  title: "Dengan enkripsi",
+                  desc: "Enkripsi AES-256 mengacak bit payload sehingga jauh lebih sulit dideteksi melalui analisis statistik.",
                 },
               ].map(({ title, desc }) => (
                 <div className="col-md-6" key={title}>
@@ -471,9 +474,9 @@ function LsbSteganography() {
               ))}
             </div>
             <div className="about-note mt-3">
-              Always use encryption when hiding sensitive data. An encrypted
-              payload produces random-looking bits that are much harder to
-              distinguish from natural image noise.
+              Selalu gunakan enkripsi saat menyembunyikan data sensitif. Payload
+              terenkripsi menghasilkan bit yang tampak acak sehingga jauh lebih
+              sulit dibedakan dari derau alami gambar.
             </div>
           </section>
 
@@ -489,7 +492,7 @@ function LsbSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Pelajari Lebih Lanjut
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -517,15 +520,15 @@ function LsbSteganography() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {[
-                  { href: "#what-is-lsb", label: "What Is the LSB?" },
-                  { href: "#encoding", label: "How Encoding Works" },
-                  { href: "#capacity", label: "Storage Capacity" },
-                  { href: "#decoding", label: "How Decoding Works" },
-                  { href: "#detection", label: "Detection" },
-                  { href: "#related", label: "Continue Learning" },
+                  { href: "#what-is-lsb", label: "Apa Itu LSB?" },
+                  { href: "#encoding", label: "Cara Kerja Encoding" },
+                  { href: "#capacity", label: "Kapasitas Penyimpanan" },
+                  { href: "#decoding", label: "Cara Kerja Decoding" },
+                  { href: "#detection", label: "Deteksi" },
+                  { href: "#related", label: "Pelajari Lebih Lanjut" },
                 ].map(({ href, label }) => (
                   <a
                     key={href}
@@ -546,13 +549,13 @@ function LsbSteganography() {
             </div>
 
             <div className="about-section mb-3">
-              <div className="about-section-title">Quick Facts</div>
+              <div className="about-section-title">Fakta Singkat</div>
               <div className="d-flex flex-column gap-2">
                 {[
-                  { label: "Bits per pixel", value: "3 (1 per RGB channel)" },
-                  { label: "Max value change", value: "±1 per channel" },
-                  { label: "Required format", value: "PNG (lossless)" },
-                  { label: "Encryption", value: "AES-256 via crypto-js" },
+                  { label: "Bit per piksel", value: "3 (1 per kanal RGB)" },
+                  { label: "Perubahan nilai maks.", value: "±1 per kanal" },
+                  { label: "Format yang diperlukan", value: "PNG (lossless)" },
+                  { label: "Enkripsi", value: "AES-256 melalui crypto-js" },
                 ].map(({ label, value }) => (
                   <div
                     key={label}
@@ -576,7 +579,7 @@ function LsbSteganography() {
             </div>
 
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -584,20 +587,21 @@ function LsbSteganography() {
                   marginBottom: "14px",
                 }}
               >
-                See LSB steganography in action — free, client-side, no uploads.
+                Lihat steganografi LSB beraksi — gratis, di sisi klien, tanpa
+                mengunggah file.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyisipkan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>

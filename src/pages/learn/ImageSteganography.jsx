@@ -3,39 +3,39 @@ import { Helmet } from "react-helmet-async";
 
 const FORMAT_COMPARISON = [
   {
-    property: "Compression type",
-    png: "Lossless (DEFLATE)",
-    jpeg: "Lossy (DCT)",
+    property: "Jenis kompresi",
+    png: "Tanpa kehilangan (DEFLATE)",
+    jpeg: "Dengan kehilangan (DCT)",
   },
   {
-    property: "Pixel values preserved",
-    png: "Yes — exactly",
-    jpeg: "No — approximated",
+    property: "Nilai piksel dipertahankan",
+    png: "Ya — persis",
+    jpeg: "Tidak — hanya perkiraan",
   },
   {
-    property: "LSB data survives save",
-    png: "Yes",
-    jpeg: "No — destroyed",
+    property: "Data LSB tetap utuh setelah disimpan",
+    png: "Ya",
+    jpeg: "Tidak — rusak",
   },
   {
-    property: "File size",
-    png: "Larger",
-    jpeg: "Smaller",
+    property: "Ukuran file",
+    png: "Lebih besar",
+    jpeg: "Lebih kecil",
   },
   {
-    property: "Suitable for steganography",
-    png: "Yes",
-    jpeg: "No",
+    property: "Cocok untuk steganografi",
+    png: "Ya",
+    jpeg: "Tidak",
   },
   {
-    property: "Colour depth",
-    png: "Up to 48-bit",
-    jpeg: "Up to 24-bit",
+    property: "Kedalaman warna",
+    png: "Hingga 48-bit",
+    jpeg: "Hingga 24-bit",
   },
   {
-    property: "Transparency support",
-    png: "Yes (alpha channel)",
-    jpeg: "No",
+    property: "Dukungan transparansi",
+    png: "Ya (kanal alfa)",
+    jpeg: "Tidak",
   },
 ];
 
@@ -43,41 +43,41 @@ const PLATFORMS_TO_AVOID = [
   {
     name: "WhatsApp",
     reason:
-      "Re-compresses all images to JPEG on send. Hidden data is destroyed.",
+      "Mengompresi ulang semua gambar ke JPEG saat dikirim. Data tersembunyi akan rusak.",
   },
   {
     name: "Instagram",
     reason:
-      "Applies lossy compression to all uploads. Stego images will not survive.",
+      "Menerapkan kompresi lossy pada semua unggahan. Gambar stego tidak akan bertahan.",
   },
   {
     name: "Facebook",
-    reason: "Re-encodes images server-side. LSB data does not survive upload.",
+    reason: "Mengodekan ulang gambar di server. Data LSB tidak akan bertahan setelah diunggah.",
   },
   {
     name: "Twitter/X",
     reason:
-      "Converts PNG to JPEG for most uploads. Use direct file transfer instead.",
+      "Mengubah PNG menjadi JPEG untuk sebagian besar unggahan. Sebaiknya kirim file secara langsung.",
   },
   {
     name: "Discord",
     reason:
-      "Compresses images above a certain size. Send as a file attachment, not image.",
+      "Mengompresi gambar yang ukurannya melebihi batas tertentu. Kirim sebagai lampiran file, bukan sebagai gambar.",
   },
 ];
 
 const SAFE_METHODS = [
   {
-    name: "Direct file transfer",
-    desc: "Send the PNG as a file attachment, not an inline image. Most messaging apps preserve files.",
+    name: "Transfer file langsung",
+    desc: "Kirim PNG sebagai lampiran file, bukan sebagai gambar yang disisipkan. Sebagian besar aplikasi pesan mempertahankan file apa adanya.",
   },
   {
-    name: "Email attachment",
-    desc: "Attach the PNG directly to an email. Do not paste it inline — some clients re-compress pasted images.",
+    name: "Lampiran email",
+    desc: "Lampirkan PNG langsung ke email. Jangan sisipkan sebagai gambar — beberapa aplikasi email mengompresi ulang gambar yang disisipkan.",
   },
   {
-    name: "Cloud storage",
-    desc: "Google Drive, Dropbox, and OneDrive preserve files exactly. Share a download link.",
+    name: "Penyimpanan cloud",
+    desc: "Google Drive, Dropbox, dan OneDrive mempertahankan file apa adanya. Bagikan tautan unduhan.",
   },
   {
     name: "GitHub / Pastebin",
@@ -88,33 +88,33 @@ const SAFE_METHODS = [
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Broad overview of steganography concepts",
+    label: "Cara Kerja Steganografi",
+    desc: "Gambaran umum konsep steganografi",
   },
   {
     to: "/learn/lsb-steganography",
-    label: "LSB Steganography",
-    desc: "How pixel-level bit manipulation works",
+    label: "Steganografi LSB",
+    desc: "Cara kerja manipulasi bit pada tingkat piksel",
   },
   {
     to: "/learn/aes256-encryption",
-    label: "AES-256 Encryption",
-    desc: "How your data is protected before embedding",
+    label: "Enkripsi AES-256",
+    desc: "Cara data Anda dilindungi sebelum disisipkan",
   },
   {
     to: "/learn/steganography-vs-encryption",
-    label: "Steganography vs Encryption",
-    desc: "Full side-by-side comparison",
+    label: "Steganografi vs Enkripsi",
+    desc: "Perbandingan lengkap secara berdampingan",
   },
   {
     to: "/learn/detect-hidden-data",
-    label: "Detect Hidden Data",
-    desc: "How steganalysis tools detect hidden content",
+    label: "Mendeteksi Data Tersembunyi",
+    desc: "Cara alat steganalisis mendeteksi konten tersembunyi",
   },
   {
     to: "/learn/use-cases",
-    label: "Use Cases",
-    desc: "When to use steganography, encryption, or both together",
+    label: "Kegunaan",
+    desc: "Kapan menggunakan steganografi, enkripsi, atau keduanya",
   },
 ];
 
@@ -122,33 +122,33 @@ function ImageSteganography() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>Image Steganography — Hide Data Inside Images | Stego.Image</title>
+        <title>Steganografi Gambar — Sembunyikan Data di Dalam Gambar | Stego.Image</title>
         <meta
           name="description"
-          content="Learn how image steganography works, why PNG is required over JPEG, how file format affects hidden data survival, and which platforms destroy stego images."
+          content="Pelajari cara kerja steganografi gambar, alasan PNG diperlukan alih-alih JPEG, pengaruh format file terhadap keutuhan data tersembunyi, dan platform yang merusak gambar stego."
         />
         <link
           rel="canonical"
           href="https://stegoimage.pages.dev/learn/image-steganography"
         />
-        <meta property="og:title" content="Image Steganography — Hide Data Inside Images | Stego.Image" />
+        <meta property="og:title" content="Steganografi Gambar — Sembunyikan Data di Dalam Gambar | Stego.Image" />
         <meta property="og:type" content="article" />
       </Helmet>
 
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
         <span style={{ color: "var(--text-primary)" }}>
-          Image Steganography
+          Steganografi Gambar
         </span>
       </nav>
 
@@ -159,7 +159,7 @@ function ImageSteganography() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            Image Steganography
+            Steganografi Gambar
           </h1>
           <p
             style={{
@@ -169,9 +169,10 @@ function ImageSteganography() {
               lineHeight: 1.7,
             }}
           >
-            Image steganography hides secret data inside the pixel values of an
-            image file. The choice of image format is critical — not all formats
-            preserve the pixel data needed to keep hidden information intact.
+            Steganografi gambar menyembunyikan data rahasia di dalam nilai piksel
+            suatu file gambar. Pemilihan format gambar sangat penting — tidak
+            semua format mempertahankan data piksel yang diperlukan agar informasi
+            tersembunyi tetap utuh.
           </p>
 
           {/* ── WHY IMAGES ── */}
@@ -186,7 +187,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Why Images?
+              Mengapa Gambar?
             </h2>
             <p
               style={{
@@ -195,24 +196,25 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Images are ideal carriers for hidden data for three reasons:
+              Gambar merupakan media yang ideal untuk menyembunyikan data karena
+              tiga alasan:
             </p>
             <div className="about-steps">
               {[
                 {
                   num: 1,
-                  title: "High redundancy",
-                  desc: "A typical image contains millions of pixels. Modifying 1 bit per channel across a fraction of those pixels stores significant data while changing the image imperceptibly.",
+                  title: "Redundansi tinggi",
+                  desc: "Gambar biasa berisi jutaan piksel. Dengan mengubah 1 bit per kanal pada sebagian kecil piksel, kita dapat menyimpan banyak data tanpa perubahan yang terlihat pada gambar.",
                 },
                 {
                   num: 2,
-                  title: "Natural variation",
-                  desc: "Real-world images contain natural noise and colour variation. Small LSB changes blend in with this natural variation, making detection harder.",
+                  title: "Variasi alami",
+                  desc: "Gambar di dunia nyata memiliki derau alami dan variasi warna. Perubahan kecil pada LSB menyatu dengan variasi alami ini sehingga lebih sulit dideteksi.",
                 },
                 {
                   num: 3,
-                  title: "Universal format",
-                  desc: "Images are shared constantly across every platform and communication channel — a stego image attracts no suspicion as a file type.",
+                  title: "Format universal",
+                  desc: "Gambar terus dibagikan di berbagai platform dan saluran komunikasi — file gambar stego tidak menimbulkan kecurigaan hanya karena jenis filenya.",
                 },
               ].map(({ num, title, desc }) => (
                 <div className="about-step-card" key={num}>
@@ -252,15 +254,16 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              The most important decision in image steganography is format. PNG
-              and JPEG handle pixel data in fundamentally different ways.
+              Keputusan terpenting dalam steganografi gambar adalah memilih
+              format. PNG dan JPEG menangani data piksel dengan cara yang sangat
+              berbeda.
             </p>
 
             <div className="about-table-wrapper">
               <table className="about-meta-table">
                 <thead>
                   <tr>
-                    <th>Property</th>
+                    <th>Karakteristik</th>
                     <th style={{ color: "#58a6ff" }}>PNG</th>
                     <th style={{ color: "#ff7b72" }}>JPEG</th>
                   </tr>
@@ -279,7 +282,7 @@ function ImageSteganography() {
                       <td
                         style={{
                           color:
-                            property === "Suitable for steganography"
+                            property === "Cocok untuk steganografi"
                               ? "#3fb950"
                               : "var(--text-body)",
                         }}
@@ -289,7 +292,7 @@ function ImageSteganography() {
                       <td
                         style={{
                           color:
-                            property === "Suitable for steganography"
+                            property === "Cocok untuk steganografi"
                               ? "#ff7b72"
                               : "var(--text-body)",
                         }}
@@ -303,11 +306,10 @@ function ImageSteganography() {
             </div>
 
             <div className="about-note mt-3">
-              <strong>Why JPEG fails:</strong> JPEG uses Discrete Cosine
-              Transform (DCT) compression. During saving, pixel values are
-              approximated and rounded. Any LSB data written before saving is
-              overwritten by this process. The hidden data is permanently
-              destroyed.
+              <strong>Mengapa JPEG tidak cocok:</strong> JPEG menggunakan
+              kompresi Discrete Cosine Transform (DCT). Saat disimpan, nilai
+              piksel diperkirakan dan dibulatkan. Proses ini menimpa data LSB
+              yang ditulis sebelumnya. Data tersembunyi pun rusak secara permanen.
             </div>
           </section>
 
@@ -323,7 +325,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Why PNG Preserves Hidden Data
+              Mengapa PNG Mempertahankan Data Tersembunyi
             </h2>
             <p
               style={{
@@ -332,11 +334,10 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              PNG uses DEFLATE lossless compression. This means the compression
-              algorithm reduces file size without changing any pixel values —
-              every pixel is stored and retrieved exactly as written. The LSBs
-              you modify during encoding are still there when the file is
-              opened.
+              PNG menggunakan kompresi lossless DEFLATE. Artinya, algoritma
+              kompresi memperkecil ukuran file tanpa mengubah nilai piksel —
+              setiap piksel disimpan dan dibaca kembali persis seperti aslinya.
+              LSB yang diubah saat encoding tetap utuh ketika file dibuka.
             </p>
             <p
               style={{
@@ -345,10 +346,10 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              PNG also supports an alpha (transparency) channel. Stego.Image
-              only encodes data into fully opaque pixels — pixels where the
-              alpha value is 255. Transparent pixels are skipped to avoid
-              corrupting transparency data.
+              PNG juga mendukung kanal alfa (transparansi). Stego.Image hanya
+              menyisipkan data pada piksel yang sepenuhnya opak — yaitu piksel
+              dengan nilai alfa 255. Piksel transparan dilewati agar data
+              transparansi tidak rusak.
             </p>
 
             <div
@@ -364,7 +365,7 @@ function ImageSteganography() {
                   letterSpacing: "0.05em",
                 }}
               >
-                Pixel encoding logic
+                Logika encoding piksel
               </div>
               <div style={{ color: "#3fb950" }}>
                 {"// Only encode into fully opaque pixels"}
@@ -397,7 +398,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Image Capacity
+              Kapasitas Gambar
             </h2>
             <p
               style={{
@@ -406,9 +407,10 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              The larger the image, the more data it can carry. Capacity depends
-              on the number of fully opaque pixels and the number of LSBs used
-              per channel (Stego.Image uses 1 LSB per channel).
+              Semakin besar gambar, semakin banyak data yang dapat ditampung.
+              Kapasitas bergantung pada jumlah piksel yang sepenuhnya opak dan
+              jumlah LSB yang digunakan per kanal (Stego.Image menggunakan 1 LSB
+              per kanal).
             </p>
 
             <div className="row g-3">
@@ -416,22 +418,22 @@ function ImageSteganography() {
                 {
                   size: "800 × 600",
                   cap: "~180 KB",
-                  note: "Small image, small files only",
+                  note: "Gambar kecil, hanya untuk file berukuran kecil",
                 },
                 {
                   size: "1920 × 1080",
                   cap: "~777 KB",
-                  note: "Full HD — good for most files",
+                  note: "Full HD — cocok untuk sebagian besar file",
                 },
                 {
                   size: "2560 × 1440",
                   cap: "~1.4 MB",
-                  note: "QHD — comfortable capacity",
+                  note: "QHD — kapasitas cukup besar",
                 },
                 {
                   size: "3840 × 2160",
                   cap: "~3.1 MB",
-                  note: "4K — large file support",
+                  note: "4K — mendukung file besar",
                 },
               ].map(({ size, cap, note }) => (
                 <div className="col-md-6" key={size}>
@@ -459,10 +461,10 @@ function ImageSteganography() {
             </div>
 
             <div className="about-note mt-3">
-              Stego.Image displays exact available capacity after you upload
-              your cover image. The secret file is GZIP compressed before
-              embedding — so the actual usable payload is often larger than the
-              raw file size.
+              Stego.Image menampilkan kapasitas yang tersedia secara tepat
+              setelah Anda mengunggah gambar sampul. File rahasia dikompresi
+              dengan GZIP sebelum disisipkan — sehingga payload yang dapat
+              digunakan sering kali lebih besar daripada ukuran file aslinya.
             </div>
           </section>
 
@@ -478,7 +480,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Platforms That Destroy Hidden Data
+              Platform yang Merusak Data Tersembunyi
             </h2>
             <p
               style={{
@@ -487,9 +489,9 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              Many popular platforms re-compress images on upload or send. This
-              destroys the LSB data. Never use these platforms to transfer a
-              stego image:
+              Banyak platform populer mengompresi ulang gambar saat diunggah
+              atau dikirim. Proses ini merusak data LSB. Jangan gunakan
+              platform-platform berikut untuk mengirim gambar stego:
             </p>
             <div className="about-limitations">
               {PLATFORMS_TO_AVOID.map(({ name, reason }) => (
@@ -521,7 +523,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Safe Transfer Methods
+              Cara Aman Mengirim File
             </h2>
             <p
               style={{
@@ -530,8 +532,8 @@ function ImageSteganography() {
                 fontSize: "14.5px",
               }}
             >
-              To preserve the hidden data, always transfer the stego image as a
-              raw file — not as an inline image preview:
+              Agar data tersembunyi tetap utuh, selalu kirim gambar stego
+              sebagai file — bukan sebagai pratinjau gambar yang disisipkan:
             </p>
             <div className="about-steps">
               {SAFE_METHODS.map(({ name, desc }, i) => (
@@ -563,7 +565,7 @@ function ImageSteganography() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Pelajari Lebih Lanjut
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -591,16 +593,16 @@ function ImageSteganography() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {[
-                  { href: "#why-images", label: "Why Images?" },
+                  { href: "#why-images", label: "Mengapa Gambar?" },
                   { href: "#png-vs-jpeg", label: "PNG vs JPEG" },
-                  { href: "#why-png", label: "Why PNG Preserves Data" },
-                  { href: "#capacity", label: "Image Capacity" },
-                  { href: "#platforms", label: "Platforms That Destroy Data" },
-                  { href: "#safe-methods", label: "Safe Transfer Methods" },
-                  { href: "#related", label: "Continue Learning" },
+                  { href: "#why-png", label: "Mengapa PNG Mempertahankan Data" },
+                  { href: "#capacity", label: "Kapasitas Gambar" },
+                  { href: "#platforms", label: "Platform yang Merusak Data" },
+                  { href: "#safe-methods", label: "Cara Aman Mengirim File" },
+                  { href: "#related", label: "Pelajari Lebih Lanjut" },
                 ].map(({ href, label }) => (
                   <a
                     key={href}
@@ -621,13 +623,13 @@ function ImageSteganography() {
             </div>
 
             <div className="about-section mb-3">
-              <div className="about-section-title">Format Summary</div>
+              <div className="about-section-title">Ringkasan Format</div>
               <div className="d-flex flex-column gap-2">
                 {[
-                  { label: "Required format", value: "PNG" },
-                  { label: "Avoid", value: "JPEG, WEBP, GIF" },
-                  { label: "Compression", value: "Lossless only" },
-                  { label: "Alpha pixels", value: "Skipped" },
+                  { label: "Format yang diperlukan", value: "PNG" },
+                  { label: "Hindari", value: "JPEG, WEBP, GIF" },
+                  { label: "Kompresi", value: "Hanya lossless" },
+                  { label: "Piksel alfa", value: "Dilewati" },
                 ].map(({ label, value }) => (
                   <div
                     key={label}
@@ -651,7 +653,7 @@ function ImageSteganography() {
             </div>
 
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -659,20 +661,21 @@ function ImageSteganography() {
                   marginBottom: "14px",
                 }}
               >
-                Hide any file inside a PNG — free, client-side, no uploads.
+                Sembunyikan file apa pun di dalam PNG — gratis, di sisi klien,
+                tanpa mengunggah file.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyisipkan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>

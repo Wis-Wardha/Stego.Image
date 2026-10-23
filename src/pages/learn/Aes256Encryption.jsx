@@ -4,79 +4,79 @@ import { Helmet } from "react-helmet-async";
 const STEPS = [
   {
     num: 1,
-    title: "Key derivation — PBKDF2-SHA256",
-    desc: "Your password is never used directly as the encryption key. Instead, PBKDF2-SHA256 runs 100,000 iterations with a random 16-byte salt to derive a strong 256-bit key. This makes brute-force attacks computationally expensive.",
+    title: "Derivasi kunci — PBKDF2-SHA256",
+    desc: "Kata sandi Anda tidak pernah digunakan langsung sebagai kunci enkripsi. PBKDF2-SHA256 dijalankan sebanyak 100.000 iterasi dengan salt acak 16-byte untuk menghasilkan kunci 256-bit yang kuat. Proses ini membuat serangan brute force membutuhkan banyak komputasi.",
   },
   {
     num: 2,
-    title: "Salt generation",
-    desc: "A new random 16-byte salt is generated for every encode operation using a cryptographically secure random number generator. The salt is prepended to the ciphertext so decryption can derive the same key.",
+    title: "Pembuatan salt",
+    desc: "Salt acak baru berukuran 16-byte dibuat untuk setiap proses penyandian menggunakan generator angka acak yang aman secara kriptografis. Salt ditambahkan di awal ciphertext agar proses dekripsi dapat menghasilkan kunci yang sama.",
   },
   {
     num: 3,
-    title: "AES-256-CBC encryption",
-    desc: "The GZIP-compressed payload is encrypted using AES-256 in CBC (Cipher Block Chaining) mode. Each 16-byte block is XOR'd with the previous ciphertext block before encryption, preventing identical plaintext blocks from producing identical ciphertext.",
+    title: "Enkripsi AES-256-CBC",
+    desc: "Payload yang dikompres dengan GZIP dienkripsi menggunakan AES-256 dalam mode CBC (Cipher Block Chaining). Setiap blok 16-byte di-XOR dengan blok ciphertext sebelumnya sebelum dienkripsi, sehingga blok plaintext yang identik tidak menghasilkan ciphertext yang identik.",
   },
   {
     num: 4,
-    title: "Output — salt + ciphertext",
-    desc: "The final encrypted blob is: [16-byte salt] + [ciphertext]. This is what gets embedded into the image pixels. Without the correct password, the data cannot be decrypted.",
+    title: "Keluaran — salt + ciphertext",
+    desc: "Blob terenkripsi akhir berbentuk: [salt 16-byte] + [ciphertext]. Inilah data yang disisipkan ke dalam piksel gambar. Tanpa kata sandi yang benar, data tidak dapat didekripsi.",
   },
 ];
 
 const DECODE_STEPS = [
   {
     num: 1,
-    title: "Extract the salt",
-    desc: "The first 16 bytes of the encrypted blob are the salt used during encoding.",
+    title: "Ekstrak salt",
+    desc: "16 byte pertama dari blob terenkripsi adalah salt yang digunakan saat penyandian.",
   },
   {
     num: 2,
-    title: "Re-derive the key",
-    desc: "PBKDF2-SHA256 runs again with the provided password and extracted salt at 100,000 iterations, producing the same 256-bit key used during encoding.",
+    title: "Derivasikan ulang kunci",
+    desc: "PBKDF2-SHA256 dijalankan kembali sebanyak 100.000 iterasi dengan kata sandi yang diberikan dan salt yang diekstrak, sehingga menghasilkan kunci 256-bit yang sama seperti saat penyandian.",
   },
   {
     num: 3,
-    title: "Decrypt with AES-256-CBC",
-    desc: "The ciphertext is decrypted using the derived key. If the password is wrong, the derived key will be different and decryption produces garbage — or fails entirely.",
+    title: "Dekripsi dengan AES-256-CBC",
+    desc: "Ciphertext didekripsi menggunakan kunci hasil derivasi. Jika kata sandinya salah, kunci hasil derivasi akan berbeda dan dekripsi menghasilkan data tak bermakna — atau gagal sepenuhnya.",
   },
   {
     num: 4,
-    title: "GZIP decompress",
-    desc: "The decrypted payload is GZIP decompressed to recover the original file. A size mismatch against the metadata header signals a wrong password or corrupted file.",
+    title: "Dekompresi GZIP",
+    desc: "Payload yang telah didekripsi didekompresi dengan GZIP untuk memulihkan berkas asli. Ketidaksesuaian ukuran dengan header metadata menandakan kata sandi salah atau berkas rusak.",
   },
 ];
 
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Broad overview combining steganography and encryption",
+    label: "Cara Kerja Steganografi",
+    desc: "Gambaran umum tentang steganografi dan enkripsi",
   },
   {
     to: "/learn/lsb-steganography",
-    label: "LSB Steganography",
-    desc: "How the encrypted payload is hidden in pixels",
+    label: "Steganografi LSB",
+    desc: "Cara payload terenkripsi disembunyikan dalam piksel",
   },
   {
     to: "/learn/steganography-vs-encryption",
-    label: "Steganography vs Encryption",
-    desc: "Full side-by-side comparison of both techniques",
+    label: "Steganografi vs Enkripsi",
+    desc: "Perbandingan lengkap kedua teknik secara berdampingan",
   },
   {
     to: "/learn/detect-hidden-data",
-    label: "Detect Hidden Data",
-    desc: "Why encryption makes steganalysis much harder",
+    label: "Deteksi Data Tersembunyi",
+    desc: "Mengapa enkripsi sangat mempersulit steganalisis",
   },
   {
     to: "/learn/use-cases",
-    label: "Use Cases",
-    desc: "When to use steganography, encryption, or both together",
+    label: "Contoh Penggunaan",
+    desc: "Kapan menggunakan steganografi, enkripsi, atau keduanya",
   },
   {
     to: "/learn/image-steganography",
-    label: "Image Steganography",
-    desc: "How the encrypted payload is hidden in pixels",
+    label: "Steganografi Gambar",
+    desc: "Cara payload terenkripsi disembunyikan dalam piksel",
   }
 ];
 
@@ -84,32 +84,32 @@ function Aes256Encryption() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>AES-256 Encryption Explained — How It Protects Hidden Data | Stego.Image</title>
+        <title>Penjelasan Enkripsi AES-256 — Cara Melindungi Data Tersembunyi | Stego.Image</title>
         <meta
           name="description"
-          content="Learn how Stego.Image uses AES-256 encryption with PBKDF2-SHA256 key derivation to protect hidden files. Covers the full encrypt and decrypt pipeline."
+          content="Pelajari cara Stego.Image menggunakan enkripsi AES-256 dengan derivasi kunci PBKDF2-SHA256 untuk melindungi berkas tersembunyi. Membahas seluruh proses enkripsi dan dekripsi."
         />
         <link
           rel="canonical"
           href="https://stegoimage.pages.dev/learn/aes256-encryption"
         />
-        <meta property="og:title" content="AES-256 Encryption Explained — How It Protects Hidden Data | Stego.Image" />
+        <meta property="og:title" content="Penjelasan Enkripsi AES-256 — Cara Melindungi Data Tersembunyi | Stego.Image" />
         <meta property="og:type" content="article" />
       </Helmet>
 
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>AES-256 Encryption</span>
+        <span style={{ color: "var(--text-primary)" }}>Enkripsi AES-256</span>
       </nav>
 
       <div className="row">
@@ -119,7 +119,7 @@ function Aes256Encryption() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            AES-256 Encryption
+            Enkripsi AES-256
           </h1>
           <p
             style={{
@@ -129,11 +129,11 @@ function Aes256Encryption() {
               lineHeight: 1.7,
             }}
           >
-            Before any data is hidden inside an image, Stego.Image encrypts it
-            using AES-256 — the same encryption standard used by governments,
-            banks, and security software worldwide. Even if the hidden data is
-            detected and extracted, it remains unreadable without the correct
-            password.
+            Sebelum data disembunyikan dalam gambar, Stego.Image mengenkripsinya
+            menggunakan AES-256 — standar enkripsi yang sama dengan yang
+            digunakan oleh pemerintah, bank, dan perangkat lunak keamanan di
+            seluruh dunia. Sekalipun data tersembunyi terdeteksi dan diekstrak,
+            data tetap tidak dapat dibaca tanpa kata sandi yang benar.
           </p>
 
           {/* ── WHAT IS AES ── */}
@@ -148,7 +148,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              What Is AES-256?
+              Apa Itu AES-256?
             </h2>
             <p
               style={{
@@ -157,10 +157,11 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              AES (Advanced Encryption Standard) is a symmetric block cipher
-              standardised by NIST in 2001. It operates on 128-bit blocks of
-              data using a key of 128, 192, or 256 bits. Stego.Image uses the
-              256-bit variant — the strongest available.
+              AES (Advanced Encryption Standard) adalah standar cipher blok
+              simetris yang ditetapkan oleh NIST pada 2001. AES memproses data
+              dalam blok 128-bit menggunakan kunci berukuran 128, 192, atau 256
+              bit. Stego.Image menggunakan varian 256-bit — yang paling kuat
+              tersedia.
             </p>
             <p
               style={{
@@ -169,17 +170,18 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              AES-256 has never been broken. A brute-force attack would require
-              trying 2<sup>256</sup> possible keys — more combinations than
-              there are atoms in the observable universe. The practical security
-              depends entirely on your password strength.
+              AES-256 belum pernah berhasil dibobol. Serangan brute force harus
+              mencoba 2<sup>256</sup> kemungkinan kunci — jumlah kombinasi yang
+              lebih banyak daripada jumlah atom di alam semesta teramati.
+              Keamanan dalam praktik sepenuhnya bergantung pada kekuatan kata
+              sandi Anda.
             </p>
 
             <div className="about-note mt-3">
-              <strong>Library used:</strong> crypto-js — a pure JavaScript
-              implementation of AES-256. All encryption and decryption happens
-              entirely in your browser. Your password and file data never leave
-              your device.
+              <strong>Pustaka yang digunakan:</strong> crypto-js — implementasi
+              AES-256 murni dalam JavaScript. Semua proses enkripsi dan dekripsi
+              berlangsung sepenuhnya di browser Anda. Kata sandi dan data berkas
+              tidak pernah meninggalkan perangkat Anda.
             </div>
           </section>
 
@@ -195,7 +197,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Encryption Pipeline
+              Alur Enkripsi
             </h2>
             <p
               style={{
@@ -204,8 +206,9 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              Stego.Image does not use a simple password-to-key mapping. It uses
-              a hardened key derivation process before any encryption occurs:
+              Stego.Image tidak sekadar mengubah kata sandi menjadi kunci.
+              Sebelum enkripsi dilakukan, Stego.Image menggunakan proses
+              derivasi kunci yang diperkuat:
             </p>
             <div className="about-steps">
               {STEPS.map(({ num, title, desc }) => (
@@ -237,7 +240,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Why PBKDF2 Matters
+              Mengapa PBKDF2 Penting
             </h2>
             <p
               style={{
@@ -246,11 +249,11 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              A weak password fed directly into AES is easy to brute-force — an
-              attacker can try millions of passwords per second. PBKDF2
-              (Password-Based Key Derivation Function 2) makes each password
-              attempt deliberately expensive by running 100,000 rounds of
-              SHA-256 hashing.
+              Kata sandi lemah yang langsung digunakan pada AES mudah ditebak
+              dengan brute force — penyerang dapat mencoba jutaan kata sandi
+              per detik. PBKDF2 (Password-Based Key Derivation Function 2)
+              sengaja membuat setiap percobaan kata sandi membutuhkan banyak
+              komputasi dengan menjalankan hashing SHA-256 sebanyak 100.000 kali.
             </p>
 
             <div
@@ -266,7 +269,7 @@ function Aes256Encryption() {
                   letterSpacing: "0.05em",
                 }}
               >
-                Key derivation
+                Derivasi kunci
               </div>
               <div>
                 <span style={{ color: "#3fb950" }}>{"const"}</span>
@@ -301,12 +304,12 @@ function Aes256Encryption() {
             <div className="row g-3 mt-2">
               {[
                 {
-                  title: "Without PBKDF2",
-                  desc: "An attacker can try ~1 billion passwords per second on modern hardware.",
+                  title: "Tanpa PBKDF2",
+                  desc: "Dengan perangkat keras modern, penyerang dapat mencoba sekitar 1 miliar kata sandi per detik.",
                 },
                 {
-                  title: "With PBKDF2 at 100k iterations",
-                  desc: "Each attempt takes ~100ms. The same attack tries only ~10 passwords per second.",
+                  title: "Dengan PBKDF2 sebanyak 100 ribu iterasi",
+                  desc: "Setiap percobaan memerlukan sekitar 100 ms. Dengan serangan yang sama, hanya sekitar 10 kata sandi yang dapat dicoba per detik.",
                 },
               ].map(({ title, desc }) => (
                 <div className="col-md-6" key={title}>
@@ -331,7 +334,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Decryption Pipeline
+              Alur Dekripsi
             </h2>
             <p
               style={{
@@ -340,8 +343,9 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              Decryption is the exact reverse of encryption. The salt embedded
-              in the payload is used to re-derive the key from the password:
+              Dekripsi adalah kebalikan persis dari enkripsi. Salt yang
+              disisipkan dalam payload digunakan untuk menurunkan kembali kunci
+              dari kata sandi:
             </p>
             <div className="about-steps">
               {DECODE_STEPS.map(({ num, title, desc }) => (
@@ -373,7 +377,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Encrypted Payload Layout
+              Susunan Payload Terenkripsi
             </h2>
             <p
               style={{
@@ -382,7 +386,8 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              The encrypted blob embedded into the image has this structure:
+              Blob terenkripsi yang disisipkan ke dalam gambar memiliki susunan
+              berikut:
             </p>
 
             <div
@@ -409,7 +414,7 @@ function Aes256Encryption() {
                       color: "var(--text-muted)",
                     }}
                   >
-                    Random salt
+                    Salt acak
                   </span>
                 </div>
                 <div
@@ -441,7 +446,7 @@ function Aes256Encryption() {
                       color: "var(--text-muted)",
                     }}
                   >
-                    AES-256-CBC ciphertext
+                    Ciphertext AES-256-CBC
                   </span>
                 </div>
               </div>
@@ -455,10 +460,10 @@ function Aes256Encryption() {
                 marginTop: "14px",
               }}
             >
-              The salt is not secret — it is stored alongside the ciphertext.
-              Its purpose is to ensure two identical files encrypted with the
-              same password produce completely different ciphertext, preventing
-              pattern-based attacks.
+              Salt bukan rahasia — salt disimpan bersama ciphertext. Tujuannya
+              adalah memastikan dua berkas identik yang dienkripsi dengan kata
+              sandi sama menghasilkan ciphertext yang sepenuhnya berbeda,
+              sehingga mencegah serangan berbasis pola.
             </p>
           </section>
 
@@ -474,7 +479,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Password Strength
+              Kekuatan Kata Sandi
             </h2>
             <p
               style={{
@@ -483,32 +488,32 @@ function Aes256Encryption() {
                 fontSize: "14.5px",
               }}
             >
-              The security of AES-256 in practice is only as strong as your
-              password. PBKDF2 significantly raises the cost of brute-force
-              attacks, but a short or common password can still be cracked with
-              a dictionary attack.
+              Dalam praktiknya, keamanan AES-256 hanya sekuat kata sandi Anda.
+              PBKDF2 secara signifikan meningkatkan biaya serangan brute force,
+              tetapi kata sandi yang pendek atau umum masih dapat dibobol
+              melalui serangan kamus.
             </p>
             <div className="about-limitations">
               {[
                 {
                   icon: "✅",
-                  title: "Use a long passphrase",
-                  desc: 'A sentence like "correct-horse-battery-staple" is far stronger than a short complex password.',
+                  title: "Gunakan frasa sandi yang panjang",
+                  desc: 'Kalimat seperti "correct-horse-battery-staple" jauh lebih kuat daripada kata sandi pendek yang rumit.',
                 },
                 {
                   icon: "✅",
-                  title: "Avoid dictionary words",
-                  desc: "Single words, even with substitutions (p@ssw0rd), are vulnerable to dictionary attacks.",
+                  title: "Hindari kata yang umum",
+                  desc: "Satu kata saja, bahkan dengan penggantian karakter (p@ssw0rd), rentan terhadap serangan kamus.",
                 },
                 {
                   icon: "✅",
-                  title: "Use a unique password",
-                  desc: "Do not reuse passwords from other accounts. If one is leaked, your stego files remain safe.",
+                  title: "Gunakan kata sandi unik",
+                  desc: "Jangan gunakan ulang kata sandi dari akun lain. Jika salah satu bocor, berkas stego Anda tetap aman.",
                 },
                 {
                   icon: "⚠️",
-                  title: "No password recovery",
-                  desc: "Stego.Image has no password recovery. If you forget your password, the hidden file cannot be retrieved.",
+                  title: "Kata sandi tidak dapat dipulihkan",
+                  desc: "Stego.Image tidak menyediakan pemulihan kata sandi. Jika Anda lupa kata sandi, berkas tersembunyi tidak dapat dipulihkan.",
                 },
               ].map(({ icon, title, desc }) => (
                 <div className="about-limitation-item" key={title}>
@@ -539,7 +544,7 @@ function Aes256Encryption() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Lanjutkan Belajar
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -567,16 +572,16 @@ function Aes256Encryption() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {[
-                  { href: "#what-is-aes", label: "What Is AES-256?" },
-                  { href: "#encrypt", label: "Encryption Pipeline" },
-                  { href: "#pbkdf2", label: "Why PBKDF2 Matters" },
-                  { href: "#decrypt", label: "Decryption Pipeline" },
-                  { href: "#layout", label: "Payload Layout" },
-                  { href: "#password-tips", label: "Password Strength" },
-                  { href: "#related", label: "Continue Learning" },
+                  { href: "#what-is-aes", label: "Apa Itu AES-256?" },
+                  { href: "#encrypt", label: "Alur Enkripsi" },
+                  { href: "#pbkdf2", label: "Mengapa PBKDF2 Penting" },
+                  { href: "#decrypt", label: "Alur Dekripsi" },
+                  { href: "#layout", label: "Susunan Payload" },
+                  { href: "#password-tips", label: "Kekuatan Kata Sandi" },
+                  { href: "#related", label: "Lanjutkan Belajar" },
                 ].map(({ href, label }) => (
                   <a
                     key={href}
@@ -597,15 +602,15 @@ function Aes256Encryption() {
             </div>
 
             <div className="about-section mb-3">
-              <div className="about-section-title">Encryption Summary</div>
+              <div className="about-section-title">Ringkasan Enkripsi</div>
               <div className="d-flex flex-column gap-2">
                 {[
-                  { label: "Algorithm", value: "AES-256-CBC" },
+                  { label: "Algoritma", value: "AES-256-CBC" },
                   { label: "KDF", value: "PBKDF2-SHA256" },
-                  { label: "Iterations", value: "100,000" },
-                  { label: "Salt size", value: "16 bytes (random)" },
-                  { label: "Library", value: "crypto-js" },
-                  { label: "Runs in", value: "Browser only" },
+                  { label: "Iterasi", value: "100.000" },
+                  { label: "Ukuran salt", value: "16 byte (acak)" },
+                  { label: "Pustaka", value: "crypto-js" },
+                  { label: "Berjalan di", value: "Browser saja" },
                 ].map(({ label, value }) => (
                   <div
                     key={label}
@@ -629,7 +634,7 @@ function Aes256Encryption() {
             </div>
 
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -637,21 +642,21 @@ function Aes256Encryption() {
                   marginBottom: "14px",
                 }}
               >
-                Encrypt and hide any file inside a PNG — free, client-side, no
-                uploads.
+                Enkripsi dan sembunyikan berkas apa pun dalam PNG — gratis,
+                diproses di perangkat, tanpa mengunggah berkas.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyandikan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>

@@ -3,86 +3,86 @@ import { Helmet } from "react-helmet-async";
 
 const TECHNIQUES = [
   {
-    title: "Visual inspection",
-    difficulty: "Easy",
+    title: "Pemeriksaan visual",
+    difficulty: "Mudah",
     effectiveness: "None",
-    desc: "Looking at a stego image with the naked eye. LSB changes are imperceptible — a ±1 change per channel is invisible. Visual inspection cannot detect LSB steganography.",
+    desc: "Mengamati gambar stego dengan mata telanjang. Perubahan LSB tidak terlihat — perubahan ±1 pada setiap kanal tidak dapat dibedakan. Pemeriksaan visual tidak dapat mendeteksi steganografi LSB.",
   },
   {
-    title: "LSB plane visualisation",
-    difficulty: "Easy",
+    title: "Visualisasi bidang LSB",
+    difficulty: "Mudah",
     effectiveness: "Low",
-    desc: "Extracting and visualising only the LSB of each channel produces a noise-like pattern. In natural images this pattern looks random. In stego images with large payloads, the LSB plane may show structured patterns — but this requires a reference image to compare against.",
+    desc: "Mengekstrak dan memvisualisasikan hanya LSB dari setiap kanal menghasilkan pola menyerupai derau. Pada gambar alami, pola ini tampak acak. Pada gambar stego dengan payload besar, bidang LSB mungkin menunjukkan pola terstruktur — tetapi diperlukan gambar acuan untuk membandingkannya.",
   },
   {
-    title: "Chi-square attack",
-    difficulty: "Medium",
+    title: "Serangan chi-kuadrat",
+    difficulty: "Sedang",
     effectiveness: "Medium",
-    desc: "Compares the frequency distribution of pixel value pairs (e.g. 200 and 201) against expected natural image statistics. LSB embedding disturbs this distribution in detectable ways — but only when a significant portion of the image is used.",
+    desc: "Membandingkan distribusi frekuensi pasangan nilai piksel (misalnya 200 dan 201) dengan statistik gambar alami yang diharapkan. Penyisipan LSB mengubah distribusi ini dengan cara yang dapat dideteksi — tetapi hanya jika sebagian besar gambar digunakan.",
   },
   {
-    title: "RS analysis",
-    difficulty: "Medium",
+    title: "Analisis RS",
+    difficulty: "Sedang",
     effectiveness: "High",
-    desc: "Regular-Singular (RS) analysis measures smoothness of pixel groups. Embedding data increases irregularity in predictable ways. RS analysis can estimate the proportion of pixels that carry hidden data.",
+    desc: "Analisis Regular-Singular (RS) mengukur kehalusan kelompok piksel. Penyisipan data meningkatkan ketidakteraturan dengan cara yang dapat diprediksi. Analisis RS dapat memperkirakan proporsi piksel yang membawa data tersembunyi.",
   },
   {
     title: "StegExpose",
-    difficulty: "Low (automated)",
+    difficulty: "Rendah (otomatis)",
     effectiveness: "High",
-    desc: "An open-source steganalysis tool that combines multiple statistical tests (chi-square, RS, sample pairs, primary sets) to detect LSB steganography. Effective against images with large payloads.",
+    desc: "Alat steganalisis sumber terbuka yang menggabungkan beberapa uji statistik (chi-kuadrat, RS, pasangan sampel, himpunan primer) untuk mendeteksi steganografi LSB. Efektif untuk gambar dengan payload besar.",
   },
 ];
 
 const COUNTERMEASURES = [
   {
-    title: "Always use encryption",
-    desc: "AES-256 encrypted payloads produce random-looking bits. Random bits closely match the statistical profile of natural image noise, making chi-square and RS analysis significantly less effective.",
+    title: "Selalu gunakan enkripsi",
+    desc: "Payload yang dienkripsi dengan AES-256 menghasilkan bit yang tampak acak. Bit acak sangat mirip dengan profil statistik derau gambar alami, sehingga analisis chi-kuadrat dan RS menjadi jauh kurang efektif.",
   },
   {
-    title: "Use small payloads",
-    desc: "The smaller the payload relative to image size, the harder detection becomes. Statistical anomalies grow with payload size. Use the largest cover image practical.",
+    title: "Gunakan payload kecil",
+    desc: "Semakin kecil payload dibandingkan ukuran gambar, semakin sulit dideteksi. Anomali statistik meningkat seiring ukuran payload. Gunakan gambar penutup sebesar mungkin.",
   },
   {
-    title: "Use high-detail images",
-    desc: "Images with complex textures and natural noise — photographs of nature, crowds, or cityscapes — absorb LSB changes better than flat or simple images like logos or gradients.",
+    title: "Gunakan gambar dengan banyak detail",
+    desc: "Gambar dengan tekstur kompleks dan derau alami — seperti foto alam, kerumunan, atau pemandangan kota — menyamarkan perubahan LSB lebih baik daripada gambar sederhana atau datar seperti logo atau gradasi.",
   },
   {
-    title: "Avoid reusing cover images",
-    desc: "If an attacker has access to the original cover image, comparison attacks become trivial. Use a fresh cover image for each encode operation.",
+    title: "Jangan gunakan ulang gambar penutup",
+    desc: "Jika penyerang memiliki akses ke gambar penutup asli, serangan perbandingan menjadi mudah dilakukan. Gunakan gambar penutup baru untuk setiap proses penyandian.",
   },
 ];
 
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Technical deep dive into the encoding process",
+    label: "Cara Kerja Steganografi",
+    desc: "Pembahasan teknis mendalam tentang proses penyandian",
   },
   {
     to: "/learn/lsb-steganography",
-    label: "LSB Steganography",
-    desc: "How pixel-level bit manipulation works",
+    label: "Steganografi LSB",
+    desc: "Cara kerja manipulasi bit pada tingkat piksel",
   },
   {
     to: "/learn/aes256-encryption",
-    label: "AES-256 Encryption",
-    desc: "Why encryption makes detection much harder",
+    label: "Enkripsi AES-256",
+    desc: "Mengapa enkripsi membuat deteksi jauh lebih sulit",
   },
   {
     to: "/learn/steganography-vs-encryption",
-    label: "Steganography vs Encryption",
-    desc: "Full comparison of both techniques",
+    label: "Steganografi vs Enkripsi",
+    desc: "Perbandingan lengkap kedua teknik",
   },
   {
     to: "/learn/image-steganography",
-    label: "Image Steganography",
-    desc: "How image format affects hidden data survival",
+    label: "Steganografi Gambar",
+    desc: "Pengaruh format gambar terhadap keutuhan data tersembunyi",
   },
     {
     to: "/learn/use-cases",
-    label: "Use Cases",
-    desc: "When to use steganography, encryption, or both together",
+    label: "Contoh Penggunaan",
+    desc: "Kapan menggunakan steganografi, enkripsi, atau keduanya",
   },
 ];
 
@@ -90,10 +90,10 @@ function DetectHiddenData() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>How to Detect Hidden Data in Images — Steganalysis Guide | Stego.Image</title>
+        <title>Cara Mendeteksi Data Tersembunyi dalam Gambar — Panduan Steganalisis | Stego.Image</title>
         <meta
           name="description"
-          content="Learn how steganalysis tools detect hidden data in images. Covers chi-square attacks, RS analysis, LSB visualisation, and how encryption makes detection harder."
+          content="Pelajari cara alat steganalisis mendeteksi data tersembunyi dalam gambar. Membahas serangan chi-kuadrat, analisis RS, visualisasi LSB, dan cara enkripsi mempersulit deteksi."
         />
         <link
           rel="canonical"
@@ -101,7 +101,7 @@ function DetectHiddenData() {
         />
         <meta
           property="og:title"
-          content="How to Detect Hidden Data in Images — Steganalysis Guide | Stego.Image"
+          content="Cara Mendeteksi Data Tersembunyi dalam Gambar — Panduan Steganalisis | Stego.Image"
         />
         <meta property="og:type" content="article" />
       </Helmet>
@@ -109,16 +109,16 @@ function DetectHiddenData() {
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Detect Hidden Data</span>
+        <span style={{ color: "var(--text-primary)" }}>Deteksi Data Tersembunyi</span>
       </nav>
 
       <div className="row">
@@ -127,7 +127,7 @@ function DetectHiddenData() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            Detecting Hidden Data in Images
+            Mendeteksi Data Tersembunyi dalam Gambar
           </h1>
           <p
             style={{
@@ -137,9 +137,9 @@ function DetectHiddenData() {
               lineHeight: 1.7,
             }}
           >
-            Steganalysis is the practice of detecting steganographic content in
-            files. Understanding how detection works helps you use steganography
-            more effectively — and understand its limits.
+            Steganalisis adalah praktik mendeteksi konten steganografi dalam
+            berkas. Memahami cara kerja deteksi membantu Anda menggunakan
+            steganografi dengan lebih efektif — sekaligus memahami batasannya.
           </p>
 
           {/* ── CAN IT BE DETECTED ── */}
@@ -154,7 +154,7 @@ function DetectHiddenData() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Can LSB Steganography Be Detected?
+              Bisakah Steganografi LSB Dideteksi?
             </h2>
             <p
               style={{
@@ -163,24 +163,24 @@ function DetectHiddenData() {
                 fontSize: "14.5px",
               }}
             >
-              Yes — under certain conditions. LSB encoding is invisible to human
-              vision, but it leaves statistical traces in the pixel data that
-              automated tools can measure. The detectability depends on three
-              factors:
+              Ya — dalam kondisi tertentu. Penyandian LSB tidak terlihat oleh
+              mata manusia, tetapi meninggalkan jejak statistik pada data piksel
+              yang dapat diukur oleh alat otomatis. Kemungkinan deteksi
+              bergantung pada tiga faktor:
             </p>
             <div className="row g-3">
               {[
                 {
-                  title: "Payload size",
-                  desc: "Larger payloads relative to image size leave stronger statistical traces. A small payload in a large image is much harder to detect.",
+                  title: "Ukuran payload",
+                  desc: "Payload yang lebih besar dibandingkan ukuran gambar meninggalkan jejak statistik yang lebih kuat. Payload kecil dalam gambar besar jauh lebih sulit dideteksi.",
                 },
                 {
-                  title: "Encryption",
-                  desc: "Unencrypted payloads have structured bit patterns that differ from natural image noise. Encrypted payloads are statistically random — much harder to distinguish.",
+                  title: "Enkripsi",
+                  desc: "Payload yang tidak dienkripsi memiliki pola bit terstruktur yang berbeda dari derau gambar alami. Payload terenkripsi bersifat acak secara statistik — jauh lebih sulit dibedakan.",
                 },
                 {
-                  title: "Cover image",
-                  desc: "Complex, high-detail images absorb LSB changes better than flat or simple images. A photograph is a better carrier than a flat-colour graphic.",
+                  title: "Gambar penutup",
+                  desc: "Gambar yang kompleks dan penuh detail menyamarkan perubahan LSB lebih baik daripada gambar datar atau sederhana. Foto merupakan media pembawa yang lebih baik daripada gambar dengan warna datar.",
                 },
               ].map(({ title, desc }) => (
                 <div className="col-12" key={title}>
@@ -205,7 +205,7 @@ function DetectHiddenData() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Detection Techniques
+              Teknik Deteksi
             </h2>
             <div className="about-steps">
               {TECHNIQUES.map(
@@ -266,7 +266,13 @@ function DetectHiddenData() {
                               border: `1px solid ${effectiveness === "None" ? "rgba(139,148,158,0.2)" : effectiveness === "Low" ? "rgba(227,179,65,0.2)" : effectiveness === "Medium" ? "rgba(88,166,255,0.2)" : "rgba(63,185,80,0.2)"}`,
                             }}
                           >
-                            {effectiveness} effectiveness
+                            Efektivitas:{" "}
+                            {{
+                              None: "Tidak ada",
+                              Low: "Rendah",
+                              Medium: "Sedang",
+                              High: "Tinggi",
+                            }[effectiveness]}
                           </span>
                         </div>
                       </div>
@@ -290,7 +296,7 @@ function DetectHiddenData() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              How to Make Detection Harder
+              Cara Mempersulit Deteksi
             </h2>
             <div className="about-steps">
               {COUNTERMEASURES.map(({ title, desc }, i) => (
@@ -309,9 +315,9 @@ function DetectHiddenData() {
               ))}
             </div>
             <div className="about-note mt-3">
-              Stego.Image applies AES-256 encryption before embedding by
-              default. This is the single most effective countermeasure against
-              statistical steganalysis.
+              Stego.Image menerapkan enkripsi AES-256 secara default sebelum
+              penyisipan. Ini merupakan langkah penangkal paling efektif untuk
+              menghadapi steganalisis statistik.
             </div>
           </section>
 
@@ -327,7 +333,7 @@ function DetectHiddenData() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Limits of Steganalysis
+              Batasan Steganalisis
             </h2>
             <p
               style={{
@@ -336,10 +342,11 @@ function DetectHiddenData() {
                 fontSize: "14.5px",
               }}
             >
-              Current steganalysis tools can detect LSB steganography reliably
-              only when the payload is large relative to the image and the
-              payload is unencrypted. With a small encrypted payload in a large,
-              complex cover image, detection rates drop significantly.
+              Alat steganalisis saat ini hanya dapat mendeteksi steganografi LSB
+              secara andal ketika payload berukuran besar dibandingkan gambar
+              dan tidak dienkripsi. Jika payload kecil dan terenkripsi disisipkan
+              dalam gambar penutup yang besar dan kompleks, tingkat deteksi
+              turun secara signifikan.
             </p>
             <p
               style={{
@@ -348,10 +355,11 @@ function DetectHiddenData() {
                 fontSize: "14.5px",
               }}
             >
-              No steganalysis tool can reliably detect all steganographic
-              content in all images. Detection is probabilistic, not certain.
-              Advanced deep-learning based detectors are an active research area
-              but remain imperfect.
+              Tidak ada alat steganalisis yang dapat mendeteksi semua konten
+              steganografi dalam setiap gambar secara andal. Deteksi bersifat
+              probabilistik, bukan pasti. Detektor berbasis deep learning
+              tingkat lanjut masih menjadi bidang penelitian aktif dan belum
+              sempurna.
             </p>
           </section>
 
@@ -367,7 +375,7 @@ function DetectHiddenData() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Lanjutkan Belajar
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -395,14 +403,14 @@ function DetectHiddenData() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {[
-                  { href: "#can-it-be-detected", label: "Can It Be Detected?" },
-                  { href: "#techniques", label: "Detection Techniques" },
-                  { href: "#countermeasures", label: "Make Detection Harder" },
-                  { href: "#limits", label: "Limits of Steganalysis" },
-                  { href: "#related", label: "Continue Learning" },
+                  { href: "#can-it-be-detected", label: "Bisakah Dideteksi?" },
+                  { href: "#techniques", label: "Teknik Deteksi" },
+                  { href: "#countermeasures", label: "Mempersulit Deteksi" },
+                  { href: "#limits", label: "Batasan Steganalisis" },
+                  { href: "#related", label: "Lanjutkan Belajar" },
                 ].map(({ href, label }) => (
                   <a
                     key={href}
@@ -422,7 +430,7 @@ function DetectHiddenData() {
               </div>
             </div>
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -430,21 +438,21 @@ function DetectHiddenData() {
                   marginBottom: "14px",
                 }}
               >
-                Hide encrypted data inside a PNG — free, client-side, no
-                uploads.
+                Sembunyikan data terenkripsi dalam PNG — gratis, diproses di
+                perangkat, tanpa mengunggah berkas.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyandikan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>

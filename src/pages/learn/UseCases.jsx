@@ -3,64 +3,64 @@ import { Helmet } from "react-helmet-async";
 
 const USE_CASES = [
   {
-    title: "Private File Transfer",
+    title: "Pengiriman File Pribadi",
     id: "use-case-0",
-    desc: 'Transfer sensitive documents without attracting attention. Instead of sending an obviously encrypted file — which signals "there is a secret here" — embed it inside an ordinary image. The recipient extracts it with the correct password.',
+    desc: 'Kirim dokumen sensitif tanpa menarik perhatian. Alih-alih mengirim file terenkripsi yang jelas menunjukkan "ada rahasia di sini", sisipkan file tersebut ke dalam gambar biasa. Penerima dapat mengekstraknya dengan kata sandi yang benar.',
     examples: [
-      "Legal documents",
-      "Financial records",
-      "Private keys or credentials",
-      "Medical records",
+      "Dokumen hukum",
+      "Catatan keuangan",
+      "Kunci privat atau kredensial",
+      "Rekam medis",
     ],
   },
   {
-    title: "Covert Communication",
+    title: "Komunikasi Terselubung",
     id: "use-case-1",
-    desc: "In regions where encrypted messaging is monitored or restricted, steganography allows communication without revealing that a secret exists. A stego image shared as a holiday photo raises no suspicion.",
+    desc: "Di wilayah yang memantau atau membatasi pesan terenkripsi, steganografi memungkinkan komunikasi tanpa mengungkapkan keberadaan rahasia. Gambar stego yang dibagikan sebagai foto liburan tidak menimbulkan kecurigaan.",
     examples: [
-      "Journalist communications",
-      "Whistleblower channels",
-      "Privacy-sensitive correspondence",
+      "Komunikasi jurnalis",
+      "Saluran pelapor pelanggaran",
+      "Korespondensi yang sensitif terhadap privasi",
     ],
   },
   {
-    title: "Digital Watermarking",
+    title: "Watermark Digital",
     id: "use-case-2",
-    desc: "Embed invisible ownership or authorship data inside digital media. Unlike visible watermarks, LSB-embedded metadata cannot be cropped or edited out without degrading the image. Used to prove ownership in copyright disputes.",
+    desc: "Sisipkan data kepemilikan atau kepengarangan yang tak terlihat ke dalam media digital. Tidak seperti watermark yang terlihat, metadata yang disisipkan dengan LSB tidak dapat dipotong atau dihapus tanpa menurunkan kualitas gambar. Teknik ini digunakan untuk membuktikan kepemilikan dalam sengketa hak cipta.",
     examples: [
-      "Photography copyright",
-      "Document authenticity",
-      "Software licensing",
+      "Hak cipta fotografi",
+      "Keaslian dokumen",
+      "Lisensi perangkat lunak",
     ],
   },
   {
-    title: "Dead Drop Communication",
+    title: "Komunikasi Dead Drop",
     id: "use-case-3",
-    desc: "A dead drop is a communication method where parties share information without direct contact. A stego image uploaded to a public site — a forum, image hosting service, or social media — can carry a hidden message retrievable only by the intended recipient.",
+    desc: "Dead drop adalah metode komunikasi ketika pihak-pihak berbagi informasi tanpa kontak langsung. Gambar stego yang diunggah ke situs publik — forum, layanan hosting gambar, atau media sosial — dapat membawa pesan tersembunyi yang hanya bisa diambil oleh penerima yang dituju.",
     examples: [
-      "Operational security",
-      "Research coordination",
-      "Anonymous tip channels",
+      "Keamanan operasional",
+      "Koordinasi penelitian",
+      "Saluran laporan anonim",
     ],
   },
   {
-    title: "Data Backup with Plausible Deniability",
+    title: "Cadangan Data dengan Penyangkalan yang Masuk Akal",
     id: "use-case-4",
-    desc: "Store sensitive backup data inside ordinary-looking image files in cloud storage. Even if the cloud account is accessed, the images appear normal. The data is both hidden and AES-256 encrypted — two layers of protection.",
+    desc: "Simpan data cadangan sensitif di dalam file gambar yang tampak biasa pada penyimpanan cloud. Sekalipun akun cloud diakses, gambar-gambarnya terlihat normal. Data tersebut disembunyikan sekaligus dienkripsi dengan AES-256 — dua lapisan perlindungan.",
     examples: [
-      "Password backups",
-      "Sensitive configuration files",
-      "Cryptocurrency seed phrases",
+      "Cadangan kata sandi",
+      "File konfigurasi sensitif",
+      "Frasa pemulihan mata uang kripto",
     ],
   },
   {
-    title: "Security Research and Education",
+    title: "Riset Keamanan dan Pendidikan",
     id: "use-case-5",
-    desc: "Stego.Image is fully open-source and client-side. Researchers and students can inspect the source code, test steganographic techniques, study LSB encoding and decoding, and experiment with steganalysis against known stego images.",
+    desc: "Stego.Image sepenuhnya bersifat open-source dan berjalan di sisi klien. Peneliti dan mahasiswa dapat memeriksa kode sumber, menguji teknik steganografi, mempelajari encoding dan decoding LSB, serta bereksperimen dengan steganalisis pada gambar stego yang telah diketahui.",
     examples: [
-      "University coursework",
+      "Tugas kuliah",
       "CTF (Capture the Flag) challenges",
-      "Security tool development",
+      "Pengembangan alat keamanan",
     ],
   },
 ];
@@ -68,33 +68,33 @@ const USE_CASES = [
 const RELATED = [
   {
     to: "/learn/how-steganography-works",
-    label: "How Steganography Works",
-    desc: "Broad overview of steganography concepts",
+    label: "Cara Kerja Steganografi",
+    desc: "Gambaran umum konsep steganografi",
   },
   {
     to: "/learn/steganography-vs-encryption",
-    label: "Steganography vs Encryption",
-    desc: "When to use each technique",
+    label: "Steganografi vs Enkripsi",
+    desc: "Kapan menggunakan masing-masing teknik",
   },
   {  
     to: "/learn/lsb-steganography",
-    label: "LSB Steganography",
-    desc: "Technical deep dive into bit-level pixel manipulation",
+    label: "Steganografi LSB",
+    desc: "Pembahasan teknis mendalam tentang manipulasi bit pada tingkat piksel",
   },
   {
     to: "/learn/aes256-encryption",
-    label: "AES-256 Encryption",
-    desc: "How your data is protected before embedding",
+    label: "Enkripsi AES-256",
+    desc: "Cara data Anda dilindungi sebelum disisipkan",
   },
   {
     to: "/learn/detect-hidden-data",
-    label: "Detect Hidden Data",
-    desc: "How steganalysis tools detect hidden content",
+    label: "Mendeteksi Data Tersembunyi",
+    desc: "Cara alat steganalisis mendeteksi konten tersembunyi",
   },
   {
     to: "/learn/image-steganography",
-    label: "Image Steganography",
-    desc: "How image format affects hidden data survival",
+    label: "Steganografi Gambar",
+    desc: "Pengaruh format gambar terhadap keutuhan data tersembunyi",
   },
 ];
 
@@ -102,10 +102,10 @@ function UseCases() {
   return (
     <div className="container py-5">
       <Helmet>
-        <title>Steganography Use Cases — Real-World Applications | Stego.Image</title>
+        <title>Kegunaan Steganografi — Penerapan di Dunia Nyata | Stego.Image</title>
         <meta
           name="description"
-          content="Explore real-world use cases for steganography — private file transfer, covert communication, digital watermarking, dead drops, secure backup, and security research."
+          content="Jelajahi kegunaan steganografi di dunia nyata — pengiriman file pribadi, komunikasi terselubung, watermark digital, dead drop, pencadangan aman, dan riset keamanan."
         />
         <link
           rel="canonical"
@@ -113,7 +113,7 @@ function UseCases() {
         />
         <meta
           property="og:title"
-          content="Steganography Use Cases — Real-World Applications | Stego.Image"
+          content="Kegunaan Steganografi — Penerapan di Dunia Nyata | Stego.Image"
         />
         <meta property="og:type" content="article" />
       </Helmet>
@@ -121,16 +121,16 @@ function UseCases() {
       {/* ── BREADCRUMB ── */}
       <nav style={{ fontSize: "13px", marginBottom: "28px" }}>
         <Link className="custom-link" to="/">
-          Home
+          Beranda
         </Link>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Learn</span>
+        <span style={{ color: "var(--text-primary)" }}>Pelajari</span>
         <span className="mx-2" style={{ color: "var(--text-primary)" }}>
           ›
         </span>
-        <span style={{ color: "var(--text-primary)" }}>Use Cases</span>
+        <span style={{ color: "var(--text-primary)" }}>Kegunaan</span>
       </nav>
 
       <div className="row">
@@ -139,7 +139,7 @@ function UseCases() {
             className="text-white mb-2"
             style={{ fontSize: "28px", fontWeight: 700 }}
           >
-            Steganography Use Cases
+            Kegunaan Steganografi
           </h1>
           <p
             style={{
@@ -149,9 +149,9 @@ function UseCases() {
               lineHeight: 1.7,
             }}
           >
-            Steganography has practical applications across privacy, security,
-            journalism, and digital rights. Here are the most common real-world
-            use cases for hiding data inside images.
+            Steganografi memiliki penerapan praktis dalam privasi, keamanan,
+            jurnalistik, dan hak digital. Berikut beberapa kegunaan paling umum
+            untuk menyembunyikan data di dalam gambar.
           </p>
 
           {/* ── USE CASES ── */}
@@ -189,7 +189,7 @@ function UseCases() {
                     fontWeight: 600,
                   }}
                 >
-                  Examples
+                  Contoh
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {examples.map((ex) => (
@@ -224,7 +224,7 @@ function UseCases() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Legal Considerations
+              Pertimbangan Hukum
             </h2>
             <p
               style={{
@@ -233,22 +233,22 @@ function UseCases() {
                 fontSize: "14.5px",
               }}
             >
-              Steganography itself is legal in most jurisdictions. It is a
-              neutral technique — the same tool used for privacy can be misused.
-              Stego.Image is provided for legitimate privacy, research, and
-              educational purposes.
+              Steganografi sendiri legal di sebagian besar wilayah hukum. Ini
+              merupakan teknik netral — alat yang sama untuk menjaga privasi
+              dapat disalahgunakan. Stego.Image disediakan untuk keperluan
+              privasi, penelitian, dan pendidikan yang sah.
             </p>
             <div className="about-limitations">
               {[
                 {
                   icon: "✅",
-                  title: "Legal uses",
-                  desc: "Personal privacy, journalism, security research, digital watermarking, education, CTF challenges.",
+                  title: "Penggunaan legal",
+                  desc: "Privasi pribadi, jurnalistik, riset keamanan, watermark digital, pendidikan, tantangan CTF.",
                 },
                 {
                   icon: "⚠️",
-                  title: "Illegal uses",
-                  desc: "Concealing evidence, transmitting illegal content, or circumventing lawful interception orders. Stego.Image must not be used for illegal activity.",
+                  title: "Penggunaan ilegal",
+                  desc: "Menyembunyikan bukti, mengirimkan konten ilegal, atau menghindari perintah penyadapan yang sah. Stego.Image tidak boleh digunakan untuk kegiatan ilegal.",
                 },
               ].map(({ icon, title, desc }) => (
                 <div className="about-limitation-item" key={title}>
@@ -279,7 +279,7 @@ function UseCases() {
                 borderBottom: "1px solid var(--border)",
               }}
             >
-              Continue Learning
+              Pelajari Lebih Lanjut
             </h2>
             <div className="d-flex flex-column gap-2">
               {RELATED.map(({ to, label, desc }) => (
@@ -307,7 +307,7 @@ function UseCases() {
         <div className="col-lg-4 d-none d-lg-block">
           <div style={{ position: "sticky", top: "24px" }}>
             <div className="about-section mb-3">
-              <div className="about-section-title">On this page</div>
+              <div className="about-section-title">Di halaman ini</div>
               <div className="d-flex flex-column gap-1">
                 {USE_CASES.map(({ title }, i) => (
                   <a
@@ -336,7 +336,7 @@ function UseCases() {
                     paddingLeft: "10px",
                   }}
                 >
-                  Legal Considerations
+                  Pertimbangan Hukum
                 </a>
                 <a
                   href="#related"
@@ -349,12 +349,12 @@ function UseCases() {
                     paddingLeft: "10px",
                   }}
                 >
-                  Related Topics
+                  Topik Terkait
                 </a>
               </div>
             </div>
             <div className="about-section text-center">
-              <div className="about-section-title">Try It</div>
+              <div className="about-section-title">Coba</div>
               <p
                 style={{
                   fontSize: "13px",
@@ -362,20 +362,21 @@ function UseCases() {
                   marginBottom: "14px",
                 }}
               >
-                Hide any file inside a PNG — free, client-side, no uploads.
+                Sembunyikan file apa pun di dalam PNG — gratis, di sisi klien,
+                tanpa mengunggah file.
               </p>
               <div className="d-flex flex-column gap-2">
                 <Link
                   className="primary-btn justify-content-center"
                   to="/encode"
                 >
-                  Start Encoding
+                  Mulai Menyisipkan
                 </Link>
                 <Link
                   className="secondary-btn justify-content-center"
                   to="/decode"
                 >
-                  Extract Data
+                  Ekstrak Data
                 </Link>
               </div>
             </div>
