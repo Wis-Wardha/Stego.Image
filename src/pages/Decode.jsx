@@ -16,6 +16,8 @@ function Decode() {
   const [useEncrypt, setUseEncrypt] = useState(true); // must match encode-time setting
   const [outputFile, setOutputFile] = useState(null); // { url, name }
   const [loading, setLoading] = useState(false);
+  const [verificationResult, setVerificationResult] = useState(null);
+  const [verifyingPdf, setVerifyingPdf] = useState(false);
 
   const canvasRef = useRef();
   const imageInputRef = useRef();
@@ -51,6 +53,65 @@ function Decode() {
       return !prev;
     });
   };
+  const verifyPdfSignature = async () => {
+    if (!outputFile || !outputFile.blob) {
+      alert("Please extract a PDF file first.");
+      return;
+    }
+  
+    const isPdf =
+      outputFile.name?.toLowerCase().endsWith(".pdf") ||
+      outputFile.type === "application/pdf";
+  
+    if (!isPdf) {
+      alert("TTE verification is only available for PDF files.");
+      return;
+    }
+  
+    setVerifyingPdf(true);
+    setVerificationResult(null);
+  
+    try {
+      const formData = new FormData();
+      const pdfFile = new File(
+        [outputFile.blob],
+        outputFile.name || "document.pdf",
+        { type: outputFile.type || "application/pdf" }
+      );
+  
+      formData.append("file", pdfFile, pdfFile.name);
+  
+      const response = await fetch("https://cekdokumen.id/api/verification", {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          "X-Platform": "web",
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Verification failed (${response.status}): ${errorText || "Unknown error"}`
+        );
+      }
+  
+      const result = await response.json();
+      setVerificationResult(result);
+    } catch (error) {
+      alert(error.message || "Failed to verify PDF signature.");
+    } finally {
+      setVerifyingPdf(false);
+    }
+  };
+
+  setOutputFile({
+    url: URL.createObjectURL(blob),
+    name: fileName,
+    blob,
+    type: blob.type || "application/octet-stream",
+  });
 
   // ── Decode ─────────────────────────────────────────────────────────────────
 
@@ -211,17 +272,55 @@ function Decode() {
             <div className="output-box">
               <h5>File Extracted Successfully</h5>
               <p>{outputFile.name}</p>
-              <a
-                href={outputFile.url}
-                download={outputFile.name}
-                className="primary-btn"
-              >
-                Download File
-              </a>
+        
+              <div className="d-flex justify-content-center gap-2 flex-wrap">
+                <a
+                  href={outputFile.url}
+                  download={outputFile.name}
+                  className="primary-btn"
+                >
+                  Download File
+                </a>
+        
+                {(outputFile.name?.toLowerCase().endsWith(".pdf") ||
+                  outputFile.type === "application/pdf") && (
+                  <button
+                    type="button"
+                    className="primary-btn"
+                    onClick={verifyPdfSignature}
+                    disabled={verifyingPdf}
+                  >
+                    {verifyingPdf ? "Verifying…" : "Verify TTE"}
+                  </button>
+                )}
+              </div>
+        
+              {verificationResult && (
+                <div className="mt-4 text-start bg-light text-dark rounded p-3">
+                  <h6 className="mb-3">Hasil Verifikasi TTE</h6>
+                  <p className="mb-1">
+                    <strong>Document ID:</strong> {verificationResult.documentId || "-"}
+                  </p>
+                  <p className="mb-1">
+                    <strong>Status:</strong>{" "}
+                    {Array.isArray(verificationResult.verificationStatus)
+                      ? verificationResult.verificationStatus.join(", ")
+                      : verificationResult.verificationStatus || "-"}
+                  </p>
+                  <p className="mb-1">
+                    <strong>Message Code:</strong> {verificationResult.messageCode || "-"}
+                  </p>
+                  <p className="mb-1">
+                    <strong>Document has signature:</strong>{" "}
+                    {verificationResult.documentHasSignature ? "Ya" : "Tidak"}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
+      
 
       {/* Hidden canvas used by the steganography engine */}
       <canvas ref={canvasRef} style={{ display: "none" }} />
