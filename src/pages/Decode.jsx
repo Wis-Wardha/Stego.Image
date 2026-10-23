@@ -198,14 +198,14 @@ function Decode() {
 
       {/* Page header */}
       <div className="text-center text-white mb-4">
-        <h1>Decode Data from Image</h1>
-        <p>Extract hidden data from a steganographic image</p>
+        <h1>Dekode Data dari Image</h1>
+        <p>Ekstrak data tersembunyi dari gambar steganografi</p>
       </div>
 
       <div className="row g-4">
         {/* Stego image drop zone */}
         <div className="col-md-8 offset-md-2">
-          <label className="label-text">Stego Image</label>
+          <label className="label-text">Gambar Stego</label>
           <div
             className="drop-zone"
             onDrop={handleDrop}
@@ -252,8 +252,8 @@ function Decode() {
           {/* Contextual hint — reminds user to match encode-time setting */}
           <p className="encrypt-hint">
             {useEncrypt
-              ? "The image was encoded with encryption. Enter the password used during encoding."
-              : "The image was encoded without encryption. No password is needed to extract."}
+              ? "Gambar tersebut telah disandikan dengan enkripsi. Masukkan kata sandi yang digunakan saat penyandian."
+              : "Gambar tersebut dikodekan tanpa enkripsi. Tidak diperlukan kata sandi untuk mengekstraknya."}
           </p>
         </div>
 
@@ -397,20 +397,18 @@ function Decode() {
 
       {/* Instructions */}
       <div className="info-box mt-5">
-        <h5>⚠️ Please read before decoding</h5>
+        <h5>⚠️ Harap baca sebelum melakukan dekode</h5>
         <ul>
           <li>
-            Use <strong>PNG or BMP</strong> only. If you received a ZIP, extract
-            it first.
+            Gunakan format <strong>PNG</strong> atau <strong>BMP</strong> saja. Jika Anda menerima file ZIP, ekstrak terlebih dahulu.
           </li>
           <li>
-            Toggle must <strong>match</strong> what was used during encoding.
+            Pengaturan harus sama dengan yang digunakan saat proses enkripsi.
           </li>
           <li>
-            Encryption <strong>ON</strong>: enter the exact password used to
-            encode. <strong>OFF</strong>: no password needed.
+            Enkripsi <strong>AKTIF</strong>: masukkan kata sandi yang tepat seperti yang digunakan saat enkripsi. <strong>NONAKTIF</strong>: tidak memerlukan kata sandi.
           </li>
-          <li>Wrong password or wrong toggle = corrupted or no output.</li>
+          <li>Kata sandi atau pengaturan yang salah akan menyebabkan file rusak atau tidak menghasilkan apa pun.</li>
           <li>
             Jika hasil decode adalah file PDF, file akan tampil langsung di dalam
             halaman web menggunakan object URL browser. Tidak disimpan ke server.

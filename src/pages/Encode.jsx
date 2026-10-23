@@ -479,7 +479,7 @@ function Encode() {
 
       {/* Instructions */}
       <div className="info-box mt-4">
-        <h5>Instructions</h5>
+        <h5>Intruksi</h5>
         <ul>
           <li>
             Gunakan format <strong>PNG</strong> atau <strong>BMP</strong> saja — kompresi JPEG akan merusak data tersembunyi.
