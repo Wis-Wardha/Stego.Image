@@ -58,164 +58,118 @@ export default function Navbar() {
   return (
     <>
       {/* Fixed navbar */}
-      <nav ref={navRef} style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-        background: "rgba(22,27,34,0.92)", backdropFilter: "blur(12px)",
-        borderBottom: "1px solid #30363d",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 20px", height: 60,
-      }}>
+      <nav ref={navRef} className="custom-navbar site-navbar">
 
         {/* Brand */}
-        <Link to="/" onClick={closeMenus} style={{
-          display: "flex", alignItems: "center", gap: 9,
-          textDecoration: "none", fontWeight: 700, fontSize: 16,
-          color: "#58a6ff", flexShrink: 0,
-        }}>
+        <Link to="/" onClick={closeMenus} className="site-navbar__brand">
           <img src={logo} alt="Stego.Image" width={28} height={28} />
           Stego.Image
         </Link>
 
         {/* Desktop links */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: 4,
-          "@media(max-width:768px)": { display: "none" },
-        }} className="nb-desktop">
+        <div className="site-navbar__desktop">
 
           {NAV_LINKS.map(({ to, label }) => (
-            <Link key={to} to={to} style={{
-              padding: "6px 12px", borderRadius: 6, fontSize: 14, textDecoration: "none",
-              color: isActive(to) ? "#e6edf3" : "#8b949e",
-              background: isActive(to) ? "rgba(255,255,255,0.06)" : "transparent",
-              transition: "color 0.2s, background 0.2s",
-              fontWeight: isActive(to) ? 500 : 400,
-            }}
-              onMouseEnter={e => { if (!isActive(to)) e.currentTarget.style.color = "#e6edf3"; }}
-              onMouseLeave={e => { if (!isActive(to)) e.currentTarget.style.color = "#8b949e"; }}
-            >{label}</Link>
+            <Link
+              key={to}
+              to={to}
+              className={`site-navbar__link${isActive(to) ? " is-active" : ""}`}
+            >
+              {label}
+            </Link>
           ))}
 
           {/* Learn dropdown */}
-          <div style={{ position: "relative" }}>
-            <button onClick={() => setLearnOpen(o => !o)} style={{
-              padding: "6px 12px", borderRadius: 6, fontSize: 14, cursor: "pointer",
-              color: isLearnActive ? "#e6edf3" : "#8b949e",
-              background: isLearnActive ? "rgba(255,255,255,0.06)" : "transparent",
-              border: "none", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 5,
-              transition: "color 0.2s",
-            }}
-              onMouseEnter={e => { if (!isLearnActive) e.currentTarget.style.color = "#e6edf3"; }}
-              onMouseLeave={e => { if (!isLearnActive && !learnOpen) e.currentTarget.style.color = "#8b949e"; }}
+          <div className="site-navbar__dropdown">
+            <button
+              onClick={() => setLearnOpen(o => !o)}
+              className={`site-navbar__dropdown-toggle${isLearnActive ? " is-active" : ""}`}
+              aria-expanded={learnOpen}
             >
               Learn
-              <span style={{ fontSize: 10, opacity: 0.6, transform: learnOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s", display: "inline-block" }}>▼</span>
+              <span className={`site-navbar__chevron${learnOpen ? " is-open" : ""}`}>▼</span>
             </button>
 
             {learnOpen && (
-              <div style={{
-                position: "absolute", top: "calc(100% + 8px)", right: 0,
-                background: "#161b22", border: "1px solid #30363d",
-                borderRadius: 10, padding: "6px", minWidth: 230,
-                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-                zIndex: 10,
-              }}>
+              <div className="site-navbar__dropdown-menu">
                 {LEARN_LINKS.map(({ to, label }) => (
-                  <Link key={to} to={to} onClick={() => setLearnOpen(false)} style={{
-                    display: "block", padding: "9px 12px", borderRadius: 6,
-                    fontSize: 13, textDecoration: "none",
-                    color: location.pathname === to ? "#58a6ff" : "#8b949e",
-                    background: location.pathname === to ? "rgba(88,166,255,0.08)" : "transparent",
-                    transition: "background 0.15s, color 0.15s",
-                  }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "#e6edf3"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = location.pathname === to ? "rgba(88,166,255,0.08)" : "transparent"; e.currentTarget.style.color = location.pathname === to ? "#58a6ff" : "#8b949e"; }}
-                  >{label}</Link>
+                  <Link
+                    key={to}
+                    to={to}
+                    onClick={() => setLearnOpen(false)}
+                    className={`site-navbar__dropdown-item${location.pathname === to ? " is-active" : ""}`}
+                  >
+                    {label}
+                  </Link>
                 ))}
               </div>
             )}
           </div>
 
           {/* GitHub */}
-          <a href={GH} target="_blank" rel="noopener noreferrer" style={{
-            marginLeft: 4, padding: "5px 12px", borderRadius: 6, fontSize: 13,
-            color: "#8b949e", border: "1px solid #30363d", textDecoration: "none",
-            transition: "border-color 0.2s, color 0.2s",
-          }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#58a6ff"; e.currentTarget.style.color = "#58a6ff"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "#30363d"; e.currentTarget.style.color = "#8b949e"; }}
-          >GitHub</a>
+          <a href={GH} target="_blank" rel="noopener noreferrer" className="site-navbar__github">
+            GitHub
+          </a>
         </div>
 
         {/* Hamburger (mobile) */}
-        <button onClick={() => setMenuOpen(o => !o)} className="nb-hamburger" style={{
-          background: "transparent", border: "1px solid #30363d", borderRadius: 6,
-          padding: "6px 8px", cursor: "pointer", display: "none",
-          flexDirection: "column", gap: 4, alignItems: "center", justifyContent: "center",
-        }} aria-label="Toggle menu" aria-expanded={menuOpen}>
-          <span style={{ display: "block", width: 18, height: 2, background: menuOpen ? "#58a6ff" : "#8b949e", borderRadius: 2, transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(6px) rotate(45deg)" : "none" }} />
-          <span style={{ display: "block", width: 18, height: 2, background: menuOpen ? "#58a6ff" : "#8b949e", borderRadius: 2, transition: "opacity 0.25s", opacity: menuOpen ? 0 : 1 }} />
-          <span style={{ display: "block", width: 18, height: 2, background: menuOpen ? "#58a6ff" : "#8b949e", borderRadius: 2, transition: "transform 0.25s, opacity 0.25s", transform: menuOpen ? "translateY(-6px) rotate(-45deg)" : "none" }} />
+        <button
+          onClick={() => setMenuOpen(o => !o)}
+          className={`site-navbar__hamburger${menuOpen ? " is-open" : ""}`}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
+          <span className="site-navbar__hamburger-line site-navbar__hamburger-line--top" />
+          <span className="site-navbar__hamburger-line site-navbar__hamburger-line--middle" />
+          <span className="site-navbar__hamburger-line site-navbar__hamburger-line--bottom" />
         </button>
 
         {/* Mobile menu drawer with Scrolling Fixed */}
         {menuOpen && (
-          <div style={{
-            position: "fixed", top: 60, left: 0, right: 0, zIndex: 999,
-            background: "#161b22", borderBottom: "1px solid #30363d",
-            padding: "12px 16px 16px",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
-            maxHeight: "calc(100vh - 60px)", // Ensures it doesn't exceed screen height
-            overflowY: "auto",               // Enables scrolling
-          }}>
+          <div className="site-navbar__mobile-menu">
             {NAV_LINKS.map(({ to, label }) => (
-              <Link key={to} to={to} onClick={closeMenus} style={{
-                display: "flex", alignItems: "center", width: "100%", boxSizing: "border-box",
-                padding: "12px 14px", borderRadius: 8, marginBottom: 4,
-                background: isActive(to) ? "rgba(88,166,255,0.08)" : "transparent",
-                border: `1px solid ${isActive(to) ? "rgba(88,166,255,0.2)" : "transparent"}`,
-                color: isActive(to) ? "#58a6ff" : "#c9d1d9",
-                fontSize: 14, fontWeight: isActive(to) ? 600 : 400,
-                textDecoration: "none", fontFamily: "inherit",
-              }}>
+              <Link
+                key={to}
+                to={to}
+                onClick={closeMenus}
+                className={`site-navbar__mobile-link${isActive(to) ? " is-active" : ""}`}
+              >
                 {label}
               </Link>
             ))}
 
             {/* Learn section on mobile */}
-            <button onClick={() => setLearnOpen(o => !o)} style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              width: "100%", padding: "12px 14px", borderRadius: 8, marginBottom: 4,
-              background: isLearnActive ? "rgba(88,166,255,0.08)" : "transparent",
-              border: `1px solid ${isLearnActive ? "rgba(88,166,255,0.2)" : "transparent"}`,
-              color: isLearnActive ? "#58a6ff" : "#c9d1d9",
-              fontSize: 14, cursor: "pointer", fontFamily: "inherit",
-            }}>
+            <button
+              onClick={() => setLearnOpen(o => !o)}
+              className={`site-navbar__mobile-learn-toggle${isLearnActive ? " is-active" : ""}`}
+              aria-expanded={learnOpen}
+            >
               <span>Learn</span>
-              <span style={{ fontSize: 10, opacity: 0.6, transform: learnOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s", display: "inline-block" }}>▼</span>
+              <span className={`site-navbar__chevron${learnOpen ? " is-open" : ""}`}>▼</span>
             </button>
 
             {learnOpen && (
-              <div style={{ paddingLeft: 12, marginBottom: 4 }}>
+              <div className="site-navbar__mobile-learn-links">
                 {LEARN_LINKS.map(({ to, label }) => (
-                  <Link key={to} to={to} onClick={closeMenus} style={{
-                    display: "flex", width: "100%", padding: "10px 14px", boxSizing: "border-box",
-                    borderRadius: 6, marginBottom: 3,
-                    background: location.pathname === to ? "rgba(88,166,255,0.08)" : "transparent",
-                    color: location.pathname === to ? "#58a6ff" : "#8b949e",
-                    fontSize: 13, textDecoration: "none", fontFamily: "inherit",
-                  }}>
+                  <Link
+                    key={to}
+                    to={to}
+                    onClick={closeMenus}
+                    className={`site-navbar__mobile-learn-link${location.pathname === to ? " is-active" : ""}`}
+                  >
                     {label}
                   </Link>
                 ))}
               </div>
             )}
 
-            <a href={GH} target="_blank" rel="noopener noreferrer" onClick={closeMenus} style={{
-              display: "flex", alignItems: "center", width: "100%", boxSizing: "border-box",
-              padding: "12px 14px", borderRadius: 8, marginTop: 4,
-              background: "transparent", border: "1px solid #30363d",
-              color: "#8b949e", fontSize: 14, textDecoration: "none",
-            }}>
+            <a
+              href={GH}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenus}
+              className="site-navbar__mobile-github"
+            >
               GitHub ↗
             </a>
           </div>
@@ -223,14 +177,7 @@ export default function Navbar() {
       </nav>
 
       {/* Body offset so content isn't hidden under fixed nav */}
-      <div style={{ height: 60 }} aria-hidden="true" />
-
-      <style>{`
-        @media (max-width: 768px) {
-          .nb-desktop  { display: none !important; }
-          .nb-hamburger { display: flex !important; }
-        }
-      `}</style>
+      <div className="site-navbar__spacer" aria-hidden="true" />
     </>
   );
 }

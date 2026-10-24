@@ -52,26 +52,17 @@ const FAQ = [
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{
-      background: open ? "#1a2030" : "#161b22",
-      border: `1px solid ${open ? "rgba(88,166,255,0.3)" : "#30363d"}`,
-      borderRadius: 10, overflow: "hidden",
-      transition: "border-color 0.25s, background 0.25s",
-    }}>
-      <button onClick={() => setOpen(o => !o)} style={{
-        width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
-        gap: 16, padding: "16px 20px", background: "transparent", border: "none",
-        color: "#e6edf3", fontSize: 14, fontWeight: 600, cursor: "pointer",
-        fontFamily: "inherit", textAlign: "left",
-      }}>
+    <div className={`about-faq-item${open ? " is-open" : ""}`}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="about-faq-question"
+        aria-expanded={open}
+      >
         <span>{q}</span>
-        <span style={{
-          color: "#58a6ff", fontSize: 18, flexShrink: 0, lineHeight: 1,
-          transform: open ? "rotate(45deg)" : "none", transition: "transform 0.25s",
-        }}>+</span>
+        <span className={`about-faq-icon${open ? " is-open" : ""}`}>+</span>
       </button>
       {open && (
-        <div style={{ padding: "0 20px 16px", fontSize: 14, color: "#8b949e", lineHeight: 1.75 }}>
+        <div className="about-faq-answer">
           {a}
         </div>
       )}
@@ -82,29 +73,19 @@ function FaqItem({ q, a }) {
 /* ─── Pipeline step card ─────────────────────────────────────── */
 function StepCard({ icon, title, desc, index, total }) {
   return (
-    <div style={{ display: "flex", gap: 0, alignItems: "stretch" }}>
+    <div className={`about-pipeline-step${index < total - 1 ? " has-next" : ""}`}>
       {/* connector column */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginRight: 16, flexShrink: 0 }}>
-        <div style={{
-          width: 36, height: 36, borderRadius: "50%", background: "#161b22",
-          border: "1px solid #30363d", display: "flex", alignItems: "center",
-          justifyContent: "center", fontSize: 16, flexShrink: 0,
-        }}>{icon}</div>
-        {index < total - 1 && (
-          <div style={{ width: 1, flex: 1, background: "#30363d", minHeight: 20, margin: "4px 0" }} />
-        )}
+      <div className="about-pipeline-connector">
+        <div className="about-pipeline-icon">{icon}</div>
+        {index < total - 1 && <div className="about-pipeline-line" />}
       </div>
       {/* content */}
-      <div style={{ paddingBottom: index < total - 1 ? 24 : 0, flex: 1 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-          <span style={{
-            fontSize: 10, fontWeight: 700, color: "#58a6ff",
-            background: "rgba(88,166,255,0.1)", border: "1px solid rgba(88,166,255,0.2)",
-            borderRadius: 4, padding: "1px 7px",
-          }}>{String(index + 1).padStart(2, "0")}</span>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "#e6edf3" }}>{title}</span>
+      <div className="about-pipeline-content">
+        <div className="about-pipeline-heading">
+          <span className="about-pipeline-number">{String(index + 1).padStart(2, "0")}</span>
+          <span className="about-pipeline-title">{title}</span>
         </div>
-        <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.7, margin: 0 }}>{desc}</p>
+        <p className="about-pipeline-desc">{desc}</p>
       </div>
     </div>
   );
@@ -113,12 +94,8 @@ function StepCard({ icon, title, desc, index, total }) {
 /* ─── Section wrapper ────────────────────────────────────────── */
 function Section({ title, children }) {
   return (
-    <section style={{ marginBottom: 48 }}>
-      <h2 style={{
-        fontSize: "clamp(16px,2.5vw,20px)", fontWeight: 700,
-        color: "#e6edf3", marginBottom: 20, paddingBottom: 12,
-        borderBottom: "1px solid #30363d", letterSpacing: -0.2,
-      }}>{title}</h2>
+    <section className="about-content-section">
+      <h2 className="about-content-heading">{title}</h2>
       {children}
     </section>
   );
@@ -127,40 +104,24 @@ function Section({ title, children }) {
 /* ─── Page ───────────────────────────────────────────────────── */
 export default function About() {
   return (
-    <div style={{ background: "#0d1117", color: "#e6edf3" }}>
+    <div className="about-page">
       <Helmet>
         <title>Tentang Stego.Image — Alat Steganografi Gratis di Sisi Klien</title>
         <meta name="description" content="Pelajari Stego.Image — alat steganografi sumber terbuka di sisi klien yang dibuat dengan React, enkripsi AES-256, dan pengodean piksel LSB." />
         <link rel="canonical" href="https://stegoimage.pages.dev/about" />
       </Helmet>
 
-      <style>{`
-        .ab-wrap { max-width:860px; margin:0 auto; padding:64px 24px; }
-        .ab-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-        .ab-tech-table { width:100%; border-collapse:collapse; }
-        .ab-tech-table th { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8b949e; padding:10px 14px; text-align:left; border-bottom:1px solid #30363d; }
-        .ab-tech-table td { font-size:13px; color:#c9d1d9; padding:11px 14px; border-bottom:1px solid #21262d; vertical-align:top; }
-        .ab-tech-table tr:last-child td { border-bottom:none; }
-        .ab-tech-table tr:nth-child(even) td { background:#111720; }
-        .ab-tech-table code { font-size:12px; color:#58a6ff; background:rgba(88,166,255,0.08); border:1px solid rgba(88,166,255,0.15); border-radius:4px; padding:1px 6px; font-family:monospace; }
-        @media (max-width:640px) {
-          .ab-wrap { padding:40px 16px; }
-          .ab-grid-2 { grid-template-columns:1fr; }
-          .ab-tech-table th:last-child, .ab-tech-table td:last-child { display:none; }
-        }
-      `}</style>
-
-      <div className="ab-wrap">
+      <div className="about-page__content">
 
         {/* ── HERO ─────────────────────────────────────────── */}
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <p style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#8b949e", marginBottom: 12 }}>
+        <div className="about-hero">
+          <p className="about-hero__eyebrow">
             Sumber terbuka · Berlisensi MIT
           </p>
-          <h1 style={{ fontSize: "clamp(26px,5vw,42px)", fontWeight: 700, marginBottom: 16, letterSpacing: -0.5 }}>
+          <h1 className="about-hero__title">
             Tentang Stego.Image
           </h1>
-          <p style={{ fontSize: 16, lineHeight: 1.75, color: "#8b949e", maxWidth: 600, margin: "0 auto" }}>
+          <p className="about-hero__description">
             Alat berbasis browser untuk menyembunyikan dan mengekstrak file di dalam gambar menggunakan
             steganografi dan enkripsi AES-256 opsional — 100% di sisi klien,
             tanpa komunikasi dengan server.
@@ -169,25 +130,22 @@ export default function About() {
 
         {/* ── WHAT IT DOES ─────────────────────────────────── */}
         <Section title="Fungsinya">
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+          <div className="about-features">
             {[
-              { n: "01", c: "#58a6ff", title: "Steganografi", desc: "Menyembunyikan keberadaan data dengan menuliskannya pada bit paling tidak signifikan dari kanal RGB piksel. Tampilan gambar keluaran tidak dapat dibedakan dari gambar asli." },
-              { n: "02", c: "#2ea043", title: "Enkripsi",    desc: "Melindungi data dengan AES-256 sehingga sekalipun seseorang menemukan data tersembunyi, mereka tidak dapat membacanya tanpa kata sandi." },
-            ].map(({ n, c, title, desc }) => (
-              <div key={n} style={{
-                flex: "1 1 260px", background: "#161b22", border: `1px solid ${c}22`,
-                borderRadius: 12, padding: "20px 20px",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={{ fontSize: 20, fontWeight: 700, color: c, lineHeight: 1 }}>{n}</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "#e6edf3" }}>{title}</span>
+              { n: "01", kind: "steganography", title: "Steganografi", desc: "Menyembunyikan keberadaan data dengan menuliskannya pada bit paling tidak signifikan dari kanal RGB piksel. Tampilan gambar keluaran tidak dapat dibedakan dari gambar asli." },
+              { n: "02", kind: "encryption", title: "Enkripsi",    desc: "Melindungi data dengan AES-256 sehingga sekalipun seseorang menemukan data tersembunyi, mereka tidak dapat membacanya tanpa kata sandi." },
+            ].map(({ n, kind, title, desc }) => (
+              <div key={n} className={`about-feature-card about-feature-card--${kind}`}>
+                <div className="about-feature-card__heading">
+                  <span className="about-feature-card__number">{n}</span>
+                  <span className="about-feature-card__title">{title}</span>
                 </div>
-                <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.7, margin: 0 }}>{desc}</p>
+                <p className="about-feature-card__description">{desc}</p>
               </div>
             ))}
           </div>
-          <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 10, padding: "14px 18px" }}>
-            <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.75, margin: 0 }}>
+          <div className="about-note">
+            <p className="about-note__text">
               Semua pemrosesan berjalan secara lokal di browser Anda. File, kata sandi, maupun data gambar
               tidak pernah dikirim ke server.
             </p>
@@ -196,7 +154,7 @@ export default function About() {
 
         {/* ── ENCODE PIPELINE ──────────────────────────────── */}
         <Section title="Alur Penyisipan">
-          <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, padding: "24px 20px" }}>
+          <div className="about-panel about-pipeline">
             {ENCODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={ENCODE_STEPS.length} />
             ))}
@@ -205,7 +163,7 @@ export default function About() {
 
         {/* ── DECODE PIPELINE ──────────────────────────────── */}
         <Section title="Alur Ekstraksi">
-          <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, padding: "24px 20px" }}>
+          <div className="about-panel about-pipeline">
             {DECODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={DECODE_STEPS.length} />
             ))}
@@ -214,8 +172,8 @@ export default function About() {
 
         {/* ── TECH STACK ───────────────────────────────────── */}
         <Section title="Teknologi yang Digunakan">
-          <div style={{ background: "#161b22", border: "1px solid #30363d", borderRadius: 12, overflow: "hidden" }}>
-            <table className="ab-tech-table">
+          <div className="about-panel about-tech-wrapper">
+            <table className="about-tech-table">
               <thead>
                 <tr>
                   <th>Pustaka</th>
@@ -226,7 +184,7 @@ export default function About() {
               <tbody>
                 {TECH_STACK.map(({ name, role, pkg }) => (
                   <tr key={name}>
-                    <td style={{ fontWeight: 600, color: "#e6edf3" }}>{name}</td>
+                    <td className="about-tech-name">{name}</td>
                     <td>{role}</td>
                     <td><code>{pkg}</code></td>
                   </tr>
@@ -238,17 +196,13 @@ export default function About() {
 
         {/* ── LIMITATIONS ──────────────────────────────────── */}
         <Section title="Batasan">
-          <div className="ab-grid-2">
+          <div className="about-limitations-grid">
             {LIMITATIONS.map(({ icon, title, desc }) => (
-              <div key={title} style={{
-                background: "#161b22", border: "1px solid #30363d",
-                borderRadius: 10, padding: "16px 18px",
-                display: "flex", gap: 14, alignItems: "flex-start",
-              }}>
-                <span style={{ fontSize: 20, flexShrink: 0, marginTop: 1 }}>{icon}</span>
-                <div>
-                  <p style={{ fontSize: 13, fontWeight: 600, color: "#e6edf3", marginBottom: 5 }}>{title}</p>
-                  <p style={{ fontSize: 12, color: "#8b949e", lineHeight: 1.65, margin: 0 }}>{desc}</p>
+              <div key={title} className="about-limitation-card">
+                <span className="about-limitation-card__icon">{icon}</span>
+                <div className="about-limitation-card__content">
+                  <p className="about-limitation-card__title">{title}</p>
+                  <p className="about-limitation-card__description">{desc}</p>
                 </div>
               </div>
             ))}
@@ -257,7 +211,7 @@ export default function About() {
 
         {/* ── FAQ ──────────────────────────────────────────── */}
         <Section title="Pertanyaan Umum">
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="about-faq-list">
             {FAQ.map(item => <FaqItem key={item.q} {...item} />)}
           </div>
         </Section>
