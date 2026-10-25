@@ -208,8 +208,7 @@ export default function Home() {
                 
               </h1>
               <p className="si-hero-description">
-                Sisipkan file apa pun ke dalam PNG menggunakan steganografi LSB dan enkripsi
-                AES-256 opsional — sepenuhnya di browser Anda. Tidak ada data yang meninggalkan perangkat.
+                Sembunyikan file apa pun di dalam gambar berformat PNG, atau buat gambar langsung menggunakan AI. Lindungi file Anda dengan enkripsi AES-256 (opsional) agar data lebih aman. Seluruh proses dilakukan langsung di browser tanpa menyimpan data di server. Dokumen juga dapat diverifikasi keasliannya menggunakan Tanda Tangan Elektronik (TTE) yang terintegrasi dengan BSSN.
               </p>
               <div className="si-action-row si-hero-actions">
                 <button className="primary-btn" onClick={() => navigate("/encode")}>Encode<span className="si-cursor" aria-hidden="true">/ Unggah</span></button>
