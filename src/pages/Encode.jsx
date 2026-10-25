@@ -235,7 +235,7 @@ function Encode() {
           <div className="info-box">
             <h5>✨ Generate Cover Gambar dengan AI</h5>
             <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.75, margin: 0 }}>
-              Buat Gambar Sampul dengan AI
+              Buat Gambar Sampul dengan AI dan bisa generate ulang untuk hasil berbeda.
             </p>
         
             <label className="label-text">
@@ -278,7 +278,7 @@ function Encode() {
                   className="spinner-border text-primary"
                   role="status"
                 />
-                <p className="mt-2">
+                <p className="mt-2 about-note__text">
                   AI sedang membuat ilustrasi tentara kartun...
                 </p>
               </div>
@@ -289,7 +289,7 @@ function Encode() {
             )}
             
             {aiImageUrl && (
-              <div className="mt-3 text-center">
+              <div className="mt-3 text-center about-note__text">
                 <h6>Preview Gambar AI</h6>
             
                 <img
@@ -305,7 +305,7 @@ function Encode() {
                 />
             
                 <p className="text-success mt-2">
-                  Gambar berhasil dibuat: {category}
+                  Gambar berhasil dibuat dengan instruksi: {category} , Silahkan generate ulang jika ingin hasil berbeda.
                 </p>
               </div>
             )}
@@ -348,7 +348,11 @@ function Encode() {
               }}
             />
           </div>
+          <p className="about-note__text">
+          Bisa ganti dengan gambar PNG/BMP dari perangkat atau langsung pakai gambar dari generator AI.
+          </p>
         </div>
+        
 
         {/* Secret file drop zone */}
         <div className="col-md-12">
@@ -408,8 +412,8 @@ function Encode() {
           {/* Contextual hint below the toggle */}
           <p className="encrypt-hint">
             {useEncrypt
-              ? "Data will be AES-256 encrypted before embedding. A password is required to decode."
-              : "Data will be embedded without encryption. Anyone with the image can extract it."}
+              ? "Data akan dienkripsi AES-256 sebelum disisipkan. Password diperlukan untuk mendekode."
+              : "Data akan disematkan tanpa enkripsi. Siapa pun yang punya gambarnya bisa mengekstraknya."}
           </p>
         </div>
 
@@ -482,7 +486,7 @@ function Encode() {
         <h5>Intruksi</h5>
         <ul>
           <li>
-            Gunakan format <strong>PNG</strong> atau <strong>BMP</strong> saja — kompresi JPEG akan merusak data tersembunyi.
+            Gunakan format <strong>PNG</strong> atau <strong>BMP</strong> atau langsung generator gambar dengan AI — kompresi JPEG akan merusak data tersembunyi.
           </li>
           <li>
             Enkripsi <strong>AKTIF</strong>: gunakan kata sandi yang kuat.{" "}

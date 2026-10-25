@@ -19,7 +19,7 @@ const LEARN_LINKS = [
   { to: "/learn/use-cases",                   label: "Use Cases" },
 ];
 
-const GH = "https://github.com/50RISHU/Stego.Image";
+const GH = "https://youtube.com";
 
 export default function Navbar() {
   const location                  = useLocation();
@@ -62,8 +62,8 @@ export default function Navbar() {
 
         {/* Brand */}
         <Link to="/" onClick={closeMenus} className="site-navbar__brand">
-          <img src={logo} alt="Stego.Image" width={28} height={28} />
-          Stego.Image
+          <img src={logo} alt="Stego.Image" width={50} height={50} />
+          SENTINEL INTEL
         </Link>
 
         {/* Desktop links */}
@@ -107,8 +107,8 @@ export default function Navbar() {
           </div>
 
           {/* GitHub */}
-          <a href={GH} target="_blank" rel="noopener noreferrer" className="site-navbar__github">
-            GitHub
+          <a href={GH} target="_blank" rel="noopener noreferrer" className="site-navbar__youtube">
+            Intro
           </a>
         </div>
 

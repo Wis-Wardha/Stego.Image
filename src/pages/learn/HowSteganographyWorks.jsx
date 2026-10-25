@@ -231,7 +231,7 @@ function HowSteganographyWorks() {
 
             <div
               className="about-section"
-              style={{ fontFamily: "monospace", fontSize: "13.5px" }}
+              style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: "13.5px" }}
             >
               <div style={{ marginBottom: "8px" }}>
                 <span style={{ color: "var(--text-muted)" }}>

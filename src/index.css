@@ -14,7 +14,7 @@ body,
   height: 100%;
   background-color: #0d1117 !important;
   color: #c9d1d9;
-  font-family: 'Courier New', monospace;
+  font-family: Consolas, "Courier New", monospace;
 }
 
 /* ===== TYPOGRAPHY ===== */

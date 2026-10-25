@@ -64,7 +64,7 @@ export default function Footer() {
             fontWeight: 600,
           }}
         >
-          © {new Date().getFullYear()} <strong>50RISHU</strong> — Stego.Image
+          Kartika Cyber Hackathon <strong>2026</strong>
         </h6>
 
         {/* Description */}
@@ -78,48 +78,9 @@ export default function Footer() {
         >
           Open-source image steganography tool.
           <br />
-          Securely hide encrypted files inside images using{" "}
+          Sembunyikan file terenkripsi dengan aman di dalam gambar menggunakan{" "}
           <strong style={{ color: "#c9d1d9" }}>AES-256 encryption</strong>.
         </p>
-
-        {/* Action Buttons */}
-        <div className="d-flex justify-content-center flex-wrap gap-3 mb-4">
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={buttonStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FaGithub size={16} />
-            <span>GitHub</span>
-          </a>
-
-          <a
-            href={LICENSE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={buttonStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <HiDocumentText size={18} />
-            <span>MIT License</span>
-          </a>
-
-          <a
-            href={ISSUES_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={buttonStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FaBug size={16} />
-            <span>Report Issue</span>
-          </a>
-        </div>
 
         {/* Version */}
         <p

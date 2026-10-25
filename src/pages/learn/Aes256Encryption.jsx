@@ -258,7 +258,7 @@ function Aes256Encryption() {
 
             <div
               className="about-section"
-              style={{ fontFamily: "monospace", fontSize: "13px" }}
+              style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: "13px" }}
             >
               <div
                 style={{
@@ -392,7 +392,7 @@ function Aes256Encryption() {
 
             <div
               className="about-section"
-              style={{ fontFamily: "monospace", fontSize: "13px" }}
+              style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: "13px" }}
             >
               <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
                 <div

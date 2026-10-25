@@ -354,7 +354,7 @@ function ImageSteganography() {
 
             <div
               className="about-section"
-              style={{ fontFamily: "monospace", fontSize: "13px" }}
+              style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: "13px" }}
             >
               <div
                 style={{
@@ -440,7 +440,7 @@ function ImageSteganography() {
                   <div className="about-faq-item h-100">
                     <div
                       className="about-faq-q"
-                      style={{ fontFamily: "monospace" }}
+                      style={{ fontFamily: "Consolas, 'Courier New', monospace" }}
                     >
                       {size}
                     </div>

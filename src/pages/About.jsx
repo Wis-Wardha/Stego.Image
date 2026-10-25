@@ -1,21 +1,39 @@
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
+import {
+  FaArchive,
+  FaBan,
+  FaEye,
+  FaFileExport,
+  FaFolderOpen,
+  FaImage,
+  FaKey,
+  FaListAlt,
+  FaLock,
+  FaMobileAlt,
+  FaPlus,
+  FaPuzzlePiece,
+  FaRulerCombined,
+  FaSave,
+  FaSearch,
+  FaUnlockAlt,
+} from "react-icons/fa";
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const ENCODE_STEPS = [
-  { icon: "📂", title: "Pilih file masukan",           desc: "Unggah gambar penutup tanpa kehilangan kualitas (PNG atau BMP) dan file rahasia yang ingin Anda sembunyikan." },
-  { icon: "📦", title: "Kompresi GZIP",           desc: "File rahasia dikompresi dengan DEFLATE (melalui pako) untuk mengurangi ruang piksel yang dibutuhkan." },
-  { icon: "🔐", title: "Enkripsi AES-256",         desc: "Jika kata sandi diberikan, data terkompresi dienkripsi dengan AES-256. Penanda terenkripsi pada header diatur agar dekoder tahu bahwa data harus didekripsi." },
-  { icon: "🧩", title: "Sisipkan dengan LSB",          desc: "Aliran biner — [panjang metadata 4B][header JSON][payload] — ditulis ke bit paling tidak signifikan pada kanal R, G, dan B dari setiap piksel yang sepenuhnya opak." },
-  { icon: "💾", title: "Ekspor PNG",              desc: "Kanvas diekspor sebagai PNG tanpa kehilangan kualitas. Tampilan gambar keluaran sama seperti gambar asli." },
+  { icon: FaFolderOpen, title: "Pilih file masukan",           desc: "Unggah gambar penutup tanpa kehilangan kualitas (PNG atau BMP) dan file rahasia yang ingin Anda sembunyikan." },
+  { icon: FaArchive, title: "Kompresi GZIP",           desc: "File rahasia dikompresi dengan DEFLATE (melalui pako) untuk mengurangi ruang piksel yang dibutuhkan." },
+  { icon: FaLock, title: "Enkripsi AES-256",         desc: "Jika kata sandi diberikan, data terkompresi dienkripsi dengan AES-256. Penanda terenkripsi pada header diatur agar dekoder tahu bahwa data harus didekripsi." },
+  { icon: FaPuzzlePiece, title: "Sisipkan dengan LSB",          desc: "Aliran biner — [panjang metadata 4B][header JSON][payload] — ditulis ke bit paling tidak signifikan pada kanal R, G, dan B dari setiap piksel yang sepenuhnya opak." },
+  { icon: FaSave, title: "Ekspor PNG",              desc: "Kanvas diekspor sebagai PNG tanpa kehilangan kualitas. Tampilan gambar keluaran sama seperti gambar asli." },
 ];
 
 const DECODE_STEPS = [
-  { icon: "🖼️", title: "Unggah gambar stego",     desc: "Unggah PNG stego. Gambar tidak boleh dikompresi ulang oleh platform yang menggunakan kompresi lossy." },
-  { icon: "🔍", title: "Baca LSB",              desc: "Dekoder membaca LSB dari setiap kanal RGB pada semua piksel yang sepenuhnya opak untuk menyusun kembali aliran bit." },
-  { icon: "📋", title: "Uraikan metadata",         desc: "Empat byte pertama menunjukkan panjang metadata. Dekoder menguraikan header JSON untuk mengetahui nama file, jenis, ukuran, dan status enkripsinya." },
-  { icon: "🔓", title: "Dekripsi",               desc: "Jika metadata.encrypted bernilai true, dekripsi AES-256 dilakukan menggunakan kata sandi yang diberikan. Tombol di antarmuka tidak mengesampingkan penanda ini." },
-  { icon: "📤", title: "Dekompresi & validasi", desc: "Payload didekompresi dan panjang byte-nya diperiksa terhadap metadata.size. Ketidakcocokan berarti kata sandi salah atau file rusak." },
+  { icon: FaImage, title: "Unggah gambar stego",     desc: "Unggah PNG stego. Gambar tidak boleh dikompresi ulang oleh platform yang menggunakan kompresi lossy." },
+  { icon: FaSearch, title: "Baca LSB",              desc: "Dekoder membaca LSB dari setiap kanal RGB pada semua piksel yang sepenuhnya opak untuk menyusun kembali aliran bit." },
+  { icon: FaListAlt, title: "Uraikan metadata",         desc: "Empat byte pertama menunjukkan panjang metadata. Dekoder menguraikan header JSON untuk mengetahui nama file, jenis, ukuran, dan status enkripsinya." },
+  { icon: FaUnlockAlt, title: "Dekripsi",               desc: "Jika metadata.encrypted bernilai true, dekripsi AES-256 dilakukan menggunakan kata sandi yang diberikan. Tombol di antarmuka tidak mengesampingkan penanda ini." },
+  { icon: FaFileExport, title: "Dekompresi & validasi", desc: "Payload didekompresi dan panjang byte-nya diperiksa terhadap metadata.size. Ketidakcocokan berarti kata sandi salah atau file rusak." },
 ];
 
 const TECH_STACK = [
@@ -32,11 +50,11 @@ const TECH_STACK = [
 ];
 
 const LIMITATIONS = [
-  { icon: "🚫", title: "JPEG tidak didukung",             desc: "Kompresi lossy JPEG mengubah nilai piksel sehingga merusak data LSB. Selalu gunakan PNG atau BMP." },
-  { icon: "📏", title: "Kapasitas terbatas",              desc: "Kapasitas = ⌊(piksel opak × 3) / 8⌋ byte. PNG berukuran 1920×1080 dapat menampung sekitar 760 KB payload setelah memperhitungkan overhead." },
-  { icon: "📱", title: "Pengodean ulang oleh platform sosial", desc: "WhatsApp, Instagram, dan Telegram mengodekan ulang gambar saat diunggah. Gunakan unduhan ZIP dan bagikan arsipnya." },
-  { icon: "🔑", title: "Kata sandi tidak dapat dipulihkan",    desc: "Tidak ada mekanisme pengaturan ulang. Jika kata sandi hilang, data tersembunyi tidak akan dapat diakses lagi." },
-  { icon: "👁️", title: "Metadata tidak dienkripsi",       desc: "Header JSON (nama file, MIME, ukuran) disimpan tanpa enkripsi. Siapa pun yang tahu tempat mencarinya dapat membaca informasi ini tanpa kata sandi." },
+  { icon: FaBan, title: "JPEG tidak didukung",             desc: "Kompresi lossy JPEG mengubah nilai piksel sehingga merusak data LSB. Selalu gunakan PNG atau BMP." },
+  { icon: FaRulerCombined, title: "Kapasitas terbatas",              desc: "Kapasitas = ⌊(piksel opak × 3) / 8⌋ byte. PNG berukuran 1920×1080 dapat menampung sekitar 760 KB payload setelah memperhitungkan overhead." },
+  { icon: FaMobileAlt, title: "Pengodean ulang oleh platform sosial", desc: "WhatsApp, Instagram, dan Telegram mengodekan ulang gambar saat diunggah. Gunakan unduhan ZIP dan bagikan arsipnya." },
+  { icon: FaKey, title: "Kata sandi tidak dapat dipulihkan",    desc: "Tidak ada mekanisme pengaturan ulang. Jika kata sandi hilang, data tersembunyi tidak akan dapat diakses lagi." },
+  { icon: FaEye, title: "Metadata tidak dienkripsi",       desc: "Header JSON (nama file, MIME, ukuran) disimpan tanpa enkripsi. Siapa pun yang tahu tempat mencarinya dapat membaca informasi ini tanpa kata sandi." },
 ];
 
 const FAQ = [
@@ -59,7 +77,7 @@ function FaqItem({ q, a }) {
         aria-expanded={open}
       >
         <span>{q}</span>
-        <span className={`about-faq-icon${open ? " is-open" : ""}`}>+</span>
+        <span className={`about-faq-icon${open ? " is-open" : ""}`}><FaPlus aria-hidden="true" /></span>
       </button>
       {open && (
         <div className="about-faq-answer">
@@ -71,12 +89,12 @@ function FaqItem({ q, a }) {
 }
 
 /* ─── Pipeline step card ─────────────────────────────────────── */
-function StepCard({ icon, title, desc, index, total }) {
+function StepCard({ icon: Icon, title, desc, index, total }) {
   return (
     <div className={`about-pipeline-step${index < total - 1 ? " has-next" : ""}`}>
       {/* connector column */}
       <div className="about-pipeline-connector">
-        <div className="about-pipeline-icon">{icon}</div>
+        <div className="about-pipeline-icon"><Icon aria-hidden="true" /></div>
         {index < total - 1 && <div className="about-pipeline-line" />}
       </div>
       {/* content */}
@@ -116,15 +134,15 @@ export default function About() {
         {/* ── HERO ─────────────────────────────────────────── */}
         <div className="about-hero">
           <p className="about-hero__eyebrow">
-            Sumber terbuka · Berlisensi MIT
+            Open Source
           </p>
           <h1 className="about-hero__title">
-            Tentang Stego.Image
+            Tentang Steganografi
           </h1>
           <p className="about-hero__description">
             Alat berbasis browser untuk menyembunyikan dan mengekstrak file di dalam gambar menggunakan
             steganografi dan enkripsi AES-256 opsional — 100% di sisi klien,
-            tanpa komunikasi dengan server.
+            tanpa tersimpan diserver.
           </p>
         </div>
 
@@ -153,7 +171,7 @@ export default function About() {
         </Section>
 
         {/* ── ENCODE PIPELINE ──────────────────────────────── */}
-        <Section title="Alur Penyisipan">
+        <Section title="Proses Encode">
           <div className="about-panel about-pipeline">
             {ENCODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={ENCODE_STEPS.length} />
@@ -162,7 +180,7 @@ export default function About() {
         </Section>
 
         {/* ── DECODE PIPELINE ──────────────────────────────── */}
-        <Section title="Alur Ekstraksi">
+        <Section title="Proses Decode">
           <div className="about-panel about-pipeline">
             {DECODE_STEPS.map((step, i) => (
               <StepCard key={step.title} {...step} index={i} total={DECODE_STEPS.length} />
@@ -170,36 +188,12 @@ export default function About() {
           </div>
         </Section>
 
-        {/* ── TECH STACK ───────────────────────────────────── */}
-        <Section title="Teknologi yang Digunakan">
-          <div className="about-panel about-tech-wrapper">
-            <table className="about-tech-table">
-              <thead>
-                <tr>
-                  <th>Pustaka</th>
-                  <th>Fungsi</th>
-                  <th>Paket</th>
-                </tr>
-              </thead>
-              <tbody>
-                {TECH_STACK.map(({ name, role, pkg }) => (
-                  <tr key={name}>
-                    <td className="about-tech-name">{name}</td>
-                    <td>{role}</td>
-                    <td><code>{pkg}</code></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
-
         {/* ── LIMITATIONS ──────────────────────────────────── */}
         <Section title="Batasan">
           <div className="about-limitations-grid">
-            {LIMITATIONS.map(({ icon, title, desc }) => (
+            {LIMITATIONS.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="about-limitation-card">
-                <span className="about-limitation-card__icon">{icon}</span>
+                <span className="about-limitation-card__icon"><Icon aria-hidden="true" /></span>
                 <div className="about-limitation-card__content">
                   <p className="about-limitation-card__title">{title}</p>
                   <p className="about-limitation-card__description">{desc}</p>

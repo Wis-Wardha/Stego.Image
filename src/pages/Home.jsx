@@ -1,6 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useRef, useState } from "react";
+import {
+  FaArchive,
+  FaArrowDown,
+  FaArrowRight,
+  FaCheckCircle,
+  FaEye,
+  FaFileAlt,
+  FaImage,
+  FaLaptopCode,
+  FaLock,
+} from "react-icons/fa";
 import pixelbg from "../assets/kartikacyberhackathon.png";
 
 /* ─── Typing animation ──────────────────────────────────────── */
@@ -133,23 +144,29 @@ function LsbDemo() {
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const FEATURES = [
-  { icon: "🔒", title: "Enkripsi AES-256", desc: "Derivasi kunci PBKDF2-SHA256 — 100.000 iterasi, salt acak untuk setiap sesi." },
-  { icon: "🖼️", title: "Steganografi LSB", desc: "Data disembunyikan pada bit paling tidak signifikan dari kanal RGB. Tidak terlihat oleh mata." },
-  { icon: "📦", title: "Kompresi GZIP", desc: "File dikompresi sebelum disisipkan untuk memaksimalkan kapasitas gambar penutup." },
-  { icon: "🖥️", title: "100% di sisi klien", desc: "Tanpa server, tanpa unggahan, tanpa telemetri. Semuanya berjalan di browser Anda." },
+  { icon: FaLock, title: "Enkripsi AES-256", desc: "Derivasi kunci PBKDF2-SHA256 — 100.000 iterasi, salt acak untuk setiap sesi." },
+  { icon: FaImage, title: "Steganografi LSB", desc: "Data disembunyikan pada bit paling tidak signifikan dari kanal RGB. Warna gambar tidak berubah jauh." },
+  { icon: FaArchive, title: "Kompresi GZIP", desc: "File dikompresi sebelum disisipkan untuk memaksimalkan kapasitas gambar sampul." },
+  { icon: FaLaptopCode, title: "100% di sisi klien", desc: "File rahasia dan gambar tidak tersimpan di server. Semuanya proses Encode/Decode di browser." },
 ];
-const STEPS = [
-  { n: "01", label: "Unggah gambar penutup", note: "Hanya PNG atau BMP" },
-  { n: "02", label: "Pilih file rahasia", note: "Semua jenis file" },
-  { n: "03", label: "Atur kata sandi", note: "Enkripsi opsional" },
-  { n: "04", label: "Unduh PNG stego", note: "Tampilan sama seperti aslinya" },
+const STEPS_ENCODE = [
+  { n: "01", label: "Unggah gambar biasa", note: "Hanya PNG atau BMP atau langsung generator gambar dengan AI" },
+  { n: "02", label: "Pilih file rahasia", note: "Semua jenis file termasuk naskah yang sudah di Tanda Tangan Digital" },
+  { n: "03", label: "Atur Password", note: "File akan dienkripsi dengan algoritma AES-256  (opsional)" },
+  { n: "04", label: "Unduh Gambar PNG", note: "Unduh gambar yang telah disisipkan file rahasia" },
+];
+const STEPS_DECODE = [
+  { n: "01", label: "Unggah gambar rahasia", note: "Unggah gambar PNG atau BMP yang telah disisipkan file rahasia" },
+  { n: "02", label: "Masukkan Password", note: "Password yang digunakan untuk enkripsi file rahasia (opsional)" },
+  { n: "03", label: "Ekstrak File Rahasia", note: "File rahasia akan diekstrak dari gambar steganografi" },
+  { n: "04", label: "Verifikasi File", note: "Untuk verifikasi keaslian tanda tangan elektronik (opsional)" },
 ];
 const PIPELINE = [
-  { icon: "📄", label: "File rahasia", tone: "muted" },
-  { icon: "📦", label: "GZIP", tone: "yellow" },
-  { icon: "🔐", label: "AES-256", tone: "green" },
-  { icon: "🖼️", label: "Sisipkan LSB", tone: "purple" },
-  { icon: "✅", label: "PNG stego", tone: "yellow" },
+  { icon: FaFileAlt, label: "File rahasia", tone: "muted" },
+  { icon: FaArchive, label: "GZIP", tone: "yellow" },
+  { icon: FaLock, label: "AES-256", tone: "green" },
+  { icon: FaImage, label: "Sisipkan LSB", tone: "purple" },
+  { icon: FaCheckCircle, label: "PNG stego", tone: "yellow" },
 ];
 const SEC_ROWS = [
   ["Derivasi kunci", "PBKDF2-SHA256", "yellow"],
@@ -185,24 +202,24 @@ export default function Home() {
         <div className="si-wrap">
           <div className="si-hero-row">
             <div className="si-hero-text">
-              <p className="si-eyebrow">Pengembangan steganografi di sisi klien</p>
+              <p className="si-eyebrow">Kartika Cyber Hackathon 2026</p>
               <h1 className="si-hero-title">
-                <span className="si-accent-yellow">{typed}</span>
-                <span className="si-cursor" aria-hidden="true">|</span>
+                <span className="si-accent-yellow">Tool Steganografi</span>
+                
               </h1>
               <p className="si-hero-description">
                 Sisipkan file apa pun ke dalam PNG menggunakan steganografi LSB dan enkripsi
                 AES-256 opsional — sepenuhnya di browser Anda. Tidak ada data yang meninggalkan perangkat.
               </p>
               <div className="si-action-row si-hero-actions">
-                <button className="primary-btn" onClick={() => navigate("/encode")}>Mulai menyisipkan</button>
-                <button className="secondary-btn" onClick={() => navigate("/decode")}>Ekstrak file</button>
+                <button className="primary-btn" onClick={() => navigate("/encode")}>Encode<span className="si-cursor" aria-hidden="true">/ Unggah</span></button>
+                <button className="secondary-btn" onClick={() => navigate("/decode")}>Decode / Unduh</button>
               </div>
               <div className="si-trust-row">
                 {[
-                  ["Tanpa permintaan jaringan", "green"],
-                  ["Sumber terbuka", "yellow"],
-                  ["Gratis selamanya", "green"],
+                  ["Proses secara lokal", "green"],
+                  ["AI image generator", "yellow"],
+                  ["Verifikasi TTE BSSN", "green"],
                 ].map(([label, tone]) => (
                   <span key={label} className="si-trust-badge">
                     <span className={`si-status-dot is-${tone}`} />
@@ -217,12 +234,55 @@ export default function Home() {
                 <span className="si-pixel-label">data piksel</span>
                 <PixelGrid />
                 <div className="si-pixel-badges">
-                  {["🔒 AES-256", "👁️ Tak terlihat"].map(label => (
-                    <span key={label} className="si-pixel-badge">{label}</span>
-                  ))}
+                  <span className="si-pixel-badge"><FaLock aria-hidden="true" /> AES-256</span>
+                  <span className="si-pixel-badge"><FaEye aria-hidden="true" /> Steganografi LSB</span>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="si-section">
+        <div className="si-wrap">
+          <h2 className="si-section-title">Proses Encode</h2>
+          <div className="si-card si-steps-grid">
+            {STEPS_ENCODE.map(({ n, label, note }) => (
+              <div key={n} className="si-step">
+                <div className="si-step-number">{n}</div>
+                <div>
+                  <p className="si-step-title">{label}</p>
+                  <p className="si-step-note">{note}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="si-pipe-row">
+            {PIPELINE.map(({ icon: Icon, label, tone }, i) => (
+              <div key={label} className="si-pipe-item">
+                {i > 0 && <div className="si-pipe-arrow"><FaArrowRight aria-hidden="true" /></div>}
+                <div className={`si-card si-pipe-box is-${tone}`}>
+                  <span className="si-pipe-icon"><Icon aria-hidden="true" /></span>
+                  <span className="si-pipe-label">{label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <h2 className="si-section-title">Proses Decode</h2>
+          <div className="si-card si-steps-grid">
+            {STEPS_DECODE.map(({ n, label, note }) => (
+              <div key={n} className="si-step">
+                <div className="si-step-number">{n}</div>
+                <div>
+                  <p className="si-step-title">{label}</p>
+                  <p className="si-step-note">{note}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="si-action-row si-centered-actions">
+            <button className="primary-btn" onClick={() => navigate("/encode")}>Coba Encode</button>
+            <button className="secondary-btn" onClick={() => navigate("/about")}>Detail teknis</button>
           </div>
         </div>
       </section>
@@ -231,11 +291,11 @@ export default function Home() {
         <div className="si-wrap">
           <div className="si-card si-layers">
             {[
-              { n: "01", tone: "yellow", title: "Steganografi", desc: "Menyembunyikan keberadaan data di dalam nilai piksel biasa." },
+              { n: "01", tone: "yellow", title: "Steganografi", desc: "Menyembunyikan keberadaan data di dalam nilai piksel gambar." },
               { sep: "+" },
               { n: "02", tone: "green", title: "Enkripsi", desc: "Melindungi data itu sendiri — tetap tidak terbaca meskipun berhasil diekstrak." },
               { sep: "=" },
-              { n: "✓", tone: "purple", title: "Keamanan dua lapis", desc: "Penyerang harus menemukan data terlebih dahulu, lalu memecahkan sandinya." },
+              { n: "✓", tone: "purple", title: "Keamanan dua lapis", desc: "Artinya hacker harus menemukan data terlebih dahulu, lalu memecahkan password-nya." },
             ].map((item, i) => item.sep ? (
               <div key={i} className="si-layer-sep">{item.sep}</div>
             ) : (
@@ -255,34 +315,13 @@ export default function Home() {
         <div className="si-wrap">
           <h2 className="si-section-title">Teknologi di baliknya</h2>
           <div className="si-feat-grid">
-            {FEATURES.map(({ icon, title, desc }) => (
+            {FEATURES.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="si-card si-feature-card">
-                <span className="si-feature-icon">{icon}</span>
+                <span className="si-feature-icon"><Icon aria-hidden="true" /></span>
                 <p className="si-feature-title">{title}</p>
                 <p className="si-feature-description">{desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="si-section">
-        <div className="si-wrap">
-          <h2 className="si-section-title">Cara menggunakannya</h2>
-          <div className="si-card si-steps-grid">
-            {STEPS.map(({ n, label, note }) => (
-              <div key={n} className="si-step">
-                <div className="si-step-number">{n}</div>
-                <div>
-                  <p className="si-step-title">{label}</p>
-                  <p className="si-step-note">{note}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="si-action-row si-centered-actions">
-            <button className="primary-btn" onClick={() => navigate("/encode")}>Coba sekarang</button>
-            <button className="secondary-btn" onClick={() => navigate("/about")}>Detail teknis</button>
           </div>
         </div>
       </section>
@@ -299,83 +338,14 @@ export default function Home() {
 
       <section className="si-section">
         <div className="si-wrap">
-          <h2 className="si-section-title">Alur penyisipan</h2>
-          <div className="si-pipe-row">
-            {PIPELINE.map(({ icon, label, tone }, i) => (
-              <div key={label} className="si-pipe-item">
-                {i > 0 && <div className="si-pipe-arrow">→</div>}
-                <div className={`si-card si-pipe-box is-${tone}`}>
-                  <span className="si-pipe-icon">{icon}</span>
-                  <span className="si-pipe-label">{label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="si-pipe-vertical">
-            {PIPELINE.map(({ icon, label, tone }, i) => (
-              <div key={label} className={`si-card si-pipe-step is-${tone}`}>
-                <span className="si-pipe-icon">{icon}</span>
-                <span className="si-pipe-mobile-label">{label}</span>
-                {i < PIPELINE.length - 1 && <span className="si-pipe-down">↓</span>}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="si-section">
-        <div className="si-wrap">
-          <div className="si-card si-security-card">
-            <div className="si-sec-inner">
-              <div className="si-security-copy">
-                <h2 className="si-security-title">Privasi sejak dari rancangan</h2>
-                <p className="si-security-description">
-                  Tidak ada backend. Setiap byte tetap berada di browser Anda — tidak pernah diserialisasi,
-                  dikirim, atau dicatat. Periksa lalu lintas jaringan saat menyisipkan data: jumlah permintaan tetap nol.
-                </p>
-                <ul className="si-security-list">
-                  {["PBKDF2-SHA256, 100.000 iterasi, salt acak", "PNG keluaran tidak memuat metadata tersembunyi atau sidik jari", "Cloudflare Pages — tidak ada server asal yang dapat diminta datanya", "Lisensi MIT — baca setiap baris kode di GitHub"].map(item => (
-                    <li key={item} className="si-sec-bullet">{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="si-sec-table">
-                {SEC_ROWS.map(([key, value, tone]) => (
-                  <div key={key} className="si-sec-row">
-                    <span className="si-sec-key">{key}</span>
-                    <span className={`si-sec-value is-${tone}`}>{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="si-section">
-        <div className="si-wrap">
           <h2 className="si-section-title">Pelajari konsepnya</h2>
           <div className="si-learn-grid">
             {LEARN.map(({ to, label }) => (
               <button key={to} className="si-btn-learn" onClick={() => navigate(to)}>
                 <span>{label}</span>
-                <span className="si-learn-arrow">→</span>
+                <span className="si-learn-arrow"><FaArrowRight aria-hidden="true" /></span>
               </button>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="si-section">
-        <div className="si-wrap">
-          <div className="si-card si-cta-card">
-            <div className="si-cta-glow" />
-            <h2 className="si-cta-title">Siap menyembunyikan sesuatu?</h2>
-            <p className="si-cta-description">File Anda. Browser Anda. Kendali ada pada Anda.</p>
-            <div className="si-action-row si-centered-actions">
-              <button className="primary-btn" onClick={() => navigate("/encode")}>Mulai menyisipkan</button>
-              <button className="secondary-btn" onClick={() => navigate("/decode")}>Ekstrak file</button>
-            </div>
           </div>
         </div>
       </section>
