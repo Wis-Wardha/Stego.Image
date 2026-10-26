@@ -14,29 +14,6 @@ import {
 } from "react-icons/fa";
 import pixelbg from "../assets/kartikacyberhackathon.png";
 
-/* ─── Typing animation ──────────────────────────────────────── */
-function useTyping(phrases) {
-  const [text, setText] = useState("");
-  const [idx, setIdx] = useState(0);
-  const [del, setDel] = useState(false);
-  useEffect(() => {
-    const target = phrases[idx];
-    let timer;
-    if (!del && text.length < target.length)
-      timer = setTimeout(() => setText(target.slice(0, text.length + 1)), 60);
-    else if (!del && text.length === target.length)
-      timer = setTimeout(() => setDel(true), 2000);
-    else if (del && text.length > 0)
-      timer = setTimeout(() => setText(text.slice(0, -1)), 30);
-    else {
-      setDel(false);
-      setIdx(i => (i + 1) % phrases.length);
-    }
-    return () => clearTimeout(timer);
-  }, [text, del, idx, phrases]);
-  return text;
-}
-
 /* ─── Pixel canvas ──────────────────────────────────────────── */
 function PixelGrid() {
   const ref = useRef(null);
@@ -188,7 +165,6 @@ const LEARN = [
 /* ─── Component ──────────────────────────────────────────────── */
 export default function Home() {
   const navigate = useNavigate();
-  const typed = useTyping(["Sembunyikan file dalam gambar.", "Enkripsi. Kompresi. Sisipkan.", "Tanpa server. Tanpa jejak."]);
 
   return (
     <div className="home-page">
@@ -204,11 +180,10 @@ export default function Home() {
             <div className="si-hero-text">
               <p className="si-eyebrow">Kartika Cyber Hackathon 2026</p>
               <h1 className="si-hero-title">
-                <span className="si-accent-yellow">Tool Steganografi</span>
-                
+                Sembunyikan file <span className="si-accent-yellow">di dalam gambar</span>
               </h1>
               <p className="si-hero-description">
-                Sembunyikan file apa pun di dalam gambar berformat PNG, atau buat gambar langsung menggunakan AI. Lindungi file Anda dengan enkripsi AES-256 (opsional) agar data lebih aman. Seluruh proses dilakukan langsung di browser tanpa menyimpan data di server. Dokumen juga dapat diverifikasi keasliannya menggunakan Tanda Tangan Elektronik (TTE) yang terintegrasi dengan BSSN.
+                Sembunyikan file apa pun di dalam gambar berformat PNG, atau buat gambar langsung menggunakan AI. Lindungi file dengan enkripsi AES-256 (opsional) agar data lebih aman. Seluruh proses dilakukan langsung di browser tanpa menyimpan data di server. Dokumen juga dapat diverifikasi keasliannya menggunakan Tanda Tangan Elektronik (TTE) yang terintegrasi dengan BSSN.
               </p>
               <div className="si-action-row si-hero-actions">
                 <button className="primary-btn" onClick={() => navigate("/encode")}>Encode<span className="si-cursor" aria-hidden="true">/ Unggah</span></button>
@@ -242,9 +217,24 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="si-section">
+      <section className="si-section" aria-labelledby="technology-title">
         <div className="si-wrap">
-          <h2 className="si-section-title">Proses Encode</h2>
+          <h2 id="technology-title" className="si-section-title">Teknologi di baliknya</h2>
+          <div className="si-feat-grid">
+            {FEATURES.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="si-card si-feature-card">
+                <span className="si-feature-icon"><Icon aria-hidden="true" /></span>
+                <p className="si-feature-title">{title}</p>
+                <p className="si-feature-description">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="si-section" aria-labelledby="encode-title">
+        <div className="si-wrap">
+          <h2 id="encode-title" className="si-section-title">Proses Encode</h2>
           <div className="si-card si-steps-grid">
             {STEPS_ENCODE.map(({ n, label, note }) => (
               <div key={n} className="si-step">
@@ -267,6 +257,15 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <div className="si-pipe-vertical">
+            {PIPELINE.map(({ icon: Icon, label, tone }, i) => (
+              <div key={label} className={`si-card si-pipe-step is-${tone}`}>
+                <span className="si-pipe-icon"><Icon aria-hidden="true" /></span>
+                <span className="si-pipe-mobile-label">{label}</span>
+                {i < PIPELINE.length - 1 && <FaArrowDown className="si-pipe-down" aria-hidden="true" />}
+              </div>
+            ))}
+          </div>
           <h2 className="si-section-title">Proses Decode</h2>
           <div className="si-card si-steps-grid">
             {STEPS_DECODE.map(({ n, label, note }) => (
@@ -286,8 +285,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="si-layers-section">
+      <section className="si-layers-section" aria-labelledby="layers-title">
         <div className="si-wrap">
+          <h2 id="layers-title" className="si-section-title">Perlindungan berlapis</h2>
           <div className="si-card si-layers">
             {[
               { n: "01", tone: "yellow", title: "Steganografi", desc: "Menyembunyikan keberadaan data di dalam nilai piksel gambar." },
@@ -310,24 +310,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="si-section">
+      <section className="si-section" aria-labelledby="lsb-title">
         <div className="si-wrap">
-          <h2 className="si-section-title">Teknologi di baliknya</h2>
-          <div className="si-feat-grid">
-            {FEATURES.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="si-card si-feature-card">
-                <span className="si-feature-icon"><Icon aria-hidden="true" /></span>
-                <p className="si-feature-title">{title}</p>
-                <p className="si-feature-description">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="si-section">
-        <div className="si-wrap">
-          <h2 className="si-section-title">Lihat cara kerja LSB</h2>
+          <h2 id="lsb-title" className="si-section-title">Lihat cara kerja LSB</h2>
           <LsbDemo />
           <p className="si-lsb-note">
             Hanya bit terakhir dari setiap byte yang berubah. Tidak ada perbedaan yang terlihat.

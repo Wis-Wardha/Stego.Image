@@ -1,53 +1,55 @@
-# Contributing to StegoImage
+# Panduan Kontribusi Stego.Image
 
-Thank you for helping improve this project. This guide is simple and beginner-friendly.
+Terima kasih telah membantu mengembangkan proyek ini. Panduan ini dibuat agar mudah diikuti, termasuk oleh kontributor pemula.
 
-## Requirements
+## Persyaratan
 
-Make sure you have:
+Pastikan perangkat Anda memiliki:
 
 - [Git](https://git-scm.com)
-- [Node.js 18+](https://nodejs.org)
+- [Node.js](https://nodejs.org) versi `20.19+` atau `22.12+`
 
-## Installation
+## Menyiapkan Proyek
 
 ```bash
-git clone https://github.com/50RISHU/Stego.Image.git
-cd StegoImage
+git clone https://github.com/Wis-Wardha/Stego.Image.git
+cd Stego.Image
 npm install
 npm run dev
 ```
 
-Open the local URL shown in the terminal, usually `http://localhost:5173`.
+Buka alamat lokal yang ditampilkan di terminal, biasanya `http://localhost:5173`.
 
-## Create a Branch
+Jika menggunakan Linux, lihat bagian [Instalasi di Linux](README.md#instalasi-di-linux) pada README untuk panduan memasang Git, curl, dan Node.js.
 
-Never work directly on `main`. Create a new branch for your change.
+## Membuat Branch
+
+Jangan mengerjakan perubahan langsung di branch `main`. Buat branch baru untuk setiap perubahan.
 
 ```bash
 git checkout -b fix/typo-on-encode-page
 ```
 
-### Branch Naming Table
+### Pola Penamaan Branch
 
-| Type | Use for | Example |
-|------|---------|---------|
-| `feat/` | New feature | `feat/add-image-preview` |
-| `fix/` | Bug fix | `fix/encode-button-error` |
-| `docs/` | Documentation | `docs/improve-contributing-guide` |
-| `chore/` | Small cleanup | `chore/update-dependencies` |
+| Awalan | Digunakan untuk | Contoh |
+|---|---|---|
+| `feat/` | Fitur baru | `feat/add-image-preview` |
+| `fix/` | Perbaikan bug | `fix/encode-button-error` |
+| `docs/` | Dokumentasi | `docs/improve-contributing-guide` |
+| `chore/` | Perapian atau pemeliharaan kecil | `chore/update-dependencies` |
 
-## Make Your Changes
+## Membuat Perubahan
 
-Keep changes small and focused.
+Buat perubahan yang terarah dan mudah ditinjau.
 
-- Fix one issue at a time
-- Keep the code easy to read
-- Test the app in the browser before submitting
+- Tangani satu masalah dalam satu waktu.
+- Pastikan kode mudah dibaca.
+- Uji aplikasi melalui browser sebelum mengirimkan perubahan.
 
-## Commit Your Changes
+## Membuat Commit
 
-After your changes, commit them with a clear message.
+Setelah perubahan selesai, buat commit dengan pesan yang menjelaskan isinya.
 
 ```bash
 git status
@@ -55,7 +57,7 @@ git add .
 git commit -m "fix: correct typo on encode page"
 ```
 
-### Good Commit Message Examples
+### Contoh Pesan Commit yang Baik
 
 ```text
 feat: add file size warning before encoding
@@ -63,7 +65,7 @@ fix: prevent crash when image is too small
 docs: improve contributor instructions
 ```
 
-### Bad Commit Message Examples
+### Hindari Pesan Commit yang Tidak Jelas
 
 ```text
 update stuff
@@ -71,25 +73,25 @@ fix
 asdfgh
 ```
 
-## Push and Open a Pull Request
+## Mengirim Perubahan dan Membuka Pull Request
 
 ```bash
 git push origin fix/typo-on-encode-page
 ```
 
-Then open a pull request on GitHub and explain:
+Setelah itu, buka pull request di GitHub dan jelaskan:
 
-- what you changed
-- why you changed it
-- how you tested it
+- apa yang diubah;
+- alasan perubahan tersebut; dan
+- cara Anda menguji perubahan.
 
-## Guidelines
+## Pedoman
 
-- Be respectful and kind
-- Keep each pull request focused on one thing
-- Do not add trackers, analytics, or external APIs without discussion
-- Ask before making large design changes
+- Bersikap sopan dan saling menghargai.
+- Batasi setiap pull request pada satu tujuan.
+- Jangan menambahkan pelacak, analitik, atau API eksternal tanpa diskusi terlebih dahulu.
+- Diskusikan perubahan desain yang besar sebelum mengerjakannya.
 
-## Need Help?
+## Butuh Bantuan?
 
-If you are stuck, ask for help in the issue or pull request. Small tasks like typo fixes, text improvements, or UI cleanup are a great place to start.
+Jika mengalami kendala, mintalah bantuan melalui issue atau pull request. Perbaikan kecil seperti typo, teks, atau tampilan merupakan cara yang baik untuk mulai berkontribusi.

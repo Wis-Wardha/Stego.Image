@@ -125,7 +125,7 @@ export default function About() {
     <div className="about-page">
       <Helmet>
         <title>Tentang Stego.Image — Alat Steganografi Gratis di Sisi Klien</title>
-        <meta name="description" content="Pelajari Stego.Image — alat steganografi sumber terbuka di sisi klien yang dibuat dengan React, enkripsi AES-256, dan pengodean piksel LSB." />
+        <meta name="description" content="Stego.Image adalah tool steganografi untuk menyembunyikan file dalam gambar PNG, dengan enkripsi AES-256 opsional dan verifikasi TTE." />
         <link rel="canonical" href="https://stegoimage.pages.dev/about" />
       </Helmet>
 
@@ -134,15 +134,16 @@ export default function About() {
         {/* ── HERO ─────────────────────────────────────────── */}
         <div className="about-hero">
           <p className="about-hero__eyebrow">
-            Open Source
+            Sumber Terbuka
           </p>
           <h1 className="about-hero__title">
-            Tentang Steganografi
+            Tool Steganografi
           </h1>
           <p className="about-hero__description">
-            Alat berbasis browser untuk menyembunyikan dan mengekstrak file di dalam gambar menggunakan
-            steganografi dan enkripsi AES-256 opsional — 100% di sisi klien,
-            tanpa tersimpan diserver.
+            Sembunyikan file apa pun di dalam gambar berformat PNG, atau buat gambar langsung menggunakan AI.
+            Lindungi file Anda dengan enkripsi AES-256 (opsional) agar data lebih aman. Seluruh proses dilakukan
+            langsung di browser tanpa menyimpan data di server. Dokumen juga dapat diverifikasi keasliannya
+            menggunakan Tanda Tangan Elektronik (TTE) yang terintegrasi dengan BSSN.
           </p>
         </div>
 
