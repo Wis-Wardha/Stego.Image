@@ -159,13 +159,13 @@ function Encode() {
    */
   const handleEncode = async () => {
     if (!image || !file) {
-      alert("Please provide both a cover image and a secret file.");
+      alert("Harap sediakan gambar sampul dan berkas rahasia.");
       return;
     }
 
     // Password is required only when encryption is enabled
     if (useEncrypt && !password) {
-      alert("Please enter a password, or turn off encryption.");
+      alert("Masukkan kata sandi, atau nonaktifkan enkripsi.");
       return;
     }
 
@@ -173,7 +173,7 @@ function Encode() {
 
     // Rough pre-flight size warning (actual enforcement is in stego.js)
     if (file.size * 2 > capacity) {
-      alert("File might be too large for the selected image. Trying anyway…");
+      alert("Ukuran file mungkin terlalu besar untuk gambar yang dipilih. Tetap mencoba…");
     }
 
     const objectUrl = URL.createObjectURL(image);
@@ -199,7 +199,7 @@ function Encode() {
     };
 
     img.onerror = () => {
-      alert("Failed to load image. Please try a different file.");
+      alert("Gagal memuat gambar. Silakan coba file lain.");
       setLoading(false);
       URL.revokeObjectURL(objectUrl);
     };
@@ -470,9 +470,7 @@ function Encode() {
               </button>
             </div>
             <p className="text-warning mt-3 small">
-              ⚠️ Sharing the PNG directly via WhatsApp, Instagram, etc. may
-              destroy hidden data due to image compression. Use the ZIP option
-              for safe sharing.
+              ⚠️ Membagikan file PNG secara langsung melalui WhatsApp, Instagram, dan sebagainya dapat merusak data tersembunyi akibat kompresi gambar. Gunakan opsi ZIP untuk berbagi dengan aman.
             </p>
           </div>
         )}
