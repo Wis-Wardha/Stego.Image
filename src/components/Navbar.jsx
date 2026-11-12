@@ -19,7 +19,7 @@ const LEARN_LINKS = [
   { to: "/learn/use-cases",                   label: "Use Cases" },
 ];
 
-const GH = "https://youtube.com";
+const GH = "https://youtu.be/Xw1aBsF3Els?si=137S6Kt_bKSJO-zS";
 
 export default function Navbar() {
   const location                  = useLocation();
@@ -108,7 +108,7 @@ export default function Navbar() {
 
           {/* GitHub */}
           <a href={GH} target="_blank" rel="noopener noreferrer" className="site-navbar__youtube">
-            Intro
+            Tutorial
           </a>
         </div>
 
