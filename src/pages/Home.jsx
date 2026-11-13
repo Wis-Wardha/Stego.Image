@@ -169,7 +169,7 @@ export default function Home() {
   return (
     <div className="home-page">
       <Helmet>
-        <title>Steganografi Online — Sembunyikan File dalam PNG | Stego.Image</title>
+        <title>Steganografi | Sentinel Intel</title>
         <meta name="description" content="Alat steganografi online gratis. Sembunyikan file apa pun di dalam gambar PNG menggunakan steganografi LSB dan enkripsi AES-256. 100% di sisi klien — tanpa unggahan, server, atau pelacakan." />
         <link rel="canonical" href="https://stegoimage.pages.dev/" />
       </Helmet>

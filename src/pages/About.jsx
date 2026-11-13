@@ -124,7 +124,7 @@ export default function About() {
   return (
     <div className="about-page">
       <Helmet>
-        <title>Tentang Stego.Image — Alat Steganografi Gratis di Sisi Klien</title>
+        <title>About | Sentinel Intel</title>
         <meta name="description" content="Stego.Image adalah tool steganografi untuk menyembunyikan file dalam gambar PNG, dengan enkripsi AES-256 opsional dan verifikasi TTE." />
         <link rel="canonical" href="https://stegoimage.pages.dev/about" />
       </Helmet>
@@ -148,6 +148,12 @@ export default function About() {
         </div>
 
         {/* ── WHAT IT DOES ─────────────────────────────────── */}
+        <Section title="Tutorial">
+          <div className="about-note">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/ut36aqDBpqg?si=QxXpC8Y2JVxn6HFT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </Section>
+
         <Section title="Fungsinya">
           <div className="about-features">
             {[

@@ -11,7 +11,7 @@ import {
 import { HiDocumentText } from "react-icons/hi2";
 
 export default function Footer() {
-  const GITHUB_URL = "https://github.com/50RISHU/Stego.Image";
+  const GITHUB_URL = "#";
   const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
   const ISSUES_URL = `${GITHUB_URL}/issues`;
   const RELEASES_URL = `${GITHUB_URL}/releases`;
@@ -76,7 +76,7 @@ export default function Footer() {
             fontSize: "0.95rem",
           }}
         >
-          Open-source image steganography tool.
+          Military Secure Steganographic
           <br />
           Sembunyikan file terenkripsi dengan aman di dalam gambar menggunakan{" "}
           <strong style={{ color: "#c9d1d9" }}>AES-256 encryption</strong>.
@@ -92,7 +92,6 @@ export default function Footer() {
         >
           <a
             href={RELEASES_URL}
-            target="_blank"
             rel="noopener noreferrer"
             style={{
               color: "#58a6ff",

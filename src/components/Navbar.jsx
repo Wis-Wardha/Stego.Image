@@ -6,7 +6,6 @@ const NAV_LINKS = [
   { to: "/",        label: "Home" },
   { to: "/encode",  label: "Encode" },
   { to: "/decode",  label: "Decode" },
-  { to: "/about",   label: "About" },
 ];
 
 const LEARN_LINKS = [
@@ -19,7 +18,7 @@ const LEARN_LINKS = [
   { to: "/learn/use-cases",                   label: "Use Cases" },
 ];
 
-const GH = "https://youtu.be/Xw1aBsF3Els?si=137S6Kt_bKSJO-zS";
+const Tutorial = "/about";
 
 export default function Navbar() {
   const location                  = useLocation();
@@ -79,7 +78,7 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* Learn dropdown */}
+          {/* Learn dropdown 
           <div className="site-navbar__dropdown">
             <button
               onClick={() => setLearnOpen(o => !o)}
@@ -104,10 +103,10 @@ export default function Navbar() {
                 ))}
               </div>
             )}
-          </div>
+          </div>*/}
 
           {/* GitHub */}
-          <a href={GH} target="_blank" rel="noopener noreferrer" className="site-navbar__youtube">
+          <a href={Tutorial} rel="noopener noreferrer" className="site-navbar__youtube">
             Tutorial
           </a>
         </div>
@@ -164,13 +163,13 @@ export default function Navbar() {
             )}
 
             <a
-              href={GH}
+              href={Tutorial}
               target="_blank"
               rel="noopener noreferrer"
               onClick={closeMenus}
               className="site-navbar__mobile-github"
             >
-              GitHub ↗
+              Tutorial ↗
             </a>
           </div>
         )}
