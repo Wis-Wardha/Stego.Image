@@ -356,7 +356,7 @@ function Encode() {
 
         {/* Secret file drop zone */}
         <div className="col-md-12">
-          <label className="label-text">File Rahasia</label>
+          <label className="label-text">Upload File Rahasia</label>
           <div
             className="drop-zone"
             onDrop={(e) => handleDrop(e, "file")}
@@ -372,6 +372,9 @@ function Encode() {
               onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
+          <p className="about-note__text">
+          Sebagai Contoh, gunakan file rahasia berikut yang sudah di TTE: <a href="https://spcp.ipdn.ac.id/storage/pengumuman/PENGUMUMAN_SKD_TTE.pdf" target="_blank" rel="noopener noreferrer">FILE_RAHASIA_TTE.pdf</a>
+          </p>
         </div>
 
         {/* Capacity indicator — only shown once an image is chosen */}
